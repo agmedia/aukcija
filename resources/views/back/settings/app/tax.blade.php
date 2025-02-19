@@ -49,7 +49,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="4">Nema poreza...</td>
+                            <td colspan="5">Nema poreza...</td>
                         </tr>
                     @endforelse
                     </tbody>

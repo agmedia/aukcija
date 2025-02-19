@@ -46,7 +46,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="2">Nema geo zona...</td>
+                            <td colspan="3">Nema geo zona...</td>
                         </tr>
                     @endforelse
                     </tbody>

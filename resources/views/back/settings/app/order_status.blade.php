@@ -9,7 +9,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Statusi narudžbi</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Statusi aukcija</h1>
                 <button class="btn btn-hero-success my-2" onclick="event.preventDefault(); openModal();">
                     <i class="far fa-fw fa-plus-square"></i><span class="d-none d-sm-inline ml-1"> Dodaj novi</span>
                 </button>
@@ -55,7 +55,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="4">Nema statusa...</td>
+                            <td colspan="6">Nema statusa...</td>
                         </tr>
                     @endforelse
                     </tbody>
@@ -71,7 +71,7 @@
             <div class="modal-content rounded">
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary">
-                        <h3 class="block-title">Status narudžbe</h3>
+                        <h3 class="block-title">Status aukcije</h3>
                         <div class="block-options">
                             <a class="text-muted font-size-h3" href="#" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-times"></i>
@@ -204,7 +204,7 @@
                 color: $('#status-color-select').val()
             };
 
-            axios.post("{{ route('api.order.status.store') }}", {data: item})
+            axios.post("{{ route('api.auction.status.store') }}", {data: item})
             .then(response => {
                 //console.log(response.data)
                 if (response.data.success) {
@@ -231,7 +231,7 @@
                 id: $('#delete-status-id').val()
             };
 
-            axios.post("{{ route('api.order.status.destroy') }}", {data: item})
+            axios.post("{{ route('api.auction.status.destroy') }}", {data: item})
             .then(response => {
                 //console.log(response.data)
                 if (response.data.success) {

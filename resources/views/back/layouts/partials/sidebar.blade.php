@@ -154,7 +154,7 @@
                                 </li>
                                 <li class="nav-main-item">
                                     <a class="nav-main-link{{ request()->routeIs(['order.statuses']) ? ' active' : '' }}" href="{{ route('order.statuses') }}">
-                                        <span class="nav-main-link-name">Statusi Narudžbi</span>
+                                        <span class="nav-main-link-name">Statusi Aukcije</span>
                                     </a>
                                 </li>
                                 <li class="nav-main-item">

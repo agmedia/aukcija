@@ -25,7 +25,7 @@ class SettingsSedder extends Seeder
             $items = json_decode($items, true);
             
             foreach ($items as $item) {
-                DB::table('settings')->insert($item);
+                //DB::table('settings')->insert($item);
             }
         }
         

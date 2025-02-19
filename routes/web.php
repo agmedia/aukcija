@@ -207,12 +207,12 @@ Route::prefix('api/v2')->group(function () {
                 Route::post('destroy', 'Back\Settings\Store\GeoZoneController@destroy')->name('geo-zone.destroy');
             });*/
             // ORDER STATUS
-            Route::prefix('order-status')->group(function () {
-                Route::post('store', [OrderStatusController::class, 'store'])->name('api.order.status.store');
-                Route::post('destroy', [OrderStatusController::class, 'destroy'])->name('api.order.status.destroy');
+            Route::prefix('auction-status')->group(function () {
+                Route::post('store', [OrderStatusController::class, 'store'])->name('api.auction.status.store');
+                Route::post('destroy', [OrderStatusController::class, 'destroy'])->name('api.auction.status.destroy');
 
-                Route::post('change', [OrderController::class, 'api_status_change'])->name('api.order.status.change');
-                Route::post('send/gls', [OrderController::class, 'api_send_gls'])->name('api.order.send.gls');
+                Route::post('change', [OrderController::class, 'api_status_change'])->name('api.auction.status.change');
+                Route::post('send/gls', [OrderController::class, 'api_send_gls'])->name('api.auction.send.gls');
             });
             // PAYMENTS
             Route::prefix('payment')->group(function () {
