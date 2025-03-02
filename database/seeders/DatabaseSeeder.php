@@ -31,6 +31,15 @@ class DatabaseSeeder extends Seeder
         $this->command->comment('Default settings created!');
         $this->command->comment('Default pages created!');
         
+        $dummy = $this->command->askWithCompletion('Do you want to create some dummy data? (y/n)', ['y', 'n'], 'n');
+        
+        if ($dummy === 'y') {
+            $this->call(AuctionSeeder::class);
+            
+            $this->command->comment('Auctions created!');
+        }
+        
+        $this->command->newLine();
         $this->command->info('Enjoy your app!');
         $this->command->comment('...');
         

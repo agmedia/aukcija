@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models\Back\Catalog\Product;
+namespace App\Models\Back\Catalog\Auction;
 
-use App\Helpers\ProductHelper;
+use App\Helpers\AuctionHelper;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -13,11 +14,12 @@ use Intervention\Image\Facades\Image;
 
 class AuctionImage extends Model
 {
+    use HasFactory;
 
     /**
      * @var string
      */
-    protected $table = 'product_images';
+    protected $table = 'auction_images';
 
     /**
      * @var array
@@ -101,7 +103,7 @@ class AuctionImage extends Model
             }
         }
 
-        return $this->where('product_id', $this->resource->id)->get();
+        return $this->where('auction_id', $this->resource->id)->get();
     }
 
 
@@ -115,21 +117,21 @@ class AuctionImage extends Model
     {
         // Nađi staru sliku i izdvoji path
         $old  = $id ? $this->where('id', $id)->first() : $this->resource;
-        $path = str_replace('media/images/gallery/products/', '', $old['image']);
+        $path = str_replace('media/images/gallery/auctions/', '', $old['image']);
         // Obriši staru sliku
-        Storage::disk('products')->delete($path);
+        Storage::disk('auctions')->delete($path);
 
         $path = $this->saveImage($new->image, $title);
 
-        // Ako nije glavna slika updejtaj path na product_images DB
+        // Ako nije glavna slika updejtaj path na auction_images DB
         if ($id) {
             return $this->where('id', $id)->update([
-                'image' => config('filesystems.disks.products.url') . $path
+                'image' => config('filesystems.disks.auctions.url') . $path
             ]);
         }
 
         return Auction::where('id', $this->resource->id)->update([
-            'image' => config('filesystems.disks.products.url') . $path
+            'image' => config('filesystems.disks.auctions.url') . $path
         ]);
     }
 
@@ -170,10 +172,10 @@ class AuctionImage extends Model
     {
         $path = $this->saveImage($new->image);
 
-        // Store image in product_images DB
+        // Store image in auction_images DB
         $id = $this->insertGetId([
-            'product_id' => $this->resource->id,
-            'image'      => config('filesystems.disks.products.url') . $path,
+            'auction_id' => $this->resource->id,
+            'image'      => config('filesystems.disks.auctions.url') . $path,
             'alt'        => $this->resource->name,
             'published'  => 1,
             'sort_order' => $sort_order,
@@ -195,19 +197,19 @@ class AuctionImage extends Model
      */
     private function saveMainTitle(string $title/*, string $alt*/)
     {
-        $existing_clean = ProductHelper::getCleanImageTitle($this->resource->image);
+        $existing_clean = AuctionHelper::getCleanImageTitle($this->resource->image);
 
         if ($existing_clean != $title) {
             $path          = $this->resource->id . '/';
-            $existing_full = ProductHelper::getFullImageTitle($this->resource->image);
-            $new_full      = ProductHelper::setFullImageTitle($title);
+            $existing_full = AuctionHelper::getFullImageTitle($this->resource->image);
+            $new_full      = AuctionHelper::setFullImageTitle($title);
 
-            Storage::disk('products')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
-            Storage::disk('products')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
-            Storage::disk('products')->move($path . $existing_full . '-thumb.webp', $path . $new_full . '-thumb.webp');
+            Storage::disk('auctions')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
+            Storage::disk('auctions')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
+            Storage::disk('auctions')->move($path . $existing_full . '-thumb.webp', $path . $new_full . '-thumb.webp');
 
             Auction::where('id', $this->resource->id)->update([
-                'image' => config('filesystems.disks.products.url') . $path . $new_full . '.jpg'
+                'image' => config('filesystems.disks.auctions.url') . $path . $new_full . '.jpg'
             ]);
         }
 
@@ -226,19 +228,19 @@ class AuctionImage extends Model
         $resource = $this->where('id', $id)->first();
 
         if ($resource && isset($resource->image)) {
-            $existing_clean = ProductHelper::getCleanImageTitle($resource->image);
+            $existing_clean = AuctionHelper::getCleanImageTitle($resource->image);
 
             if ($existing_clean != $title) {
                 $path          = $this->resource->id . '/';
-                $existing_full = ProductHelper::getFullImageTitle($resource->image);
-                $new_full      = ProductHelper::setFullImageTitle($title);
+                $existing_full = AuctionHelper::getFullImageTitle($resource->image);
+                $new_full      = AuctionHelper::setFullImageTitle($title);
 
-                Storage::disk('products')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
-                Storage::disk('products')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
-                Storage::disk('products')->move($path . $existing_full . '-thumb.webp', $path . $new_full . '-thumb.webp');
+                Storage::disk('auctions')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
+                Storage::disk('auctions')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
+                Storage::disk('auctions')->move($path . $existing_full . '-thumb.webp', $path . $new_full . '-thumb.webp');
 
                 $this->where('id', $id)->update([
-                    'image' => config('filesystems.disks.products.url') . $path . $new_full . '.jpg'
+                    'image' => config('filesystems.disks.auctions.url') . $path . $new_full . '.jpg'
                 ]);
             }
         }
@@ -261,10 +263,10 @@ class AuctionImage extends Model
         $path = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '.';
 
         $path_jpg = $path . 'jpg';
-        Storage::disk('products')->put($path_jpg, $img->encode('jpg'));
+        Storage::disk('auctions')->put($path_jpg, $img->encode('jpg'));
 
         $path_webp = $path . 'webp';
-        Storage::disk('products')->put($path_webp, $img->encode('webp'));
+        Storage::disk('auctions')->put($path_webp, $img->encode('webp'));
 
         // Thumb creation
         $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
@@ -274,7 +276,7 @@ class AuctionImage extends Model
         })->resizeCanvas(250, null);
 
         $path_webp_thumb = $path_thumb . 'webp';
-        Storage::disk('products')->put($path_webp_thumb, $img->encode('webp', 80));
+        Storage::disk('auctions')->put($path_webp_thumb, $img->encode('webp', 80));
 
         return $path_jpg;
     }
@@ -299,23 +301,23 @@ class AuctionImage extends Model
      *******************************************************************************/
 
     /**
-     * @param int $product_id
+     * @param int $auction_id
      *
      * @return Collection
      */
-    public static function getAdminList(int $product_id = null): Collection
+    public static function getAdminList(int $auction_id = null): Collection
     {
         $response = [];
 
-        if ($product_id) {
-            $images   = self::where('product_id', $product_id)->orderBy('sort_order')->get();
+        if ($auction_id) {
+            $images   = self::where('auction_id', $auction_id)->orderBy('sort_order')->get();
 
             foreach ($images as $image) {
                 $response[] = [
                     'id'         => $image->id,
-                    'product_id' => $image->product_id,
+                    'auction_id' => $image->auction_id,
                     'image'      => $image->image,
-                    'title'      => ProductHelper::getCleanImageTitle($image->image),
+                    'title'      => AuctionHelper::getCleanImageTitle($image->image),
                     'alt'        => $image->alt,
                     'published'  => $image->published,
                     'sort_order' => $image->sort_order,
@@ -329,20 +331,20 @@ class AuctionImage extends Model
 
     /**
      * Save stack of images to the
-     * product_images database.
+     * auction_images database.
      *
      * @param array $paths
-     * @param       $product_id
+     * @param       $auction_id
      *
      * @return array|bool
      */
-    public static function saveStack(array $paths, $product_id)
+    public static function saveStack(array $paths, $auction_id)
     {
         $images = [];
 
         foreach ($paths as $key => $path) {
             $images[] = self::create([
-                'product_id' => $product_id,
+                'auction_id' => $auction_id,
                 'image'      => $path,
                 'sort_order' => $key,
                 'created_at' => Carbon::now(),
@@ -360,39 +362,39 @@ class AuctionImage extends Model
 
     /**
      * Save temporary stored images
-     * to newly saved product folder.
-     * The folder is based on product ID.
+     * to newly saved auction folder.
+     * The folder is based on auction ID.
      *
      * @param array $paths
-     * @param       $product_id
+     * @param       $auction_id
      *
      * @return array|bool
      */
-    public static function transferTemporaryImages(array $paths, $product_id)
+    public static function transferTemporaryImages(array $paths, $auction_id)
     {
         $targets = [];
 
         foreach ($paths as $key => $path) {
-            $target    = str_replace('temp', $product_id, $path);
+            $target    = str_replace('temp', $auction_id, $path);
             $targets[] = $target;
 
             if ($key == 0) {
-                self::setDefault($target, $product_id);
+                self::setDefault($target, $auction_id);
             }
 
-            $_path   = str_replace(config('filesystems.disks.products.url'), '', $path);
-            $_target = str_replace(config('filesystems.disks.products.url'), '', $target);
+            $_path   = str_replace(config('filesystems.disks.auctions.url'), '', $path);
+            $_target = str_replace(config('filesystems.disks.auctions.url'), '', $target);
 
-            Storage::disk('products')->move($_path, $_target);
-            Storage::disk('products')->delete($_path);
+            Storage::disk('auctions')->move($_path, $_target);
+            Storage::disk('auctions')->delete($_path);
         }
 
-        return self::saveStack($targets, $product_id);
+        return self::saveStack($targets, $auction_id);
     }
 
 
     /**
-     * Set default product image.
+     * Set default auction image.
      *
      * @param string $path
      * @param        $id

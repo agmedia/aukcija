@@ -41,17 +41,41 @@
                     <form action="{{ route('auctions') }}" method="get">
 
                         <div class="form-group row items-push mb-0">
-                            <div class="col-md-9 mb-0">
+                            <div class="col-md-8 mb-0">
                                 <div class="form-group">
                                     <div class="input-group flex-nowrap">
                                         <input type="text" class="form-control py-3 text-center" name="search" id="search-input" value="{{ request()->input('search') }}" placeholder="Upiši pojam pretraživanja">
                                         <button type="submit" class="btn btn-primary fs-base" onclick="setPageURL('search', $('#search-input').val());"><i class="fa fa-search"></i> </button>
                                     </div>
-                                    <div class="form-text small">Pretraži po imenu, šifri...</div>
+                                    {{--<div class="form-text small">Pretraži po imenu, šifri...</div>--}}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2 mb-0">
+                                <div class="form-group">
+                                    <select class="js-select2 form-control" id="status-select" name="status" style="width: 100%;" data-placeholder="Odaberi Status">
+                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                        <option value="all" {{ 'all' == request()->input('status') ? 'selected' : '' }}>Sve aukcije</option>
+                                        <option value="active" {{ 'active' == request()->input('status') ? 'selected' : '' }}>Aktivne</option>
+                                        <option value="inactive" {{ 'inactive' == request()->input('status') ? 'selected' : '' }}>Neaktivne</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-0">
+                                <div class="form-group">
+                                    <select class="js-select2 form-control" id="sort-select" name="sort" style="width: 100%;" data-placeholder="Sortiraj aukcije">
+                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                        <option value="new" {{ 'new' == request()->input('sort') ? 'selected' : '' }}>Najnovije</option>
+                                        <option value="old" {{ 'old' == request()->input('sort') ? 'selected' : '' }}>Najstarije</option>
+                                        <option value="price_up" {{ 'price_up' == request()->input('sort') ? 'selected' : '' }}>Cijena od manje</option>
+                                        <option value="price_down" {{ 'price_down' == request()->input('sort') ? 'selected' : '' }}>Cijena od više</option>
+                                        <option value="az" {{ 'az' == request()->input('sort') ? 'selected' : '' }}>Od A do Ž</option>
+                                        <option value="za" {{ 'za' == request()->input('sort') ? 'selected' : '' }}>Od Ž do A</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{--<div class="col-md-3">
                                 <div class="form-group">
                                     <select class="js-select2 form-control" id="category-select" name="category" style="width: 100%;" data-placeholder="Odaberi kategoriju">
                                         <option></option>
@@ -67,36 +91,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group row items-push mb-0">
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <select class="js-select2 form-control" id="status-select" name="status" style="width: 100%;" data-placeholder="Odaberi Status">
-                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                                        <option value="all" {{ 'all' == request()->input('status') ? 'selected' : '' }}>Svi artikli</option>
-                                        <option value="active" {{ 'active' == request()->input('status') ? 'selected' : '' }}>Aktivni</option>
-                                        <option value="inactive" {{ 'inactive' == request()->input('status') ? 'selected' : '' }}>Neaktivni</option>
-                                        <option value="with_action" {{ 'with_action' == request()->input('status') ? 'selected' : '' }}>Sa akcijama</option>
-                                        <option value="without_action" {{ 'without_action' == request()->input('status') ? 'selected' : '' }}>Bez akcija</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <select class="js-select2 form-control" id="sort-select" name="sort" style="width: 100%;" data-placeholder="Sortiraj artikle">
-                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                                        <option value="new" {{ 'new' == request()->input('sort') ? 'selected' : '' }}>Najnovije</option>
-                                        <option value="old" {{ 'old' == request()->input('sort') ? 'selected' : '' }}>Najstarije</option>
-                                        <option value="price_up" {{ 'price_up' == request()->input('sort') ? 'selected' : '' }}>Cijena od manje</option>
-                                        <option value="price_down" {{ 'price_down' == request()->input('sort') ? 'selected' : '' }}>Cijena od više</option>
-                                        <option value="az" {{ 'az' == request()->input('sort') ? 'selected' : '' }}>Od A do Ž</option>
-                                        <option value="za" {{ 'za' == request()->input('sort') ? 'selected' : '' }}>Od Ž do A</option>
-                                    </select>
-                                </div>
-                            </div>
+                            </div>--}}
 
                         </div>
                     </form>

@@ -2,25 +2,25 @@
 
 namespace App\Helpers;
 
-use App\Models\Back\Catalog\Product\Auction;
-use App\Models\Back\Orders\OrderProduct;
+use App\Models\Back\Catalog\Auction\Auction;
+use App\Models\Back\Orders\OrderAuction;
 use App\Models\Front\Catalog\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class ProductHelper
+class AuctionHelper
 {
 
     /**
-     * @param Auction       $product
+     * @param Auction       $auction
      * @param Category|null $category
      * @param Category|null $subcategory
      *
      * @return string
      */
-    public static function categoryString(Auction $product, Category $category = null, Category $subcategory = null): string
+    public static function categoryString(Auction $auction, Category $category = null, Category $subcategory = null): string
     {
-        $data        = static::resolveCategories($product, $category, $subcategory);
+        $data        = static::resolveCategories($auction, $category, $subcategory);
         $category    = $data['category'];
         $subcategory = $data['subcategory'];
         $catstring   = '';
@@ -41,24 +41,24 @@ class ProductHelper
 
 
     /**
-     * @param Auction       $product
+     * @param Auction       $auction
      * @param Category|null $category
      * @param Category|null $subcategory
      *
      * @return string
      */
-    public static function url(Auction $product, Category $category = null, Category $subcategory = null): string
+    public static function url(Auction $auction, Category $category = null, Category $subcategory = null): string
     {
-        $data        = static::resolveCategories($product, $category, $subcategory);
+        $data        = static::resolveCategories($auction, $category, $subcategory);
         $category    = $data['category'];
         $subcategory = $data['subcategory'];
 
         if ($subcategory) {
-            return Str::slug($category->group) . '/' . $category->slug . '/' . $subcategory->slug . '/' . $product->slug;
+            return Str::slug($category->group) . '/' . $category->slug . '/' . $subcategory->slug . '/' . $auction->slug;
         }
 
         if ($category) {
-            return Str::slug($category->group) . '/' . $category->slug . '/' . $product->slug;
+            return Str::slug($category->group) . '/' . $category->slug . '/' . $auction->slug;
         }
 
         return '/';
@@ -66,20 +66,20 @@ class ProductHelper
 
 
     /**
-     * @param Auction       $product
+     * @param Auction       $auction
      * @param Category|null $category
      * @param Category|null $subcategory
      *
      * @return array
      */
-    public static function resolveCategories(Auction $product, Category $category = null, Category $subcategory = null): array
+    public static function resolveCategories(Auction $auction, Category $category = null, Category $subcategory = null): array
     {
         if ( ! $category) {
-            $category = $product->category();
+            $category = $auction->category();
         }
 
         if ( ! $subcategory) {
-            $psub = $product->subcategory();
+            $psub = $auction->subcategory();
 
             if ($psub) {
                 foreach ($category->subcategories()->get() as $sub) {
@@ -169,10 +169,10 @@ class ProductHelper
      */
     public static function makeAvailable($order_id): bool
     {
-        $ops = OrderProduct::query()->where('order_id', $order_id)->get();
+        $ops = OrderAuction::query()->where('order_id', $order_id)->get();
 
         foreach ($ops as $op) {
-            Auction::query()->where('id', $op->product_id)->increment('quantity', $op->quantity);
+            Auction::query()->where('id', $op->auction_id)->increment('quantity', $op->quantity);
         }
 
         return true;

@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Back\Catalog\Attributes\Attributes;
+use App\Models\Back\Catalog\Auction\Auction;
+use App\Models\Back\Catalog\Auction\AuctionAttribute;
+use App\Models\Back\Catalog\Auction\AuctionBid;
+use App\Models\Back\Catalog\Auction\AuctionImage;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class AuctionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+        Attributes::factory(100)->create();
+        
+        Auction::factory(500)->create();
+        
+        //AuctionAttribute::factory(1500)->create();
+        
+        AuctionImage::factory(1000)->create();
+        
+        AuctionBid::factory(2500)->create();
+    }
+}

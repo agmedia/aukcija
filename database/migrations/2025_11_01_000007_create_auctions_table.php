@@ -17,6 +17,7 @@ class CreateAuctionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('sku', 14)->default(0)->index();
             $table->string('ean', 14)->nullable();
+            $table->string('group')->index();
             $table->string('name')->index();
             $table->text('description')->nullable();
             $table->string('meta_title')->nullable();
@@ -31,15 +32,15 @@ class CreateAuctionsTable extends Migration
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->integer('status')->default(1);
+            $table->boolean('active')->default(false);
             $table->integer('tax_id')->unsigned()->default(0);
             $table->integer('viewed')->unsigned()->default(0);
             $table->boolean('featured')->default(false);
             $table->integer('sort_order')->unsigned()->default(0);
-            $table->boolean('active')->default(false);
             $table->timestamps();
         });
         
-        Schema::create('auction_bids', function (Blueprint $table) {
+        Schema::create('auction_bid', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('auction_id')->index();
             $table->unsignedBigInteger('user_id')->index();
@@ -128,7 +129,7 @@ class CreateAuctionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('auctions');
-        Schema::dropIfExists('auction_bids');
+        Schema::dropIfExists('auction_bid');
         Schema::dropIfExists('auction_images');
         Schema::dropIfExists('auction_category');
         Schema::dropIfExists('auction_related');

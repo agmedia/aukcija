@@ -1,4 +1,4 @@
-@push('product_css')
+@push('auction_css')
     <style>
         .fileContainer {
             overflow: hidden;
@@ -50,8 +50,8 @@
     </div>
 
     <div class="row items-push" id="sortable">
-        @if (isset($product))
-            @if (! empty($product->image))
+        @if (isset($auction))
+            @if (! empty($auction->image))
                 <div class="col-sm-12 animated fadeIn mb-0 p-3 ribbon ribbon-left ribbon-bookmark ribbon-crystal" id="{{ 'image_0' }}">
                     <div class="row form-group mt-2">
                         <div class="col-sm-3">
@@ -64,11 +64,11 @@
                                      data-ratio="free"
                                      {{--                             data-size="600,800"--}}
                                      data-max-file-size="2"
-                                     data-meta-type="products"
-                                     data-meta-type_id="{{ $product->id }}"
+                                     data-meta-type="auctions"
+                                     data-meta-type_id="{{ $auction->id }}"
                                      data-will-remove="removeImage"
                                         {{--data-will-request="handleXHRRequest"--}}>
-                                    <img src="{{ asset($product->image) }}" alt="{{ 'image_' . $product->id }}"/>
+                                    <img src="{{ asset($auction->image) }}" alt="{{ 'image_' . $auction->id }}"/>
                                     <input type="file" name="slim[0][image]"/>
                                 </div>
                             </div>
@@ -77,14 +77,14 @@
                             <div class="row mb-2">
                                 <label class="col-sm-3 text-right font-size-sm pt-2">Naziv fotografije</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="max" class="form-control js-tooltip-enabled" name="slim[0][title]" value="{{ $product->imageName() }}" data-toggle="tooltip" data-placement="top" title="Image Title" placeholder="Naziv fotografije">
+                                    <input type="text" id="max" class="form-control js-tooltip-enabled" name="slim[0][title]" value="{{ $auction->imageName() }}" data-toggle="tooltip" data-placement="top" title="Image Title" placeholder="Naziv fotografije">
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <label class="col-sm-3 text-right font-size-sm pt-2">Alt. tekst</label>
                                 <div class="col-sm-9 font-size-sm">
 <!--                                    Alternativni tekst glavne fotografije je jednak nazivu knjige + autor.-->
-                                    <input type="text" id="max" class="form-control js-tooltip-enabled" name="slim[0][alt]" value="{{ $product->image_alt }}" data-toggle="tooltip" data-placement="top" title="Image Alt Text" placeholder="Alternativni Naziv fotografije">
+                                    <input type="text" id="max" class="form-control js-tooltip-enabled" name="slim[0][alt]" value="{{ $auction->image_alt }}" data-toggle="tooltip" data-placement="top" title="Image Alt Text" placeholder="Alternativni Naziv fotografije">
                                 </div>
                             </div>
                             <div class="row">
@@ -113,8 +113,8 @@
                                                  data-ratio="free"
                                                  {{--                                         data-size="600,800"--}}
                                                  data-max-file-size="2"
-                                                 data-meta-type="products"
-                                                 data-meta-type_id="{{ $product->id }}"
+                                                 data-meta-type="auctions"
+                                                 data-meta-type_id="{{ $auction->id }}"
                                                  data-meta-image_id="{{ $image['id'] }}"
                                                  data-will-remove="removeImage"
                                             >
@@ -172,7 +172,7 @@
 
 </div>
 
-@push('product_scripts')
+@push('auction_scripts')
 
     <script>
         let el = $('#max');
@@ -191,7 +191,7 @@
 
     <script>
         //
-        let blocks = "{{ (isset($product) && isset($product->images)) ? count($product->images) : 0 }}";
+        let blocks = "{{ (isset($auction) && isset($auction->images)) ? count($auction->images) : 0 }}";
         let created_id = 0;
         // get a reference to the file drop area and the file input
         var fileDropArea = document.querySelector('.file-drop-area');
@@ -270,8 +270,8 @@
                 maxFileSize: '2',
                 service: false,
                 meta: {
-                    type: 'products',
-                    type_id: "{{ isset($product) ? $product->id : '' }}",
+                    type: 'auctions',
+                    type_id: "{{ isset($auction) ? $auction->id : '' }}",
                     image_id: 0
                 },
                 defaultInputName: fileInputName,
@@ -300,7 +300,7 @@
 
         function removeImage(data, slim) {
             if (data.meta.hasOwnProperty('image_id')) {
-                axios.post("{{ route('products.destroy.image') }}", { data: data.meta.image_id })
+                axios.post("{{ route('auctions.destroy.image') }}", { data: data.meta.image_id })
                     .then((response) => {
                         successToast.fire({
                             text: 'Fotografija je uspješno izbrisana',

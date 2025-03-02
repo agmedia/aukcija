@@ -35,12 +35,12 @@ class AuctionController extends Controller
 
         }
 
-        $categories = (new Category())->getList(false);
+        //$categories = (new Category())->getList(false);
         /*$authors    = Author::all()->pluck('title', 'id');
         $publishers = Publisher::all()->pluck('title', 'id');*/
         $counts = [];//Auction::setCounts($query);
 
-        return view('back.catalog.auction.index', compact('auctions', 'categories'/*, 'authors', 'publishers'*/, 'counts'));
+        return view('back.catalog.auction.index', compact('auctions', /*'categories', 'authors', 'publishers',*/ 'counts'));
     }
 
 
@@ -54,7 +54,7 @@ class AuctionController extends Controller
         $auction = new Auction();
 
         $data           = $auction->getRelationsData();
-        $active_actions = AuctionAction::active()->get();
+        $active_actions = null;
 
         return view('back.catalog.auction.edit', compact('data', 'active_actions'));
     }
