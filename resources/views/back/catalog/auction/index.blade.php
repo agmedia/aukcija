@@ -97,7 +97,7 @@
                     </form>
                 </div>
             </div>
-            <div class="block-content">
+            {{--<div class="block-content">
                 <div class="table-responsive">
                     <table class="table table-borderless table-striped table-vcenter">
                         <thead>
@@ -148,7 +148,7 @@
                                 <td class="font-size-sm">{{ \Illuminate\Support\Carbon::make($auction->created_at)->format('d.m.Y') }}</td>
                                 <td class="font-size-sm">{{ \Illuminate\Support\Carbon::make($auction->updated_at)->format('d.m.Y') }}</td>
                                 <td class="text-center font-size-sm">
-                                    {{--@include('back.layouts.partials.status', ['status' => $auction->status])--}}
+                                    --}}{{--@include('back.layouts.partials.status', ['status' => $auction->status])--}}{{--
                                     <div class="custom-control custom-switch custom-control-success mb-1">
                                         <input type="checkbox" class="custom-control-input" id="status-{{ $auction->id }}" onclick="setStatus({{ $auction->id }})" name="status" @if ($auction->status) checked="" @endif>
                                         <label class="custom-control-label" for="status-{{ $auction->id }}"></label>
@@ -176,6 +176,10 @@
                 </div>
                 <!-- Pagination -->
                 {{ $auctions->links() }}
+            </div>--}}
+
+            <div class="block-content">
+                <livewire:auctions-table theme="bootstrap-5" />
             </div>
         </div>
     </div>

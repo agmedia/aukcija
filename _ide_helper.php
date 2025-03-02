@@ -25183,6 +25183,29 @@ namespace Illuminate\View {
             }
     }
 
+namespace Illuminate\Database\Eloquent {
+    /**
+     * 
+     *
+     * @template TKey of array-key
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @extends \Illuminate\Support\Collection<TKey, TModel>
+     */
+    class Collection {
+        /**
+         * 
+         *
+         * @see \Barryvdh\Debugbar\ServiceProvider::register()
+         * @static 
+         */
+        public static function debug()
+        {
+            return \Illuminate\Database\Eloquent\Collection::debug();
+        }
+
+            }
+    }
+
 
 namespace  {
     class App extends \Illuminate\Support\Facades\App {}

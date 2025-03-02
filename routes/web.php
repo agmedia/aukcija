@@ -40,9 +40,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('auctions', [AuctionController::class, 'index'])->name('auctions');
         Route::get('auction/create', [AuctionController::class, 'create'])->name('auctions.create');
         Route::post('auction', [AuctionController::class, 'store'])->name('auctions.store');
-        Route::get('auction/{category}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
-        Route::patch('auction/{category}', [AuctionController::class, 'update'])->name('auctions.update');
-        Route::delete('auction/{category}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
+        Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
+        Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
+        Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
         // KATEGORIJE
        /* Route::get('categories', [CategoryController::class, 'index'])->name('categories');
         Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');

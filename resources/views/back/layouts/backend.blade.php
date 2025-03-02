@@ -76,7 +76,7 @@
 
         <!-- END Page Container -->
         <script src="{{ asset('js/dashmix.app.js') }}"></script>
-        <script src="{{ asset('/js/laravel.app.js') }}"></script>
+        {{--<script src="{{ asset('/js/laravel.app.js') }}"></script>--}}
 
         <script>
             const confirmPopUp = Swal.mixin({
