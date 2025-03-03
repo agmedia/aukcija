@@ -10,7 +10,7 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 /**
- * 
+ *
  */
 class AuctionsTable extends DataTableComponent
 {

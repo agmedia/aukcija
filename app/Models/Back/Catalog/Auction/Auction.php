@@ -40,7 +40,7 @@ class Auction extends Model
     /**
      * @var null
      */
-    protected $old_product = null;
+    protected $old_auction = null;
 
 
     /**
@@ -48,7 +48,7 @@ class Auction extends Model
      */
     public function images()
     {
-        return $this->hasMany(AuctionImage::class, 'product_id')->orderBy('sort_order');
+        return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
     }
 
 
@@ -104,15 +104,15 @@ class Auction extends Model
         if ($id) {
             $this->resolveCategories($id);
 
-            $product = $this->find($id);
+            $auction = $this->find($id);
 
-            $product->update([
-                'url'             => AuctionHelper::url($product),
-                'category_string' => AuctionHelper::categoryString($product),
+            $auction->update([
+                'url'             => AuctionHelper::url($auction),
+                'category_string' => AuctionHelper::categoryString($auction),
                 'special_lock'    => $this->resolveActionLock($id)
             ]);
 
-            return $product;
+            return $auction;
         }
 
         return false;
@@ -154,7 +154,7 @@ class Auction extends Model
         if ($insert) {
             $slug = $this->resolveSlug();
         } else {
-            $this->old_product = $this->setHistoryAuction();
+            $this->old_auction = $this->setHistoryAuction();
             $slug              = $this->request->slug;
         }
 
@@ -207,9 +207,9 @@ class Auction extends Model
         return [
             'categories' => (new Category())->getList(false),
             'images'     => AuctionImage::getAdminList($this->id),
-            'letters'    => Settings::get('product', 'letter_styles'),
-            'conditions' => Settings::get('product', 'condition_styles'),
-            'bindings'   => Settings::get('product', 'binding_styles'),
+            'letters'    => Settings::get('auction', 'letter_styles'),
+            'conditions' => Settings::get('auction', 'condition_styles'),
+            'bindings'   => Settings::get('auction', 'binding_styles'),
             'taxes'      => Settings::get('tax', 'list')
         ];
     }
@@ -229,13 +229,13 @@ class Auction extends Model
 
 
     /**
-     * @param Auction $product
+     * @param Auction $auction
      *
      * @return mixed
      */
-    public function storeImages(Auction $product)
+    public function storeImages(Auction $auction)
     {
-        return (new AuctionImage())->store($product, $this->request);
+        return (new AuctionImage())->store($auction, $this->request);
     }
 
 
@@ -248,7 +248,7 @@ class Auction extends Model
     {
         $new = $this->setHistoryAuction();
 
-        $history = new AuctionHistory($new, $this->old_product);
+        $history = new AuctionHistory($new, $this->old_auction);
 
         return $history->addData($type);
     }
@@ -268,22 +268,6 @@ class Auction extends Model
                   ->orWhere('sku', 'like', '%' . $request->input('search') . '%')
                   ->orWhere('polica', 'like', '%' . $request->input('search') . '%')
                   ->orWhere('year', 'like', '' . $request->input('search') . '');
-        }
-
-        if ($request->has('category') && ! empty($request->input('category'))) {
-            $query->whereHas('categories', function ($query) use ($request) {
-                $query->where('id', $request->input('category'));
-            })->orWhereHas('subcategories', function ($query) use ($request) {
-                $query->where('id', $request->input('category'));
-            });
-        }
-
-        if ($request->has('author') && ! empty($request->input('author'))) {
-            $query->where('author_id', $request->input('author'));
-        }
-
-        if ($request->has('publisher') && ! empty($request->input('publisher'))) {
-            $query->where('publisher_id', $request->input('publisher'));
         }
 
         if ($request->has('status')) {
@@ -349,17 +333,17 @@ class Auction extends Model
      */
     private function setHistoryAuction()
     {
-        $product = $this->where('id', $this->id)->first();
+        $auction = $this->where('id', $this->id)->first();
 
-        $response             = $product->toArray();
+        $response             = $auction->toArray();
         $response['category'] = [];
 
-        if ($product->category()) {
-            $response['category'] = $product->category()->toArray();
+        if ($auction->category()) {
+            $response['category'] = $auction->category()->toArray();
         }
 
-        $response['subcategory'] = $product->subcategory() ? $product->subcategory()->toArray() : [];
-        $response['images']      = $product->images()->get()->toArray();
+        $response['subcategory'] = $auction->subcategory() ? $auction->subcategory()->toArray() : [];
+        $response['images']      = $auction->images()->get()->toArray();
 
         return $response;
     }
@@ -379,14 +363,14 @@ class Auction extends Model
 
 
     /**
-     * @param int $product_id
+     * @param int $auction_id
      *
      * @return bool
      */
-    private function resolveCategories(int $product_id): bool
+    private function resolveCategories(int $auction_id): bool
     {
         if ( ! empty($this->request->category) && is_array($this->request->category)) {
-            AuctionCategory::storeData($this->request->category, $product_id);
+            AuctionCategory::storeData($this->request->category, $auction_id);
 
             return true;
         }
@@ -396,27 +380,27 @@ class Auction extends Model
 
 
     /**
-     * @param int  $product_id
+     * @param int  $auction_id
      * @param bool $insert
      *
      * @return int
      */
-    private function resolveActionLock(int $product_id, bool $insert = true): int
+    private function resolveActionLock(int $auction_id, bool $insert = true): int
     {
         if ($insert) {
             if ($this->request->special) {
-                return $this->createActionFromAuction($product_id);
+                return $this->createActionFromAuction($auction_id);
             }
         }
 
-        $product = $this->newQuery()->find($product_id);
+        $auction = $this->newQuery()->find($auction_id);
 
-        if ($product->special) {
-            if ( ! $product->action_id) {
-                return $this->createActionFromAuction($product_id);
+        if ($auction->special) {
+            if ( ! $auction->action_id) {
+                return $this->createActionFromAuction($auction_id);
             }
 
-            if ($product->lock) {
+            if ($auction->lock) {
                 return 1;
             }
         }
@@ -426,15 +410,15 @@ class Auction extends Model
 
 
     /**
-     * @param int $product_id
+     * @param int $auction_id
      *
      * @return int
      */
-    private function createActionFromAuction(int $product_id): int
+    private function createActionFromAuction(int $auction_id): int
     {
-        $action_id = Action::createFromAuction($product_id, $this->request);
+        $action_id = Action::createFromAuction($auction_id, $this->request);
 
-        $this->newQuery()->where('id', $product_id)
+        $this->newQuery()->where('id', $auction_id)
              ->update(['action_id' => $action_id]);
 
         return 1;
@@ -456,10 +440,10 @@ class Auction extends Model
         }
 
         if ($target == 'update') {
-            $product = Auction::where('id', $this->id)->first();
+            $auction = Auction::where('id', $this->id)->first();
 
-            if ($product) {
-                $slug = $product->slug;
+            if ($auction) {
+                $slug = $auction->slug;
             }
         }
 
