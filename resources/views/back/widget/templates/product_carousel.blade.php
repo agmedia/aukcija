@@ -44,7 +44,7 @@
                                     <label for="group-select">Grupa stavki @include('back.layouts.partials.required-star')</label>
                                     <select class="form-control" id="target-select" name="target">
                                         <option></option>
-                                        <option value="product" {{ (isset($widget->target) and $widget->target == 'product') ? 'selected="selected"' : '' }}>Artikli</option>
+                                        <option value="auction" {{ (isset($widget->target) and $widget->target == 'auction') ? 'selected="selected"' : '' }}>Aukcije</option>
                                         {{--@foreach ($targets as $target)
                                             <option value="{{ $target->id }}" {{ (isset($widget) and $target->id == $widget->target) ? 'selected="selected"' : '' }}>{{ $target->title }}</option>
                                         @endforeach--}}
@@ -118,7 +118,7 @@
                             @if (isset($widget))
                                 @livewire('back.marketing.action-group-list', ['group' => $widget->target, 'list' => json_decode($widget->links)])
                             @else
-                                @livewire('back.marketing.action-group-list', ['group' => 'products'])
+                                @livewire('back.marketing.action-group-list', ['group' => 'auction'])
                             @endif
 
                         </div>
