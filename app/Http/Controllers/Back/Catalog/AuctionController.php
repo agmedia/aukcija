@@ -74,8 +74,7 @@ class AuctionController extends Controller
         $stored = $auction->validateRequest($request)->create();
 
         if ($stored) {
-            $auction->checkSettings()
-                    ->storeImages($stored);
+            $auction->storeImages($stored);
 
             return redirect()->route('auctions.edit', ['auction' => $stored])->with(['success' => 'Artikl je uspješno snimljen!']);
         }
@@ -112,10 +111,9 @@ class AuctionController extends Controller
         $updated = $auction->validateRequest($request)->edit();
 
         if ($updated) {
-            $auction->checkSettings()
-                    ->storeImages($updated);
+            $auction->storeImages($updated);
 
-            $auction->addHistoryData('change');
+            //$auction->addHistoryData('change');
 
             return redirect()->route('auctions.edit', ['auction' => $updated])->with(['success' => 'Artikl je uspješno snimljen!']);
         }
@@ -134,7 +132,7 @@ class AuctionController extends Controller
     public function destroy(Request $request, Auction $auction)
     {
         AuctionImage::where('auction_id', $auction->id)->delete();
-        AuctionCategory::where('auction_id', $auction->id)->delete();
+        //AuctionCategory::where('auction_id', $auction->id)->delete();
 
         Storage::deleteDirectory(config('filesystems.disks.auctions.root') . $auction->id);
 

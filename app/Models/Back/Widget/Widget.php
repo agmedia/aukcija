@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class Widget extends Model
 {
@@ -210,15 +210,15 @@ class Widget extends Model
             $data = json_decode($request->image_long);
         }
 
-        $img  = Image::make($data->output->image);
+        $img  = Image::read($data->output->image);
 
         $str = $this->id . '/' . Str::slug($this->title) . '-' . time() . '.';
 
         $path = $str . 'jpg';
-        Storage::disk('widget')->put($path, $img->encode('jpg'));
+        Storage::disk('widget')->put($path, $img->toJpeg(90));
 
         $path_webp = $str . 'webp';
-        Storage::disk('widget')->put($path_webp, $img->encode('webp'));
+        Storage::disk('widget')->put($path_webp, $img->toWebp(90));
 
         $default_path = config('filesystems.disks.widget.url') . 'default.jpg';
 

@@ -62,6 +62,7 @@ class CreateAuctionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('auction_id')->index();
             $table->string('image');
+            $table->string('alt')->nullable();
             $table->boolean('default')->default(false);
             $table->boolean('published')->default(false);
             $table->integer('sort_order')->unsigned();

@@ -74,7 +74,7 @@ class AuctionHelper
      */
     public static function resolveCategories(Auction $auction, Category $category = null, Category $subcategory = null): array
     {
-        if ( ! $category) {
+        /*if ( ! $category) {
             $category = $auction->category();
         }
 
@@ -88,7 +88,7 @@ class AuctionHelper
                     }
                 }
             }
-        }
+        }*/
 
         return [
             'category'    => $category,

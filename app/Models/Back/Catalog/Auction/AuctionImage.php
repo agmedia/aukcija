@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class AuctionImage extends Model
 {
@@ -75,18 +75,19 @@ class AuctionImage extends Model
             }
 
             foreach ($existing as $key => $image) {
+                
+                $title = $this->resource->name;
+                
                 if (isset($image['image']) && $image['image']) {
                     $data = json_decode($image['image']);
 
                     if ($data) {
-                        $this->replace($key, $data->output, $image['title']);
+                        $this->replace($key, $data->output, $title);
                     }
                 }
 
                 if ( ! $key) {
-                    $this->saveMainTitle($image['title']);
-                    //$this->saveMainTitle($image['title'], $image['alt']);
-                    // zamjeni title na glavnoj
+                    $this->saveMainTitle($title);
                 }
 
                 if ($key && $key != 'default') {
@@ -98,7 +99,7 @@ class AuctionImage extends Model
                         'published'  => $published
                     ]);
 
-                    $this->saveTitle($key, $image['title']);
+                    $this->saveTitle($key, $title);
                 }
             }
         }
@@ -259,24 +260,22 @@ class AuctionImage extends Model
         }
 
         $time = Str::random(4);
-        $img  = Image::make($this->makeImageFromBase($image));
+        $img  = Image::read($this->makeImageFromBase($image));
         $path = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '.';
 
         $path_jpg = $path . 'jpg';
-        Storage::disk('auctions')->put($path_jpg, $img->encode('jpg'));
+        Storage::disk('auctions')->put($path_jpg, $img->toJpeg(90));
 
         $path_webp = $path . 'webp';
-        Storage::disk('auctions')->put($path_webp, $img->encode('webp'));
+        Storage::disk('auctions')->put($path_webp, $img->toWebp(90));
 
         // Thumb creation
         $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
 
-        $img = $img->resize(null, 300, function ($constraint) {
-            $constraint->aspectRatio();
-        })->resizeCanvas(250, null);
+        $img = $img->resize(null, 300)->resizeCanvas(250, null);
 
         $path_webp_thumb = $path_thumb . 'webp';
-        Storage::disk('auctions')->put($path_webp_thumb, $img->encode('webp', 80));
+        Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80));
 
         return $path_jpg;
     }
