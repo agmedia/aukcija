@@ -113,12 +113,12 @@ hr {
 }
 
 #searchBox {
-    position: absolute;
+
     left: 0;
     right: 0;
     margin: 0 auto;
     top: 60px;
-    width: 780px;
+    width: 100%;
 }
 
 #st-1 .st-btn > img {

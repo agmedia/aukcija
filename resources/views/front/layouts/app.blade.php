@@ -129,7 +129,7 @@
 <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"></i></a>
 <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
 <link rel="stylesheet" media="screen" href="{{ asset(config('settings.images_domain') . 'css/tiny-slider.css?v=1.2') }}"/>
-<!-- Vendor scrits: js libraries and plugins-->
+<!-- Vendor scripts: js libraries and plugins-->
 <script src="{{ asset('js/jquery/jquery-2.1.1.min.js?v=1.2') }}"></script>
 <script src="{{ asset('js/bootstrap.bundle.min.js?v=1.2') }}"></script>
 <script src="{{ asset('js/tiny-slider.js?v=1.2') }}"></script>

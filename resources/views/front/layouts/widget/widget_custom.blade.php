@@ -1,8 +1,10 @@
 <!-- {"title": "Slider Index", "description": "Index main slider."} -->
 
 <section class="tns-carousel tns-controls-lg mb-0 bg-white">
+
+    <div class="px-lg-5 py-5 bg-symphony" >
     <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 1, &quot;autoplay&quot;: true, &quot;mode&quot;: &quot;gallery&quot;, &quot;nav&quot;: true, &quot;responsive&quot;: {&quot;0&quot;: {&quot;nav&quot;: true, &quot;controls&quot;: true}, &quot;576&quot;: {&quot;nav&quot;: true, &quot;controls&quot;: true}}}">
-        <div class="px-lg-5 py-5 bg-symphony" >
+
         @foreach($data as  $widget)
             <div>
                 <div class="rounded-3 px-md-5 text-center text-lg-start " style="background-image: url({{ config('settings.images_domain') . 'media/img/vintage-bg.jpg' }});background-repeat: repeat;">
@@ -17,7 +19,7 @@
                         </div>
                         <div class="bckshelf">
                             <a  href="{{ url($widget['url']) }}" role="button">
-                               <!-- <img src="{{ $widget['image'] }}" alt="{{ $widget['title'] }}" width="auto" height="500"> -->
+
 
                                 <img src="media/book.png" alt="{{ $widget['title'] }}" width="auto" height="500">
                             </a>
