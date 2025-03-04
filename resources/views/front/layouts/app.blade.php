@@ -87,25 +87,26 @@
 
 
 <!-- Light topbar -->
-<div class="topbar topbar-light  bg-dark">
+
+<div class="topbar topbar-datk  bg-light bg-symphony" >
     <div class="container">
 
         <div class="topbar-text text-nowrap  d-inline-block">
-            <i class="ci-support"></i>
+            <i class="ci-phone"></i>
             <span class=" me-1">Podrška</span>
-            <a class="topbar-link" href="tel:00385916047126">091 604 7126</a>
+            <a class="topbar-link" href="tel:+385 91 2213 198">+385 91 2213 198</a>
         </div>
         <div class="topbar-text  d-none  d-md-inline-block">Besplatna dostava za sve narudžbe iznad 70 €</div>
         <div class="ms-3 text-nowrap ">
-            <a class="topbar-link me-2 d-inline-block" href="https://www.facebook.com/zuziobrt/">
+            <a class="topbar-link me-2 d-inline-block" href="#">
                 <i class="ci-facebook"></i>
             </a>
 
-            <a class="topbar-link me-2 d-inline-block" href="https://www.instagram.com/zuziobrt/">
+            <a class="topbar-link me-2 d-inline-block" href="#">
                 <i class="ci-instagram"></i>
             </a>
 
-            <a class="topbar-link me-0 d-inline-block" href="mailto:info@zuzi.hr">
+            <a class="topbar-link me-0 d-inline-block" href="mailto:info@aukcije4a.com">
                 <i class="ci-mail"></i>
             </a>
 
@@ -113,13 +114,12 @@
     </div>
 </div>
 
-<section class="spikes"></section>
 
 <div id="agapp">
     @include('front.layouts.partials.header')
 
     @yield('content')
-    <section class="spikesw"></section>
+
     @include('front.layouts.partials.footer')
 
     @include('front.layouts.partials.handheld')

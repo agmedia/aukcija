@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 @if (request()->routeIs(['index']))
-    @section ( 'title', 'ZUZI Shop | Prodaja knjiga | Otkup knjiga | Webshop' )
-@section ( 'description', 'Zuzi shop - Nudimo Vam praktičnu mogućnost pretraživanja i naručivanja željenih naslova putem web stranice zuzi.hr iz udobnosti naslonjača.' )
+    @section ( 'title', 'AUKCIJE 4A | Aukcije 4 antikvarijata' )
+@section ( 'description', 'Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija. ' )
 
 
 @push('meta_tags')
@@ -9,25 +9,25 @@
     <link rel="canonical" href="{{ env('APP_URL')}}" />
     <meta property="og:locale" content="hr_HR" />
     <meta property="og:type" content="product" />
-    <meta property="og:title" content="ZUZI Shop | Prodaja knjiga | Otkup knjiga | Webshop" />
-    <meta property="og:description" content="Zuzi shop - Nudimo Vam praktičnu mogućnost pretraživanja i naručivanja željenih naslova putem web stranice zuzi.hr iz udobnosti naslonjača." />
+    <meta property="og:title" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
+    <meta property="og:description" content="Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija." />
     <meta property="og:url" content="{{ env('APP_URL')}}"  />
-    <meta property="og:site_name" content="ZUZI Shop | Prodaja knjiga | Otkup knjiga | Webshop" />
+    <meta property="og:site_name" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
     <meta property="og:image" content="{{ asset('media/img/cover-zuzi.jpg') }}" />
     <meta property="og:image:secure_url" content="{{ asset('media/img/cover-zuzi.jpg') }}" />
     <meta property="og:image:width" content="1920" />
     <meta property="og:image:height" content="720" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content="ZUZI Shop | Prodaja knjiga | Otkup knjiga | Webshop" />
+    <meta property="og:image:alt" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ZUZI Shop | Prodaja knjiga | Otkup knjiga | Webshop" />
-    <meta name="twitter:description" content="Zuzi shop - Nudimo Vam praktičnu mogućnost pretraživanja i naručivanja željenih naslova putem web stranice zuzi.hr iz udobnosti naslonjača." />
-    <meta name="twitter:image" content="{{ asset('media/img/cover-zuzi.jpg') }}" />
+    <meta name="twitter:title" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
+    <meta name="twitter:description" content="Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija." />
+    <meta name="twitter:image" content="{{ asset('media/cover-aukcije4a.jpg') }}" />
 
 @endpush
 
 @else
-    @section ( 'title', $page->title. ' - ZUZI Shop' )
+    @section ( 'title', $page->title. ' - AUKCIJE 4A' )
 @section ( 'description', $page->meta_description )
 @endif
 
@@ -38,10 +38,9 @@
 
 
 
-
         {!! $page->description !!}
 
-        @include('front.layouts.partials.otkupwidget')
+        {{--@include('front.layouts.partials.otkupwidget') --}}
 
 
 

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alice&family=Quicksand:wght@300;400;500;600;700&display=swap");
 :root {
     --cz-blue: #0d6efd;
     --cz-indigo: #6610f2;
@@ -11,7 +11,7 @@
     --cz-green: #198754;
     --cz-teal: #20c997;
     --cz-cyan: #0dcaf0;
-    --cz-black: #000;
+    --cz-black: #050505;
     --cz-white: #fff;
     --cz-gray: #7d879c;
     --cz-gray-dark: #373f50;
@@ -24,7 +24,7 @@
     --cz-gray-700: #4b566b;
     --cz-gray-800: #373f50;
     --cz-gray-900: #2b3445;
-    --cz-primary: #e50077;
+    --cz-primary: #050505;
     --cz-accent: #4e54c8;
     --cz-secondary: #f3f5f9;
     --cz-success: #42d697;
@@ -32,8 +32,8 @@
     --cz-warning: #fea569;
     --cz-danger: #f34770;
     --cz-light: #fff;
-    --cz-dark: #373f50;
-    --cz-primary-rgb: 229, 0, 119;
+    --cz-dark: #8C0000;
+    --cz-primary-rgb: 5, 5 5;
     --cz-accent-rgb: 78, 84, 200;
     --cz-secondary-rgb: 243, 245, 249;
     --cz-success-rgb: 66, 214, 151;
@@ -41,7 +41,7 @@
     --cz-warning-rgb: 254, 165, 105;
     --cz-danger-rgb: 243, 71, 112;
     --cz-light-rgb: 255, 255, 255;
-    --cz-dark-rgb: 55, 63, 80;
+    --cz-dark-rgb: 140, 0, 0;
     --cz-white-rgb: 255, 255, 255;
     --cz-black-rgb: 0, 0, 0;
     --cz-body-color-rgb: 75, 86, 107;
@@ -50,7 +50,9 @@
     --cz-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --cz-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --cz-body-font-family: var(--cz-font-sans-serif);
+    --cz-title-font-family:  "Alice", serif;
     --cz-body-font-size: 1rem;
+    --cz-link-font-size: 1.3rem;
     --cz-body-font-weight: 500;
     --cz-body-line-height: 1.5;
     --cz-body-color: #111;
@@ -65,9 +67,9 @@
     --cz-border-radius-xl: 1rem;
     --cz-border-radius-2xl: 2rem;
     --cz-border-radius-pill: 50rem;
-    --cz-link-color: #e50077;
-    --cz-link-hover-color: #fe3638;
-    --cz-code-color: #d63384;
+    --cz-link-color: #050505;
+    --cz-link-hover-color: #8C0000;
+    --cz-code-color: #8C0000;
     --cz-highlight-bg: #fff3cd;
 }
 
@@ -90,12 +92,20 @@ body {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.text-title{
+    font-family: var(--cz-title-font-family);
+}
+
 hr {
     margin: 0 0;
     color: #e3e9ef;
     border: 0;
     border-top: 1px solid;
     opacity: 1;
+}
+
+.bg-symphony{
+    background-image: url('../media/symphony.png');background-repeat:repeat;background-attachment:fixed;
 }
 
 .offcanvas-collapse .offcanvas-cap {
@@ -227,7 +237,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     margin-bottom: 0.75rem;
     font-weight: 600;
     line-height: 1.2;
-    color: #373f50;
+    color: #050505;
 }
 
 h1, .h1 {
@@ -16263,27 +16273,20 @@ a.nav-link:hover .media-tab-media {
         position: relative;
         border-radius: 5px;
         padding:10px 15px;
-        background-color: var(--cz-primary) !important;
-        color:#fff;
+        background-color: #fff !important;
+        color:#050505;
+font-size:1.275em;
+        font-weight:400;
+        font-family: var(--cz-title-font-family);
     }
 
-    .navbar-expand-lg .navbar-nav .nav-link span::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: calc(50% - 5px);
-        background:var(--cz-primary);
-        width: 10px;
-        height: 10px;
 
-        /* The points are: (left top: x y, right top: x y, center bottom: x y) */
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
-    }
 
 
     .navbar-expand-lg .navbar-nav .nav-link span:hover {
-        background-color: #373f50!important;
-        color:#fff
+        background-color: #fff!important;
+        color:#050505;
+        border-color:#050505;
     }
 
     .navbar-expand-lg .navbar-nav .nav-link span:hover::after {
@@ -17010,13 +17013,13 @@ a.nav-link:hover .media-tab-media {
     color: #e50077;
 }
 .topbar-light .topbar-link.active {
-    color:#e50077;
+    color:rgb(140, 0, 0) !important;
 }
 .topbar-light .show .topbar-link {
-    color: #e50077;
+    color: rgb(140, 0, 0) !important;
 }
 .topbar-light .tns-carousel [data-controls] {
-    color: rgba(75, 86, 107, 0.9);
+    color: rgb(140, 0, 0) !important;
 }
 .topbar-light .tns-carousel [data-controls]:hover {
     color: #373f50;
@@ -18045,7 +18048,7 @@ a.nav-link:hover .media-tab-media {
 .widget-list-link {
     display: block;
     transition: color 0.25s ease-in-out;
-    color: #fff;
+    color: #050505;
     font-size: .9375rem;
     font-weight: 600;
     padding:2px 0;
