@@ -14,13 +14,13 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
  */
 class AuctionsTable extends DataTableComponent
 {
-    
+
     /**
      * @var string
      */
     protected $model = Auction::class;
-    
-    
+
+
     /**
      * @return void
      */
@@ -28,8 +28,8 @@ class AuctionsTable extends DataTableComponent
     {
         $this->setPrimaryKey('id');
     }
-    
-    
+
+
     /**
      * @return array
      */
@@ -50,15 +50,15 @@ class AuctionsTable extends DataTableComponent
                 ->sortable(),
             BooleanColumn::make('Status', 'status')
                 ->toggleable('changeStatus'),
-            ButtonGroupColumn::make('Actions')
+            ButtonGroupColumn::make('Uredi')
                 ->attributes(function($row) {
                     return [
-                        'class' => 'btn btn-sm btn-outline-dark',
+                        'class' => 'btn btn-sm btn-alt-secondary',
                     ];
                 })
                 ->buttons([
-                    LinkColumn::make('Edit')
-                        ->title(fn($row) => 'Edit')
+                    LinkColumn::make('Uredi')
+                        ->title(fn($row) => 'Uredi')
                         ->location(fn($row) => route('auctions.edit', ['auction' => $row]))
                         ->attributes(function($row) {
                             return [
@@ -66,11 +66,11 @@ class AuctionsTable extends DataTableComponent
                             ];
                         }),
                 ]),
-            
+
         ];
     }
-    
-    
+
+
     /**
      * @param int $id
      *
@@ -80,7 +80,7 @@ class AuctionsTable extends DataTableComponent
     {
         $item = $this->model::find($id);
         $item->status = !$item->status;
-        
+
         $item->save();
     }
 }

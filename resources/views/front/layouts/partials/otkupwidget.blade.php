@@ -172,6 +172,8 @@
 
                 <p>  Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija. </p>
 
+                <a class="btn btn btn-outline-dark btn-sm mt-3 me-2  mb-2" href="#" role="button">O nama <i class="ci-arrow-right ms-2 me-n1"></i></a>
+
             </div>
             <div class="col-lg-5 col-end-auto">
 

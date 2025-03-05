@@ -179,7 +179,7 @@
             </div>--}}
 
             <div class="block-content">
-                <livewire:auctions-table theme="bootstrap-5" />
+                <livewire:auctions-table theme="bootstrap-4" />
             </div>
         </div>
     </div>
