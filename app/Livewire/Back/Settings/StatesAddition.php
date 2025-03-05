@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Back\Settings;
+namespace App\Livewire\Back\Settings;
 
 use App\Helpers\Country;
 use Livewire\Component;

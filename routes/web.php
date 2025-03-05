@@ -201,11 +201,11 @@ Route::prefix('api/v2')->group(function () {
         // APPLICATION SETTINGS
         Route::prefix('app')->group(function () {
             // GEO ZONE
-            /*Route::prefix('geo-zone')->group(function () {
+            Route::prefix('geo-zone')->group(function () {
                 Route::post('get-state-zones', 'Back\Settings\Store\GeoZoneController@getStateZones')->name('geo-zone.get-state-zones');
                 Route::post('store', 'Back\Settings\Store\GeoZoneController@store')->name('geo-zone.store');
                 Route::post('destroy', 'Back\Settings\Store\GeoZoneController@destroy')->name('geo-zone.destroy');
-            });*/
+            });
             // ORDER STATUS
             Route::prefix('auction-status')->group(function () {
                 Route::post('store', [OrderStatusController::class, 'store'])->name('api.auction.status.store');

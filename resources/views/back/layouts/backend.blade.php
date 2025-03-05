@@ -76,6 +76,7 @@
 
         <!-- END Page Container -->
         <script src="{{ asset('js/dashmix.app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.8.1/dist/axios.min.js"></script>
         {{--<script src="{{ asset('/js/laravel.app.js') }}"></script>--}}
 
         <script>
