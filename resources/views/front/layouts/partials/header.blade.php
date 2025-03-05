@@ -27,7 +27,7 @@
                 <form action="{{ route('pretrazi') }}" id="search-form-mobile" method="get">
                     <div class="input-group d-lg-none my-3"><i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
                         <input class="form-control rounded-start" type="text" name="{{ config('settings.search_keyword') }}" value="{{ request()->query('pojam') ?: '' }}" placeholder="Pretražite po nazivu ili autoru">
-                        <button type="submit" class="btn btn-primary btn-lg fs-base"><i class="ci-search"></i></button>
+                        <button type="submit" class="btn btn-dark btn-lg fs-base"><i class="ci-search"></i></button>
                     </div>
                 </form>
 
@@ -50,7 +50,7 @@
                 <form action="{{ route('pretrazi') }}" id="search-form" method="get">
                     <div class="input-group">
                         <input class="form-control rounded-start" type="text" name="{{ config('settings.search_keyword') }}" value="{{ request()->query('pojam') ?: '' }}" placeholder="Pretražite po nazivu ili autoru">
-                        <button type="submit" class="btn btn-primary btn-lg fs-base"><i class="ci-search"></i></button>
+                        <button type="submit" class="btn btn-dark btn-lg fs-base"><i class="ci-search"></i></button>
                     </div>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 <!-- Footer-->
 <footer class="bg-symphony pt-sm-5">
 
-    <div class="container pt-2 pb-3">
+    <div class="container pt-2 pb-0">
         <div class="row">
             <div class="col-md-3  text-center text-md-start mb-4">
 
@@ -23,14 +23,14 @@
 
 
                 <div class="widget mt-4 text-md-nowrap text-center text-sm-start">
-                    <a class="btn-social bs-light bg-primary bs-instagram me-2 mb-2" href="https://www.instagram.com/zuziobrt/"><i class="ci-instagram"></i></a>
-                    <a class="btn-social bs-light bg-primary bs-facebook me-2 mb-2" href="https://www.facebook.com/zuziobrt/"><i class="ci-facebook"></i></a>
+                    <a class="btn-social text-primary bg-primary bs-instagram me-2 mb-2" href="https://www.instagram.com/zuziobrt/"><i class="ci-instagram"></i></a>
+                    <a class="btn-social  text-primary bg-primary bs-facebook me-2 mb-2" href="https://www.facebook.com/zuziobrt/"><i class="ci-facebook"></i></a>
                 </div>
             </div>
             <!-- Mobile dropdown menu (visible on screens below md)-->
             <div class="col-12 d-md-none text-center mb-sm-4 pb-2">
                 <div class="btn-group dropdown d-block mx-auto mb-3">
-                    <button class="btn btn-outline-light border-light dropdown-toggle" type="button" data-bs-toggle="dropdown">Uvjeti kupnje</button>
+                    <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">Uvjeti kupnje</button>
                     <ul class="dropdown-menu my-1">
                         @foreach ($uvjeti_kupnje as $page)
                             <li><a class="dropdown-item" href="{{ route('catalog.route.page', ['page' => $page]) }}">{{ $page->title }}</a></li>
@@ -81,7 +81,7 @@
         </div>
     </div>
     <!-- Second row-->
-    <div class="pt-0 ">
+    <div class="pt-4 bg-white">
 
 
         <div class="container">
