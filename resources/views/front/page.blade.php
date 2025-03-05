@@ -40,7 +40,7 @@
 
         {!! $page->description !!}
 
-        {{--@include('front.layouts.partials.otkupwidget') --}}
+         @include('front.layouts.partials.otkupwidget')
 
 
 

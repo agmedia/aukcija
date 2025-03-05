@@ -7,21 +7,34 @@
 
         @foreach($data as  $widget)
             <div>
-                <div class="rounded-3 px-md-5 text-center text-lg-start " style="background-image: url({{ config('settings.images_domain') . 'media/img/vintage-bg.jpg' }});background-repeat: repeat;">
-                    <div class="d-lg-flex justify-content-between align-items-center px-4  mx-auto" style="max-width: 1226px;">
-                        <div class="py-2 py-sm-3 pb-0 me-xl-4 mx-auto mx-xl-0" style="max-width: 490px;">
-                            <p class="text-primary fs-sm pb-0 mb-1 mt-2 "><i class="ci-bookmark  fs-sm mt-n1 me-2"></i> TOP PONUDA</p>
-                            <h2 class="h1 text-title font-title mb-1">{{ $widget['title'] }} </h2>
-                            <div class="star-rating mb-3"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
+                <div class="rounded-3 px-md-5 text-center text-lg-start ">
+                    <div class="d-lg-flex justify-content-between align-items-center px-4  mx-auto" style="max-width: 1360px;">
+                        <div class="py-2 py-sm-3 pb-0 me-xl-4 mx-auto mx-xl-0" style="max-width: 590px;">
+
+
+
+
+
+
+                            <p class="text-primary fs-sm pb-0 mb-1 mt-2 "><i class="ci-time  fs-sm mt-2 me-1"></i> JOŠ 7 DANA</p>
+                           <a href="{{ url($widget['url']) }}"><h2 class="h3 text-title font-title mb-3">{{ $widget['title'] }} </h2></a>
+
+                            <p class="text-primary pb-1 d-none d-md-block">{{ $widget['subtitle'] }}</p>
+
+
+
+                                <div class="fs-xs me-2 text-gray mb-4">TRENUTNA PONUDA  <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div></div>
+
+
+                            <div class="d-flex flex-wrap justify-content-center justify-content-xl-start d-none d-md-block">
+                                <a class="btn btn btn-outline-dark btn-sm me-2  mb-2" href="{{ url($widget['url']) }}" role="button">Pogledajte ponudu <i class="ci-arrow-right ms-2 me-n1"></i></a>
                             </div>
-                            <p class="text-primary pb-1">{{ $widget['subtitle'] }}</p>
-                            <div class="d-flex flex-wrap justify-content-center justify-content-xl-start"><a class="btn btn-dark btn-shadow me-2 mb-4" href="{{ url($widget['url']) }}" role="button">Pogledajte ponudu <i class="ci-arrow-right ms-2 me-n1"></i></a></div>
                         </div>
                         <div class="bckshelf">
                             <a  href="{{ url($widget['url']) }}" role="button">
 
 
-                                <img src="media/book.png" alt="{{ $widget['title'] }}" width="auto" height="500">
+                                <img src="media/book.png" alt="{{ $widget['title'] }}" width="auto" style="max-height:430px" height="400">
                             </a>
                         </div>
                     </div>

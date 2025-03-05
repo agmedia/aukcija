@@ -2,10 +2,10 @@
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-none d-sm-block flex-shrink-0 me-4 order-lg-1 p-0" href="{{ route('index') }}">
-                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40"  style="height:45px" alt="AUKCIJE 4A | Aukcije knjiga">
+                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40"  style="height:40px" alt="AUKCIJE 4A | Aukcije knjiga">
             </a>
             <a class="navbar-brand d-sm-none me-0 order-lg-1 p-0" href="{{ route('index') }}">
-                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40" alt="AUKCIJE 4A">
+                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" style="height:40px" height="40" alt="AUKCIJE 4A">
             </a>
 
             <!-- Toolbar -->

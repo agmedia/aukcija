@@ -2,152 +2,282 @@
 
 
 
-<!-- Become Courier / Partner CTA-->
-<section class=" pb-4 pt-lg-0 pb-sm-5">
-    <div class="container">
-    <div class="row pt-4 mt-2 mt-lg-3 mb-md-2">
-        <div class="col-lg-6 mb-grid-gutter">
-            <div class="d-block d-sm-flex justify-content-between align-items-center bg-dark rounded-3 shadow">
-                <div class="pt-5 py-sm-5 px-4 ps-md-5 mb-3 text-center text-sm-start">
-                    <h2 class="h3 text-white fw-bold">Rijetke knjige</h2>
-                    <p class=" pb-2 text-white">Pogledajte našu kolekeciju popularnih i rijetkih naslova.</p><a class="btn mb-3 btn-primary" href="{{ route('catalog.route', ['group' => \App\Helpers\Helper::categoryGroupPath(true) . '/rijetke-knjige']) }}">Pogledajte ponudu <i class="ci-arrow-right ms-2 me-n1"></i></a>
-                </div>
-                <img class="d-block mx-auto mx-sm-0 rounded-end rounded-xs pb-4 pb-sm-0" src="{{ asset('media/img/rijetke.webp') }}"  width="250" alt="Become a Courier">
-            </div>
-        </div>
-        <div class="col-lg-6 mb-grid-gutter">
-            <div class="d-block d-sm-flex justify-content-between align-items-center bg-dark rounded-3 shadow">
-                <div class="pt-5 py-sm-5 px-4 ps-md-5 mb-3   text-center text-sm-start">
-                    <h2 class="h3 fw-bold text-white">Svezalice - pidžame za knjige</h2>
-                    <p class="text-white pb-2">Za praktičnije čuvanje knjige, ručno izrađeno s puno ljubavi.
-
-                        </p><a class="btn btn-primary mb-3" href="https://www.zuzi.hr/kategorija-proizvoda/svezalice-pidzame-za-knjige">Pogledajte ponudu <i class="ci-arrow-right ms-2 me-n1"></i></a>
-                </div><img class="d-block mx-auto mx-sm-0 rounded-end rounded-xs pb-sm-0 pb-4" src="{{ asset('media/img/svezalice.webp') }}" width="250"    alt="Become a Partner">
-            </div>
-        </div>
+<section class="container py-5 mb-lg-3">
+    <!-- Heading-->
+    <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
+        <h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
+        <a class="btn btn-sm btn-outline-dark mt-3" href="#">Pogledajte sve<i class="ci-arrow-right fs-ms ms-1"></i></a>
     </div>
+    <!-- Grid-->
+
+        <div class="tns-carousel tns-controls-static tns-controls-inside">
+            <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
+                    <!-- Product-->
+                    <div class="col ">
+                        <!-- Product-->
+                        <div class="card product-card-alt">
+                            <div class="product-thumb">
+                                <div class="product-card-actions">
+                                    <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                                </div>
+                                <a class="product-thumb-overlay" href="#"></a><img src="media/books/b1.jpg" alt="Product">
+                            </div>
+                            <div class="card-body px-0">
+                                <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                                <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                   <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product-->
+                    <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b2.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-->
+                <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b3.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-->
+                <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b4.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-->
+                <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b5.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-->
+                <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b6.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-->
+                <div class="col">
+                    <!-- Product-->
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
+                            </div>
+                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b7.jpg" alt="Product">
+                        </div>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- More button-->
+
+</section>
+
+<section class=" pt-5 pb-4 pb-lg-5 bg-symphony" >
+    <div class="container py-lg-2">
+
+        <div class="row d-lg-flex justify-content-between align-items-center ">
+
+
+            <div class="col-lg-5 text-center text-lg-start pb-3 pt-lg-2">
+                <h2 class="h3 mb-2 pb-3 text-center text-title text-lg-start">Aukcije <span class="text-dark">4 antikvarijata</span></h2>
+                <p>Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. </p>
+
+                <p>  Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija. </p>
+
+            </div>
+            <div class="col-lg-5 col-end-auto">
+
+                <div class="row gallery g-4" data-video="true">
+
+                    <!-- Item -->
+                    <div class="col-sm-6">
+
+                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                            <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
+                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+                        </a>
+
+
+                    </div>
+                    <!-- Item -->
+                    <div class="col-sm-6">
+                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                            <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
+                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+                        </a>
+                    </div>
+                    <!-- Item -->
+                    <div class="col-sm-6">
+                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                            <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
+                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+                        </a>
+                    </div>
+                    <!-- Item -->
+                    <div class="col-sm-6">
+                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                            <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
+                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+                        </a>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
     </div>
 </section>
 
-<section class="spikesw"></section>
-<section class="bg-dark bg-size-cover bg-position-center pt-5 pb-4" >
-    <div class="container pt-lg-1">
 
-        <div class="row pt-lg-2 text-center">
-            <div class="col-lg-3 col-sm-6 col-6 mb-grid-gutter">
-                <div class="d-inline-flex align-items-center text-start"><i class="ci-truck text-primary" style="font-size: 3rem;"></i>
-                    <div class="ps-3">
-                        <p class="text-light fw-bold fs-base mb-1">Brza dostava</p>
-                        <p class="text-light fs-ms opacity-70 mb-0">Unutar 5 radnih dana</p>
+<!-- Blog posts carousel-->
+<section class="py-5">
+    <div class="container py-lg-3 ">
+        <div class="d-flex flex-wrap justify-content-between align-items-center  pb-4 mb-4">
+            <h2 class="h5 mb-0 fw-bold pt-3 me-2  ">NOVOSTI I OBJAVE</h2>
+            <a class="btn btn-sm btn-outline-dark mt-3" href="#">Pogledajte sve<i class="ci-arrow-right fs-ms ms-1"></i></a>
+        </div>
+        <div class="tns-carousel pb-4">
+            <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;gutter&quot;: 15, &quot;controls&quot;: false, &quot;nav&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3}, &quot;992&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 30}}}">
+                <div>
+                    <div class="card"><a class="blog-entry-thumb" href="blog-single.html"><img class="card-img-top" src="media/blog1.jpg" alt="Post"></a>
+                        <div class="card-body">
+                            <h2 class="h6 blog-entry-title "><a href="blog-single.html">Najtraženije knjige na aukcijama – što kolekcionari najviše žele?</a></h2>
+                            <p class="fs-sm">Koje knjige najviše privlače kolekcionare i postižu najviše cijene na aukcijama? Otkrijte popis najtraženijih izdanja, od klasične književnosti do modernih bestselera s ograničenim nakladama.</p>
+                            <div class="fs-xs text-nowrap"><a class="blog-entry-meta-link text-nowrap" href="#">Nov 23</a><span class="blog-entry-meta-divider mx-2"></span><a class="blog-entry-meta-link text-nowrap" href="blog-single.html#comments"><i class="ci-message"></i>19</a></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 col-6 mb-grid-gutter">
-                <div class="d-inline-flex align-items-center text-start"><i class="ci-security-check text-primary" style="font-size: 3rem;"></i>
-                    <div class="ps-3">
-                        <p class="text-light fw-bold fs-base mb-1">Sigurna kupovina</p>
-                        <p class="text-light fs-ms opacity-70 mb-0">SSL certifitikat i CorvusPay</p>
+                <div>
+                    <div class="card"><a class="blog-entry-thumb" href="blog-single.html"><img class="card-img-top" src="media/blog2.jpg" alt="Post"></a>
+                        <div class="card-body">
+                            <h2 class="h6 blog-entry-title"><a href="blog-single.html">Prednosti kupnje knjiga putem aukcija</a></h2>
+                            <p class="fs-sm">Kupnja knjiga na aukcijama donosi brojne prednosti, uključujući pristup rijetkim izdanjima, niže cijene u usporedbi s antikvarijatima i mogućnost otkrivanja skrivenih književnih dragulja. U ovom članku istražit ćemo zašto su online...</p>
+                            <div class="fs-xs text-nowrap"><a class="blog-entry-meta-link text-nowrap" href="#">Oct 10</a><span class="blog-entry-meta-divider mx-2"></span><a class="blog-entry-meta-link text-nowrap" href="blog-single.html#comments"><i class="ci-message"></i>28</a></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 col-6 mb-grid-gutter">
-                <div class="d-inline-flex align-items-center text-start"><i class="ci-bag text-primary" style="font-size: 3rem;"></i>
-                    <div class="ps-3">
-                        <p class="text-light fw-bold fs-base mb-1">Besplatna dostava</p>
-                        <p class="text-light fs-ms opacity-70 mb-0">Za narudžbe iznad 70€</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 col-6 mb-grid-gutter">
-                <div class="d-inline-flex align-items-center text-start"><i class="ci-locked text-primary" style="font-size: 3rem;"></i>
-                    <div class="ps-3">
-                        <p class="text-light fw-bold fs-base mb-1">Zaštita kupca</p>
-                        <p class="text-light fs-ms opacity-70 mb-0">Od narudžbe pa sve do dostave</p>
+                <div>
+                    <div class="card"><a class="blog-entry-thumb" href="blog-single.html"><img class="card-img-top" src="media/blog3.jpg" alt="Post"></a>
+                        <div class="card-body">
+                            <h2 class="h6 blog-entry-title"><a href="blog-single.html">Savjeti za sigurno sudjelovanje u online aukcijama knjiga</a></h2>
+                            <p class="fs-sm">Online aukcije knjiga mogu biti uzbudljive, ali i rizične ako ne znate kako prepoznati pouzdane prodavače i zaštititi svoje podatke. U ovom blogu dijelimo korisne savjete kako sigurno sudjelovati u dražbama i izbjeći prevare.</p>
+                            <div class="fs-xs text-nowrap"><a class="blog-entry-meta-link text-nowrap" href="#">Sep 15</a><span class="blog-entry-meta-divider mx-2"></span><a class="blog-entry-meta-link text-nowrap" href="blog-single.html#comments"><i class="ci-message"></i>46</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="spikesg"></section>
-<!-- Reviews-->
-<section class="bg-secondary py-5" style="background-image: url({{ config('settings.images_domain') . 'media/img/zuzi-bck-transparent.svg' }});z-index: 10;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;background-position: bottom">
-    <div class="container py-md-4 pt-3 pb-0 py-sm-3">
-        <h2 class="text-center text-dark fw-bold mb-4 mb-md-5">Komentari kupaca</h2>
+        <!-- More button-->
 
-
-        <div class="tns-carousel mb-3">
-            <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1, &quot;gutter&quot;:20}, &quot;576&quot;:{&quot;items&quot;:2, &quot;gutter&quot;:20},&quot;850&quot;:{&quot;items&quot;:3, &quot;gutter&quot;:20},&quot;1080&quot;:{&quot;items&quot;:3, &quot;gutter&quot;:25}}}">
-                <blockquote class="mb-2">
-                    <div class="card card-body fs-md  border-0 shadow-sm">
-                        <div class="mb-2">
-                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                            </div>
-                        </div>Vrlo ljubazni, uslužni, pouzdani, često izađu u susret. Knjige očuvane i dobro zapakirane prilikom slanja. Surađujemo već dugo i svima preporuke.
-
-                        <div class="pt-3">
-                            <p class="fs-sm mb-n1">Helena J.</p>
-                        </div>
-                    </div>
-
-                </blockquote>
-
-                <blockquote class="mb-2">
-                    <div class="card card-body fs-md  border-0 shadow-sm">
-                        <div class="mb-2">
-                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                            </div>
-                        </div>Odlična trgovina, vrhunska usluga i ljubazni prodavači. Svaka preporuka.
-
-                        <div class="pt-3">
-                            <p class="fs-sm mb-n1">Katarina H.</p>
-                        </div>
-                    </div>
-
-                </blockquote>
-                <blockquote class="mb-2">
-                    <div class="card card-body fs-md  border-0 shadow-sm">
-                        <div class="mb-2">
-                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                            </div>
-                        </div>Predivan mali antikvarijat, sa jako ljubaznim i susretljivim prodavačima, kao stvoren za prave ljubitelje knjige.
-
-                        <div class="pt-3">
-                            <p class="fs-sm mb-n1">Mija S.</p>
-                        </div>
-                    </div>
-
-                </blockquote>
-
-                <blockquote class="mb-2">
-                    <div class="card card-body fs-md  border-0 shadow-sm">
-                        <div class="mb-2">
-                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                            </div>
-                        </div>Napokon i u Španskom mjesto za knjigoljupce, knjigu koju sam tražila po cijelom gradu našla samo kod njih!
-
-                        <div class="pt-3">
-                            <p class="fs-sm mb-n1">Kornelija B.</p>
-                        </div>
-                    </div>
-
-                </blockquote>
-
-                <blockquote class="mb-2">
-                    <div class="card card-body fs-md  border-0 shadow-sm">
-                        <div class="mb-2">
-                            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                            </div>
-                        </div>Dečko mi je naručio knjigu koju isprva nismo mogli pronaći ali Vi ste ju naravno imali na stanju. Brza dostava, uredno zapakirano i najbitnije odličan izbor knjiga. Vidi se da volite to što radite. Velika pohvala i topla preporuka svima
-
-                        <div class="pt-3">
-                            <p class="fs-sm mb-n1">Valentina J.</p>
-                        </div>
-                    </div>
-
-                </blockquote>
-
-            </div>
-        </div>
     </div>
 </section>
