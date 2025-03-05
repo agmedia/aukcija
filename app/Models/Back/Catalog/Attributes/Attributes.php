@@ -36,7 +36,7 @@ class Attributes extends Model
      */
     public function getGrupaAttribute($value)
     {
-        return $this->translation->group_title;
+        return $this->group_title;
     }
 
 
@@ -50,9 +50,7 @@ class Attributes extends Model
     public function validateRequest(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'type' => 'required',
-            'item' => 'required'
+            'title' => 'required'
         ]);
 
         $this->request = $request;
@@ -68,19 +66,21 @@ class Attributes extends Model
      */
     public function create()
     {
-        $group = $this->request->input('title')[config('app.locale')] ?? 'hr';
-
-        foreach ($this->request->input('item') as $item) {
-            $id = $this->insertGetId([
-                'group'       => Str::slug($group),
-                'type'        => $this->request->input('type'),
-                'sort_order'  => $item['sort_order'] ?? 0,
-                'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-                'updated_at'  => Carbon::now()
-            ]);
+        $id = $this->insertGetId([
+            'group'       => '',
+            'title'       => $this->request->input('title'),
+            'type'        => $this->request->input('type'),
+            'sort_order'  => 0,
+            'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+            'created_at'  => Carbon::now(),
+            'updated_at'  => Carbon::now()
+        ]);
+        
+        if ($id) {
+            return $this->find($id);
         }
 
-        return $this->find($id);
+        return false;
     }
 
 
@@ -91,48 +91,20 @@ class Attributes extends Model
      */
     public function edit()
     {
-        $values = Attributes::query()->where('group', Str::slug($this->group))->get();
-        $group = $this->request->input('title')[config('app.locale')] ?? 'hr';
-        $items = collect($this->request->input('item'));
-
-        foreach ($values as $value) {
-            $item = $items->where('id', $value->id);
-
-            if ( ! empty($item->first())) {
-                $saved = $value->update([
-                    'group'       => Str::slug($group),
-                    'type'        => $this->request->input('type'),
-                    'sort_order'  => $item->first()['sort_order'] ?? 0,
-                    'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-                    'updated_at'  => Carbon::now()
-                ]);
-            }
+        $saved = $this->update([
+            'group'       => '',
+            'title'       => $this->request->input('title'),
+            'type'        => $this->request->input('type'),
+            'sort_order'  => 0,
+            'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+            'updated_at'  => Carbon::now()
+        ]);
+        
+        if ($saved) {
+            return $this;
         }
-
-        foreach ($items->where('id', '==', '0') as $item) {
-            $id = $this->insertGetId([
-                'group'       => Str::slug($group),
-                'type'        => $this->request->input('type'),
-                'sort_order'  => $item['sort_order'] ?? 0,
-                'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-                'updated_at'  => Carbon::now()
-            ]);
-        }
-
-        if ($items->count() < $values->count()) {
-            $diff = $values->diffUsing($items, function ($one, $other) {
-                return $other['id'] - $one['id'];
-            });
-
-            if ($diff->count()) {
-                foreach ($diff as $item) {
-                    Attributes::query()->where('id', $item['id'])->delete();
-                }
-            }
-
-        }
-
-        return true;
+        
+        return false;
     }
     
     

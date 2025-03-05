@@ -73,6 +73,11 @@
                                 <span class="nav-main-link-name">Aukcije</span>
                             </a>
                         </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link{{ request()->routeIs(['attributes', 'attributes.*']) ? ' active' : '' }}" href="{{ route('attributes') }}">
+                                <span class="nav-main-link-name">Atributi</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

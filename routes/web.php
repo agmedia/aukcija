@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\ForgotPasswordController;
+use App\Http\Controllers\Back\Catalog\AttributesController;
 use App\Http\Controllers\Back\Catalog\AuctionController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\Marketing\BlogController;
@@ -43,6 +44,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
         Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
         Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
+        
+        // Atttributes
+        Route::get('attributes', [AttributesController::class, 'index'])->name('attributes');
+        Route::get('attribute/create', [AttributesController::class, 'create'])->name('attributes.create');
+        Route::post('attribute', [AttributesController::class, 'store'])->name('attributes.store');
+        Route::get('attribute/{attributes}/edit', [AttributesController::class, 'edit'])->name('attributes.edit');
+        Route::patch('attribute/{attributes}', [AttributesController::class, 'update'])->name('attributes.update');
+        Route::delete('attribute/{attributes}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
+        
         // KATEGORIJE
        /* Route::get('categories', [CategoryController::class, 'index'])->name('categories');
         Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
