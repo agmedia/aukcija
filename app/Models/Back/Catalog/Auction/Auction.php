@@ -75,10 +75,7 @@ class Auction extends Model
     {
         // Validate the request.
         $request->validate([
-            'name'     => 'required',
-            'sku'      => 'required',
-            'price'    => 'required',
-            'category' => 'required'
+            'name' => 'required'
         ]);
 
         // Set Auction Model request variable
@@ -102,13 +99,13 @@ class Auction extends Model
         $id = $this->insertGetId($this->getModelArray());
 
         if ($id) {
-            $this->resolveCategories($id);
+            //$this->resolveCategories($id);
 
             $auction = $this->find($id);
 
             $auction->update([
                 'url'             => AuctionHelper::url($auction),
-                'category_string' => AuctionHelper::categoryString($auction),
+                'category_string' => '',//AuctionHelper::categoryString($auction),
                 'special_lock'    => $this->resolveActionLock($id)
             ]);
 
@@ -129,11 +126,11 @@ class Auction extends Model
         $updated = $this->update($this->getModelArray(false));
 
         if ($updated) {
-            $this->resolveCategories($this->id);
+            //$this->resolveCategories($this->id);
 
             $this->update([
                 'url'             => AuctionHelper::url($this),
-                'category_string' => AuctionHelper::categoryString($this),
+                'category_string' => '',//AuctionHelper::categoryString($this),
                 'special_lock'    => $this->resolveActionLock($this->id, false)
             ]);
 
@@ -159,35 +156,26 @@ class Auction extends Model
         }
 
         $response = [
-            'author_id'        => $this->request->author_id ?: 6,
-            'publisher_id'     => $this->request->publisher_id ?: 2,
-            'action_id'        => $this->request->action ?: 0,
-            'name'             => $this->request->name,
             'sku'              => $this->request->sku,
-            'polica'           => $this->request->polica,
+            'ean'              => $this->request->ean,
+            'group'            => $this->request->group ?: 'Top',
+            'name'             => $this->request->name,
             'description'      => $this->cleanHTML($this->request->description),
-            'slug'             => $slug,
-            'price'            => isset($this->request->price) ? $this->request->price : 0,
-            'quantity'         => $this->request->quantity ?: 0,
-            'decrease'         => (isset($this->request->decrease) and $this->request->decrease == 'on') ? 0 : 1,
-            'tax_id'           => $this->request->tax_id ?: 1,
-            'special'          => $this->request->special,
-            'special_from'     => $this->request->special_from ? Carbon::make($this->request->special_from) : null,
-            'special_to'       => $this->request->special_to ? Carbon::make($this->request->special_to) : null,
-            'special_lock'     => 0,
-            'meta_title'       => $this->request->meta_title ?: $this->request->name/* . '-' . ($author ? '-' . $author->title : '')*/,
+            'meta_title'       => $this->request->meta_title ?: $this->request->name,
             'meta_description' => $this->request->meta_description,
-            'pages'            => $this->request->pages,
-            'dimensions'       => $this->request->dimensions,
-            'origin'           => $this->request->origin,
-            'letter'           => $this->request->letter,
-            'condition'        => $this->request->condition,
-            'binding'          => $this->request->binding,
-            'year'             => $this->request->year,
-            'viewed'           => 0,
-            'sort_order'       => 0,
-            'push'             => 0,
+            'slug'             => $slug,
+            'starting_price'   => isset($this->request->starting_price) ? $this->request->starting_price : 0,
+            'current_price'    => isset($this->request->current_price) ? $this->request->current_price : 0,
+            'reserve_price'    => isset($this->request->reserve_price) ? $this->request->reserve_price : 0,
+            'min_increment'    => $this->request->min_increment ?: 0,
+            'start_time'       => $this->request->start_time ? Carbon::make($this->request->start_time) : null,
+            'end_time'         => $this->request->end_time ? Carbon::make($this->request->end_time) : null,
             'status'           => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+            'active'           => (isset($this->request->active) and $this->request->active == 'on') ? 1 : 0,
+            'tax_id'           => $this->request->tax_id ?: 1,
+            'viewed'           => 0,
+            'featured'         => 0,
+            'sort_order'       => 0,
             'updated_at'       => Carbon::now()
         ];
 
@@ -212,19 +200,6 @@ class Auction extends Model
             'bindings'   => Settings::get('auction', 'binding_styles'),
             'taxes'      => Settings::get('tax', 'list')
         ];
-    }
-
-
-    /**
-     * @return $this
-     */
-    public function checkSettings()
-    {
-        Settings::setAuction('letter_styles', $this->request->letter);
-        Settings::setAuction('condition_styles', $this->request->condition);
-        Settings::setAuction('binding_styles', $this->request->binding);
-
-        return $this;
     }
 
 
@@ -337,12 +312,7 @@ class Auction extends Model
 
         $response             = $auction->toArray();
         $response['category'] = [];
-
-        if ($auction->category()) {
-            $response['category'] = $auction->category()->toArray();
-        }
-
-        $response['subcategory'] = $auction->subcategory() ? $auction->subcategory()->toArray() : [];
+        $response['subcategory'] = [];
         $response['images']      = $auction->images()->get()->toArray();
 
         return $response;
