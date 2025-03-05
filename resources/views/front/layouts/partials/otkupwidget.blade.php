@@ -11,16 +11,13 @@
     <!-- Grid-->
 
         <div class="tns-carousel tns-controls-static tns-controls-inside">
-            <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
+            <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
                     <!-- Product-->
                     <div class="col ">
                         <!-- Product-->
                         <div class="card product-card-alt">
                             <div class="product-thumb">
-                                <div class="product-card-actions">
-                                    <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                                </div>
-                                <a class="product-thumb-overlay" href="#"></a><img src="media/books/b1.jpg" alt="Product">
+                                <a  href="#"><img src="media/books/b1.jpg" alt="Product"></a>
                             </div>
                             <div class="card-body px-0">
                                 <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -40,10 +37,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b2.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b2.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -63,10 +57,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b3.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b3.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -86,10 +77,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b4.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b4.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -109,10 +97,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b5.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b5.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -132,10 +117,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b6.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b6.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -155,10 +137,7 @@
                     <!-- Product-->
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <div class="product-card-actions">
-                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="marketplace-single.html"><i class="ci-eye"></i></a>
-                            </div>
-                            <a class="product-thumb-overlay" href="#"></a><img src="media/books/b7.jpg" alt="Product">
+                            <a  href="#"><img src="media/books/b7.jpg" alt="Product"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
@@ -196,37 +175,37 @@
             </div>
             <div class="col-lg-5 col-end-auto">
 
-                <div class="row gallery g-4" data-video="true">
+                <div class="row  g-4" data-video="true">
 
                     <!-- Item -->
                     <div class="col-sm-6">
 
-                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                        <a href="https://www-antikvarijat-biblos.hr" >
                             <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
-                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+
                         </a>
 
 
                     </div>
                     <!-- Item -->
                     <div class="col-sm-6">
-                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                        <a href="https://www-antikvarijat-biblos.hr" >
                             <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
-                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+
                         </a>
                     </div>
                     <!-- Item -->
                     <div class="col-sm-6">
-                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                        <a href="https://www-antikvarijat-biblos.hr" >
                             <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
-                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+
                         </a>
                     </div>
                     <!-- Item -->
                     <div class="col-sm-6">
-                        <a href="https://www-antikvarijat-biblos.hr" class="gallery-item rounded-3" data-sub-html='<h6 class="fs-sm text-light">Antikvarijat Biblos</h6>'>
+                        <a href="https://www-antikvarijat-biblos.hr" >
                             <img src="media/biblos-logo2.svg" alt="Antikvarijat Biblos">
-                            <span class="gallery-item-caption">Antikvarijat Biblos</span>
+
                         </a>
                     </div>
 
