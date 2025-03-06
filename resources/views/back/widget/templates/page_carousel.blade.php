@@ -41,6 +41,8 @@
                                     <input type="text" class="form-control" id="title-input" name="title" placeholder="Upišite naziv widgeta" value="{{ isset($widget) ? $widget->title : old('title') }}">
                                 </div>
                                 <div class="col-md-4">
+
+
                                     <label for="group-select">Grupa stavki @include('back.layouts.partials.required-star')</label>
                                     <select class="form-control" id="target-select" name="target">
                                         <option></option>

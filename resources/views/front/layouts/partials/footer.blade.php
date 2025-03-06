@@ -15,17 +15,7 @@
                 <p class=" text-primary  fs-md pb-1 d-none d-sm-block">  <strong>Email</strong><br>
                     info@aukcije4a.com</p>
 
-                <p class="text-primary  fs-md pb-1 d-none d-sm-block">  <strong>Radno vrijeme</strong><br>
-                    Pon-Pet: 8-20<br>
-                    Sub: 9-15
 
-                </p>
-
-
-                <div class="widget mt-4 text-md-nowrap text-center text-sm-start">
-                    <a class="btn-social text-primary bg-primary bs-instagram me-2 mb-2" href="https://www.instagram.com/zuziobrt/"><i class="ci-instagram"></i></a>
-                    <a class="btn-social  text-primary bg-primary bs-facebook me-2 mb-2" href="https://www.facebook.com/zuziobrt/"><i class="ci-facebook"></i></a>
-                </div>
             </div>
             <!-- Mobile dropdown menu (visible on screens below md)-->
             <div class="col-12 d-md-none text-center mb-sm-4 pb-2">
