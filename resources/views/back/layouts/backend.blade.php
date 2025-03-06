@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>Zuzi shop</title>
+        <title>Aukcije4A</title>
 
-        <meta name="description" content="Zuzi shop">
-        <meta name="author" content="pixelcave">
+        <meta name="description" content="Aukcije4A">
+        <meta name="author" content="www.agmedia.hr">
         <meta name="robots" content="noindex, nofollow">
 
         <!-- CSRF Token -->
@@ -62,7 +62,7 @@
                             Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600" href="https://www.agmedia.hr" target="_blank">AG media</a>
                         </div>
                         <div class="col-sm-6 order-sm-1 text-center text-sm-left">
-                            <a class="font-w600" href="https://www.zuzi.hr" target="_blank">Zuzi Shop</a> &copy; <span data-toggle="year-copy"></span>
+                            <a class="font-w600" href="https://www.aukcije4a.com" target="_blank">Aukcije4A</a> &copy; <span data-toggle="year-copy"></span>
                         </div>
                     </div>
                 </div>

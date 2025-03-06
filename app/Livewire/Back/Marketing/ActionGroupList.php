@@ -3,13 +3,8 @@
 namespace App\Livewire\Back\Marketing;
 
 use App\Models\Back\Catalog\Auction\Auction;
-use App\Models\Back\Catalog\Author;
-use App\Models\Back\Catalog\Category;
-use App\Models\Back\Catalog\Product\Product;
-use App\Models\Back\Catalog\Publisher;
 use App\Models\Back\Marketing\Blog;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -48,7 +43,7 @@ class ActionGroupList extends Component
     public $title = '';
 
     /**
-     * @var int 
+     * @var int
      */
     public $dropdown_limit = 5;
 

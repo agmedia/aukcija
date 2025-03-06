@@ -2,14 +2,14 @@
 
 namespace App\Models\Back\Widget;
 
-use App\Models\Back\Catalog\Product\Auction;
+use App\Models\Back\Catalog\Auction\Auction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Facades\Image;
 
 class Widget extends Model
 {

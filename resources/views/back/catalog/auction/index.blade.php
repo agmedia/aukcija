@@ -47,7 +47,7 @@
                                         <input type="text" class="form-control py-3 text-center" name="search" id="search-input" value="{{ request()->input('search') }}" placeholder="Upiši pojam pretraživanja">
                                         <button type="submit" class="btn btn-primary fs-base" onclick="setPageURL('search', $('#search-input').val());"><i class="fa fa-search"></i> </button>
                                     </div>
-                                    {{--<div class="form-text small">Pretraži po imenu, šifri...</div>--}}
+
                                 </div>
                             </div>
 
@@ -75,108 +75,13 @@
                                 </div>
                             </div>
 
-                            {{--<div class="col-md-3">
-                                <div class="form-group">
-                                    <select class="js-select2 form-control" id="category-select" name="category" style="width: 100%;" data-placeholder="Odaberi kategoriju">
-                                        <option></option>
-                                        @foreach ($categories as $group => $cats)
-                                            @foreach ($cats as $id => $category)
-                                                <option value="{{ $id }}" class="font-weight-bold small" {{ $id == request()->input('category') ? 'selected' : '' }}>{{ $group . ' >> ' . $category['title'] }}</option>
-                                                @if ( ! empty($category['subs']))
-                                                    @foreach ($category['subs'] as $sub_id => $subcategory)
-                                                        <option value="{{ $sub_id }}" class="pl-3 text-sm" {{ $sub_id == request()->input('category') ? 'selected' : '' }}>{{ $subcategory['title'] }}</option>
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>--}}
+
 
                         </div>
                     </form>
                 </div>
             </div>
-            {{--<div class="block-content">
-                <div class="table-responsive">
-                    <table class="table table-borderless table-striped table-vcenter">
-                        <thead>
-                        <tr>
-                            <th class="text-center" style="width: 100px;">Slika</th>
-                            <th>Naziv</th>
-                            <th>Šifra</th>
-                            <th class="text-right">Cijena</th>
-                            <th class="text-center">God.</th>
-                            <th class="text-center">Polica</th>
-                            <th class="text-center">Dimenzija</th>
-                            <th class="text-center">Kol.</th>
-                            <th>Dodano</th>
-                            <th>Zadnja izmjena</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-right" style="width: 12%;">Uredi</th>
-                        </tr>
-                        </thead>
-                        <tbody id="ag-table-with-input-fields" class="js-gallery">
-                        @forelse ($auctions as $auction)
-                            <tr>
-                                <td class="text-center font-size-sm">
-                                    <a class="img-link img-link-zoom-in img-lightbox" href="{{ $auction->image ? asset($auction->image) : asset('media/avatars/avatar0.jpg') }}">
-                                        <img src="{{ $auction->image ? asset($auction->image) : asset('media/avatars/avatar0.jpg') }}" height="80px"/>
-                                    </a>
-                                </td>
-                                <td class="font-size-sm">
-                                    <a class="font-w600" href="{{ route('auctions.edit', ['auction' => $auction]) }}">{{ $auction->name }}</a><br>
-                                    @if ($auction->categories)
-                                        @foreach ($auction->categories as $cat)
-                                            <span class="badge badge-secondary">{{ $cat->title }}</span>
-                                        @endforeach
-                                    @endif
-                                    @if ($auction->subcategory())
-                                        <span class="badge badge-secondary">{{ $auction->subcategory()->title }}</span>
-                                    @endif
-                                </td>
-                                <td class="font-size-sm">{{ $auction->sku }}</td>
-                                <td class="font-size-sm text-right">
-                                    <ag-input-field item="{{ $auction }}" target="price"></ag-input-field>
-                                </td>
-                                <td class="font-size-sm text-center">
-                                    <ag-input-field item="{{ $auction }}" target="year"></ag-input-field>
-                                </td>
-                                <td class="font-size-sm text-center">  <ag-input-field item="{{ $auction }}" target="polica"></ag-input-field></td>
-                                <td class="font-size-sm text-center">  <ag-input-field item="{{ $auction }}" target="dimensions"></ag-input-field></td>
-                                <td class="font-size-sm text-center">{{ $auction->quantity }}</td>
-                                <td class="font-size-sm">{{ \Illuminate\Support\Carbon::make($auction->created_at)->format('d.m.Y') }}</td>
-                                <td class="font-size-sm">{{ \Illuminate\Support\Carbon::make($auction->updated_at)->format('d.m.Y') }}</td>
-                                <td class="text-center font-size-sm">
-                                    --}}{{--@include('back.layouts.partials.status', ['status' => $auction->status])--}}{{--
-                                    <div class="custom-control custom-switch custom-control-success mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="status-{{ $auction->id }}" onclick="setStatus({{ $auction->id }})" name="status" @if ($auction->status) checked="" @endif>
-                                        <label class="custom-control-label" for="status-{{ $auction->id }}"></label>
-                                    </div>
-                                </td>
-                                <td class="text-right font-size-sm">
-                                    <a class="btn btn-sm btn-alt-secondary" target="_blank" href=" {{ url($auction->url) }}">
-                                        <i class="fa fa-fw fa-eye"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-alt-secondary" href="{{ route('auctions.edit', ['auction' => $auction]) }}">
-                                        <i class="fa fa-fw fa-pencil-alt"></i>
-                                    </a>
-                                    <button class="btn btn-sm btn-alt-danger" onclick="event.preventDefault(); deleteItem({{ $auction->id }}, '{{ route('auctions.destroy.api') }}');"><i class="fa fa-fw fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td class="text-center font-size-sm" colspan="12">
-                                    <label>Nema proizvoda...</label>
-                                </td>
-                            </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                <!-- Pagination -->
-                {{ $auctions->links() }}
-            </div>--}}
+
 
             <div class="block-content">
                 <livewire:auctions-table theme="bootstrap-4" />

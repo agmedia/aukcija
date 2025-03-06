@@ -36,11 +36,11 @@
     @if (request()->routeIs(['index']))
 
 
-
+        @include('front.layouts.partials.indexbanner')
 
         {!! $page->description !!}
 
-         @include('front.layouts.partials.otkupwidget')
+
 
 
 

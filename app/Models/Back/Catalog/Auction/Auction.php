@@ -174,7 +174,7 @@ class Auction extends Model
             'active'           => (isset($this->request->active) and $this->request->active == 'on') ? 1 : 0,
             'tax_id'           => $this->request->tax_id ?: 1,
             'viewed'           => 0,
-            'featured'         => 0,
+            'featured'         => (isset($this->request->featured) and $this->request->featured == 'on') ? 1 : 0,
             'sort_order'       => 0,
             'updated_at'       => Carbon::now()
         ];
@@ -446,6 +446,66 @@ class Auction extends Model
         }
 
         return false;
+    }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('status', 1);
+    }
+
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeInactive(Builder $query): Builder
+    {
+        return $query->where('status', 0);
+    }
+
+
+
+
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeLast(Builder $query, $count = 12): Builder
+    {
+        return $query->where('status', 1)->orderBy('created_at', 'desc')->limit($count);
+    }
+
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeCreated($query, $count = 9)
+    {
+        return $query->where('status', 1)->orderBy('created_at', 'desc')->limit($count);
+    }
+
+
+
+
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopePopular(Builder $query, $count = 12): Builder
+    {
+        return $query->where('featured', 1)->orderBy('viewed', 'desc')->limit($count);
     }
 
 }

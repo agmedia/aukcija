@@ -12,7 +12,7 @@
 -->
 <nav id="sidebar" aria-label="Main Navigation">
     <!-- Side Header -->
-    <div class="bg-header-dark">
+    <div class="bg-header-light">
         <div class="content-header bg-white-10">
             <!-- Logo -->
             <a class="font-w600 text-white text-center tracking-wide" href="/">
@@ -20,7 +20,7 @@
                                 B<span class="opacity-75">x</span>
                             </span>
                 <span class="smini-hidden">
-                                ZUZI<span class="opacity-75">SHOP</span>
+                               <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40" style="height:29px" alt="AUKCIJE 4A | Aukcije knjiga">
                             </span>
             </a>
             <!-- END Logo -->

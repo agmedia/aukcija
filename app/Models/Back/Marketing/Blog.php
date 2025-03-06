@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
+
 
 class Blog extends Model
 {
@@ -121,14 +122,14 @@ class Blog extends Model
     public function resolveImage(Blog $blog)
     {
         if ($this->request->hasFile('image')) {
-            $img = Image::make($this->request->image);
+            $img = Image::read($this->request->image);
             $str = $blog->id . '/' . Str::slug($blog->title) . '-' . time() . '.';
 
             $path = $str . 'jpg';
-            Storage::disk('blog')->put($path, $img->encode('jpg'));
+            Storage::disk('blog')->put($path, $img->toJpg(90));
 
             $path_webp = $str . 'webp';
-            Storage::disk('blog')->put($path_webp, $img->encode('webp'));
+            Storage::disk('blog')->put($path_webp, $img->toWebp(90));
 
             return $blog->update([
                 'image' => config('filesystems.disks.blog.url') . $path

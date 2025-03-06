@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 
+
 class AuctionImage extends Model
 {
     use HasFactory;
@@ -75,9 +76,9 @@ class AuctionImage extends Model
             }
 
             foreach ($existing as $key => $image) {
-                
+
                 $title = $this->resource->name;
-                
+
                 if (isset($image['image']) && $image['image']) {
                     $data = json_decode($image['image']);
 

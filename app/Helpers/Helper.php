@@ -2,14 +2,13 @@
 
 
 namespace App\Helpers;
+use App\Models\Back\Catalog\Auction\Auction;
 use App\Models\Back\Catalog\Category;
 use App\Models\Back\Marketing\Action;
 use App\Models\Back\Settings\Settings;
 use App\Models\Back\Widget\WidgetGroup;
 use App\Models\Front\Blog;
-use App\Models\Front\Catalog\Author;
-use App\Models\Front\Catalog\Product;
-use App\Models\Front\Catalog\Publisher;
+
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -18,7 +17,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\False_;
+
+
 
 class Helper
 {
@@ -252,6 +252,10 @@ class Helper
                 $items     = static::products($data)->get();
                 $tablename = 'product';
             }
+            if (static::isDescriptionTarget($data, 'auction')) {
+                $items     = static::auctions($data)->get();
+                $tablename = 'auctions';
+            }
 
             if (static::isDescriptionTarget($data, 'blog')) {
                 $items     = static::blogs($data)->get();
@@ -370,6 +374,31 @@ class Helper
         }
 
         return $prods->with('author');
+    }
+
+
+    /**
+     * @param array $data
+     *
+     * @return Builder
+     */
+    private static function auctions(array $data): Builder
+    {
+        $auctions = (new Auction())->newQuery();
+
+        $auctions->active();
+
+        if (isset($data['popular']) && $data['popular'] == 'on') {
+            $auctions->popular();
+        }
+
+        $auctions->distinct()->last();
+
+        if (isset($data['list']) && $data['list']) {
+            $auctions->whereIn('id', $data['list']);
+        }
+
+        return $auctions;
     }
 
 

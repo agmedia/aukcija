@@ -12,7 +12,7 @@
         "php": "^8.3",
         "chillerlan/php-qrcode": "^5.0",
         "darryldecode/cart": "^4.2",
-        "intervention/image-laravel": "^1.4",
+        "intervention/image": "^2.6",
         "laravel/framework": "^11.31",
         "laravel/jetstream": "^5.3",
         "laravel/pulse": "^1.4",
