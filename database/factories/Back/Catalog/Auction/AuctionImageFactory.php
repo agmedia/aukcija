@@ -20,7 +20,7 @@ class AuctionImageFactory extends Factory
         return [
             'auction_id' => fake()->numberBetween(1, Auction::count()),
             'image' => fake()->imageUrl,
-            'alt' => fake()->words(),
+            'alt' => fake()->words(3, true),
             'default' => 0,
             'published' => 1,
             'sort_order' => 0,
