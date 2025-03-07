@@ -20,7 +20,9 @@
                 <a class="navbar-tool ms-12" href="{{ route('login') }}" ><span class="navbar-tool-tooltip">Korisnički račun</span>
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
                 </a>
-
+                <a class="navbar-tool ms-12" href="{{ route('moj.racun') }}" ><span class="navbar-tool-tooltip">Moj račun</span>
+                    <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle text-danger"></i></div>
+                </a>
             </div>
 
             <div class="collapse navbar-collapse me-auto mx-auto order-lg-2 justify-content-center" id="navbarCollapse">
@@ -33,9 +35,9 @@
 
                 <!-- Navbar -->
                 <ul class="navbar-nav justify-content-centerpe-lg-2 me-lg-2">
-                    <li class="nav-item "><a class="nav-link " href="#"><span>Aukcije</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><span>Arhiva </span></a>
-                    <li class="nav-item"><a class="nav-link" href="#"><span>O nama</span></a>
+                    <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Sve aukcije')]) }}"><span>Aukcije</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Arhiva')]) }}"><span>Arhiva</span></a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'uvjeti-prodaje']) }}"><span>O nama</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kontakt') }}"><span>Kontakt</span></a></li>
                 </ul>

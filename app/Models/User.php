@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Front\Catalog\Auction\AuctionBid;
 use App\Models\Roles\Role;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -83,6 +84,15 @@ class User extends Authenticatable
     public function details()
     {
         return $this->hasOne(UserDetail::class, 'user_id');
+    }
+    
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bids()
+    {
+        return $this->hasMany(AuctionBid::class, 'user_id')->with('auction');
     }
 
 

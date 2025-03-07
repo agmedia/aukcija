@@ -84,7 +84,7 @@ class Helper
         if ($target != '') {
             $response = collect();
 
-            $products = Product::active()->where('name', 'like', '%' . $target . '%')
+            $products = Auction::active()->where('name', 'like', '%' . $target . '%')
                 ->orWhere('meta_description', 'like', '%' . $target . '%')
                 ->orWhere('sku', 'like', '%' . $target . '%')
                 ->pluck('id');
@@ -92,32 +92,6 @@ class Helper
             if ( ! $products->count()) {
                 $products = collect();
             }
-
-            $preg = explode(' ', $target, 3);
-
-            if (isset ($preg[1]) && in_array($preg[1], $preg) && ! isset($preg[2])) {
-                $authors = Author::active()->where('title', 'like', '%' . $preg[0] . '%' . $preg[1] . '%')
-                                 ->orWhere('title', 'like', '%' . $preg[1] . '% ' . $preg[0] . '%')
-                                 ->with('products')->get();
-
-            } elseif (isset ($preg[2]) && in_array($preg[2], $preg)) {
-                $authors = Author::active()->where('title', 'like', $preg[0] . '%' . $preg[1] . '%' . $preg[2] . '%')
-                                 ->orWhere('title', 'like', $preg[2] . '%' . $preg[1] . '% ' . $preg[0] . '%')
-                                 ->orWhere('title', 'like', $preg[0] . '%' . $preg[2] . '% ' . $preg[1] . '%')
-                                 ->orWhere('title', 'like', $preg[1] . '%' . $preg[0] . '% ' . $preg[2] . '%')
-                                 ->orWhere('title', 'like', $preg[1] . '%' . $preg[2] . '% ' . $preg[0] . '%')
-                                 ->with('products')->get();
-
-            } else {
-                $authors = Author::active()->where('title', 'like', '%' . $preg[0] . '%')
-                                 ->with('products')->get();
-            }
-
-            foreach ($authors as $author) {
-                $products = $products->merge($author->products->pluck('id'));
-            }
-
-            $response->put('products', $products->unique()->flatten());
 
             if ($builder) {
                 return $response;

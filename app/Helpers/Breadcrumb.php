@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Catalog\Category;
 use App\Models\Front\Catalog\Product;
 use Illuminate\Support\Facades\Log;
@@ -37,29 +38,9 @@ class Breadcrumb
      *
      * @return $this
      */
-    public function category($group, Category $cat = null, $subcat = null)
+    public function group(string $group = null)
     {
-        if (isset($group) && $group) {
-            $this->addGroup($group);
-
-            if ($cat) {
-                array_push($this->breadcrumbs, [
-                    '@type' => 'ListItem',
-                    'position' => 3,
-                    'name' => $cat->title,
-                    'item' => route('catalog.route', ['group' => $group, 'cat' => $cat])
-                ]);
-            }
-
-            if ($subcat) {
-                array_push($this->breadcrumbs, [
-                    '@type' => 'ListItem',
-                    'position' => 4,
-                    'name' => $subcat->title,
-                    'item' => route('catalog.route', ['group' => $group, 'cat' => $cat, 'subcat' => $subcat])
-                ]);
-            }
-        }
+        $this->addGroup($group);
 
         return $this;
     }
@@ -73,18 +54,16 @@ class Breadcrumb
      *
      * @return $this
      */
-    public function product($group, Category $cat = null, $subcat = null, Product $prod = null)
+    public function auction(string $group, Auction $auction = null)
     {
-        $this->category($group, $cat, $subcat);
-
-        if ($prod) {
+        if ($auction) {
             $count = count($this->breadcrumbs) + 1;
 
             array_push($this->breadcrumbs, [
                 '@type' => 'ListItem',
                 'position' => $count,
-                'name' => $prod->name,
-                'item' => url($prod->url)
+                'name' => $auction->name,
+                'item' => url($auction->url)
             ]);
         }
 
@@ -97,28 +76,23 @@ class Breadcrumb
      *
      * @return array
      */
-    public function productBookSchema(Product $prod = null)
+    public function auctionBookSchema(Auction $auction = null)
     {
-        if ($prod) {
+        if ($auction) {
             return [
                 '@context' => 'https://schema.org/',
                 '@type' => 'Book',
-                'datePublished' => $prod->year ?: '...',
-                'description' => $prod->name . ' knjiga autora ' . (($prod->author) ? $prod->author->title : 'Autor') . ' godine izdanja ' . ($prod->year ?: '...') . '. izdavača ' . (($prod->publisher) ? $prod->publisher->title : 'Izdavačka kuća'),
-                'image' => asset($prod->image),
-                'name' => $prod->name,
-                'url' => url($prod->url),
-                'publisher' => [
-                    '@type' => 'Organization',
-                    'name' => ($prod->publisher) ? $prod->publisher->title : 'Izdavačka kuća',
-                ],
-                'author' => ($prod->author) ? $prod->author->title : 'Autor',
+                'datePublished' => '',
+                'description' => $auction->name,
+                'image' => asset($auction->image),
+                'name' => $auction->name,
+                'url' => url($auction->url),
                 'offers' => [
                     '@type' => 'Offer',
                     'priceCurrency' => 'EUR',
-                    'price' => ($prod->special()) ? $prod->special() : number_format($prod->price, 2, '.', ''),
-                    'sku' => $prod->sku,
-                    'availability' => ($prod->quantity) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+                    'price' => number_format($auction->current_price, 2, '.', ''),
+                    'sku' => $auction->sku,
+                    'availability' => ($auction->quantity) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
                 ],
             ];
         }
@@ -163,7 +137,7 @@ class Breadcrumb
         array_push($this->breadcrumbs, [
             '@type' => 'ListItem',
             'position' => 2,
-            'name' => Str::ucfirst($group),
+            'name' => $group ? Str::ucfirst($group) : 'Sve aukcije',
             'item' => route('catalog.route', ['group' => $group])
         ]);
     }

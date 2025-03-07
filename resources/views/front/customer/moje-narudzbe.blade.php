@@ -8,35 +8,28 @@
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Broj narudžbe - {{ $order->id }}</h5>
+                        <h5 class="modal-title">Broj ponude - {{ $order->id }}: {{ $order->auction->name }}</h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pb-0">
-                        @foreach ($order->products as $product)
-                            <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
-                                <div class="d-sm-flex text-center text-sm-start">
-                                    <a class="d-inline-block flex-shrink-0 mx-auto" href="{{ url($product->real->url) }}" style="width: 10rem;">
-                                        <img src="{{ $product->product->image ? asset($product->product->image) : asset('media/avatars/avatar0.jpg') }}" alt="{{ $product->name }}">
-                                    </a>
-                                    <div class="ps-sm-4 pt-2">
-                                        <h3 class="product-title fs-base mb-2"><a href="{{ url($product->real->url) }}">{{ $product->name }}</a></h3>
-                                        <div class="fs-lg text-accent pt-2">{{ number_format($product->price, 2, ',', '.') }}</div>
-                                    </div>
-                                </div>
-                                <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-                                    <div class="text-muted mb-2">Količina:</div>{{ $product->quantity }}
-                                </div>
-                                <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-                                    <div class="text-muted mb-2">Ukupno</div>{{ number_format($product->total, 2, ',', '.') }}
+                        <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
+                            <div class="d-sm-flex text-center text-sm-start">
+                                <a class="d-inline-block flex-shrink-0 mx-auto" href="{{ url($order->auction->url) }}" style="width: 10rem;">
+                                    <img src="{{ $order->auction->image ? asset($order->auction->image) : asset('media/avatars/avatar0.jpg') }}" alt="{{ $order->auction->name }}">
+                                </a>
+                                <div class="ps-sm-4 pt-2">
+                                    <h3 class="product-title fs-base mb-2"><a href="{{ url($order->auction->url) }}">{{ $order->auction->name }}</a></h3>
+                                    <div class="fs-lg text-accent pt-2">{{ number_format($order->auction->starting_price, 2, ',', '.') }}</div>
                                 </div>
                             </div>
-                        @endforeach
+                            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                                <div class="text-muted mb-2">Ponuda</div>{{ number_format($order->amount, 2, ',', '.') }}
+                            </div>
+                        </div>
                     </div>
                     <!-- Footer-->
                     <div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md">
-                        @foreach ($order->totals as $total)
-                            <div class="px-2 py-1"><span class="text-muted">{{ $total->title }}:&nbsp;</span><span>{{ number_format($total->value, 2, ',', '.') }}</span></div>
-                        @endforeach
+                        <div class="px-2 py-1"><span class="text-muted">{{ $order->auction->name }}:&nbsp;</span><span>{{ number_format($order->amount, 2, ',', '.') }}</span></div>
                     </div>
                 </div>
             </div>
@@ -69,10 +62,10 @@
                         <tbody>
                         @forelse ($orders as $order)
                             <tr>
-                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details{{ $order->id }}" data-bs-toggle="modal">{{ $order->id }}</a></td>
+                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details{{ $order->id }}" data-bs-toggle="modal">{{ $loop->iteration }}: {{ $order->auction->name }}</a></td>
                                 <td class="py-3">{{ \Illuminate\Support\Carbon::make($order->created_at)->format('d.m.Y') }}</td>
-                                <td class="py-3"><span class="badge bg-info m-0">{{ $order->status->title }}</span></td>
-                                <td class="py-3">{{ number_format($order->total, 2, ',', '.') }} kn</td>
+                                <td class="py-3"><span class="badge bg-info m-0">{{ $order->auction->status }}</span></td>
+                                <td class="py-3">{{ number_format($order->amount, 2, ',', '.') }} kn</td>
                             </tr>
                         @empty
                             <tr>

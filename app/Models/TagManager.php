@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Helpers\Helper;
 use App\Models\Back\Orders\Order;
+use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Catalog\Product;
 use Darryldecode\Cart\CartCollection;
-use function Livewire\str;
 
 /**
  * Class Sitemap
@@ -62,22 +61,13 @@ class TagManager
      *
      * @return array
      */
-    public static function getGoogleProductDataLayer(Product $product): array
+    public static function getGoogleAuctionDataLayer(Auction $auction): array
     {
-        $discount = 0;
-
-        if ($product->main_price > $product->main_special) {
-            $discount = Helper::calculateDiscount($product->main_price, $product->main_special);
-        }
-
         $item = [
-            'item_id'        => $product->sku,
-            'item_name'      => $product->name,
-            'price'          => (float) str_replace(',', '.', $product->main_price),
+            'item_id'        => $auction->sku,
+            'item_name'      => $auction->name,
+            'price'          => (float) str_replace(',', '.', $auction->current_price),
             'currency'       => 'EUR',
-            'discount'       => (float) number_format($discount, 2),
-            'item_category'  => $product->category() ? $product->category()->title : '',
-            'item_category2' => $product->subcategory() ? $product->subcategory()->title : '',
             'quantity'       => 1,
         ];
 

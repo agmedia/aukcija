@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use App\Helpers\Metatags;
-use App\Models\Front\Catalog\Author;
+use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Catalog\Category;
 use App\Models\Front\Catalog\Product;
-use App\Models\Front\Catalog\Publisher;
 use Illuminate\Http\Request;
 
 /**
@@ -20,11 +19,11 @@ class Seo
     /**
      * @return array
      */
-    public static function getProductData(Product $product): array
+    public static function getAuctionData(Auction $auction): array
     {
         return [
-            'title'       => $product->name . ' knjige ' . (isset($product->author->title) ? $product->author->title : ''),
-            'description' => 'Knjiga ' . $product->name . ' izdavača ' . (isset($product->author->title) ? $product->author->title : '') . ' godine izdanja ' . ($product->year ?: '') . ' i mjesta izdavanja ' . ($product->origin ?: '') . ' u Zuzi Shop-u.'
+            'title'       => $auction->name,
+            'description' => $auction->description
         ];
     }
 

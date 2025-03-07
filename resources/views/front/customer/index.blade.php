@@ -18,7 +18,7 @@
                 </div>
 
                 @include('front.layouts.partials.session')
-                <form action="{{ route('moj-racun.snimi', ['user' => $user]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('moj.racun.snimi', ['user' => $user]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('PATCH') }}
 

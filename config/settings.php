@@ -26,6 +26,7 @@ return [
     'publisher_path'    => 'nakladnik',
     'group_path'        => 'Kategorija proizvoda',
 
+    'about_page'        => 2,
     'unknown_author'    => 3282,
     'unknown_publisher' => 376,
     'images_domain'     =>  env('APP_IMAGE_DOMAIN'),

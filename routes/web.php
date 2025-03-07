@@ -20,6 +20,7 @@ use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\Widget\WidgetController;
 use App\Http\Controllers\Back\Widget\WidgetGroupController;
 use App\Http\Controllers\Front\CatalogRouteController;
+use App\Http\Controllers\Front\CustomerController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -259,7 +260,14 @@ Route::prefix('api/v2')->group(function () {
  *                                Copyright : AGmedia                           *
  *                              email: filip@agmedia.hr                         *
  *******************************************************************************/
-
+/**
+ * CUSTOMER BACK ROUTES
+ */
+Route::middleware(['auth:sanctum', 'verified'])->prefix('moj-racun')->group(function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('moj.racun');
+    Route::patch('/snimi/{user}', [CustomerController::class, 'save'])->name('moj.racun.snimi');
+    Route::get('/narudzbe', [CustomerController::class, 'orders'])->name('moj.racun.narudzbe');
+});
 /**
  * FRONT ROUTES
  */
@@ -289,8 +297,6 @@ Route::get('cache/thumb', [HomeController::class, 'thumbCache']);
 Route::redirect('/sitemap.xml', '/sitemap');
 Route::get('sitemap/{sitemap?}', [HomeController::class, 'sitemapXML'])->name('sitemap');
 Route::get('image-sitemap', [HomeController::class, 'sitemapImageXML'])->name('sitemap');
-//
-Route::get('njuskalo/xml', [HomeController::class, 'njuskaloXML'])->name('njuskalo');
 /**
  * Forgot password & login routes.
  */
@@ -302,12 +308,4 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
  * Groups, Categories and Products routes resolver.
  * https://www.antikvarijat-biblos.hr/kategorija-proizvoda/knjige/
  */
-Route::get('proizvod/{prod?}/', [CatalogRouteController::class, 'resolveOldUrl']);
-//Route::get('kategorija-proizvoda/{group?}/{cat?}/{subcat?}', [CatalogRouteController::class, 'resolveOldCategoryUrl']);
-//
-Route::get(config('settings.author_path') . '/{author?}/{cat?}/{subcat?}', [CatalogRouteController::class, 'author'])->name('catalog.route.author');
-Route::get(config('settings.publisher_path') . '/{publisher?}/{cat?}/{subcat?}', [CatalogRouteController::class, 'publisher'])->name('catalog.route.publisher');
-//
-Route::get('akcijska-ponuda/{cat?}/{subcat?}', [CatalogRouteController::class, 'actions'])->name('catalog.route.actions');
-//
-Route::get('{group}/{cat?}/{subcat?}/{prod?}', [CatalogRouteController::class, 'resolve'])->name('catalog.route');
+Route::get('{group?}/{auction?}', [CatalogRouteController::class, 'resolve'])->name('catalog.route');

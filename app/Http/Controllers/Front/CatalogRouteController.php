@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Imports\ProductImport;
 use App\Models\Front\Blog;
+use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Page;
 use App\Models\Front\Faq;
 use App\Models\Front\Catalog\Author;
@@ -24,216 +25,38 @@ use Illuminate\Support\Str;
 
 class CatalogRouteController extends Controller
 {
-
+    
     /**
-     * Resolver for the Groups, categories and products routes.
-     * Route::get('{group}/{cat?}/{subcat?}/{prod?}', 'Front\GCP_RouteController::resolve()')->name('gcp_route');
+     * @param Request      $request
+     * @param string       $group
+     * @param Auction|null $auction
      *
-     * @param               $group
-     * @param Category|null $cat
-     * @param Category|null $subcat
-     * @param Product|null  $prod
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|object
      */
-    public function resolve(Request $request, $group, Category $cat = null, $subcat = null, Product $prod = null)
+    public function resolve(Request $request, string $group = null, Auction $auction = null)
     {
-        //
-        if ($subcat) {
-            $sub_category = Category::where('slug', $subcat)->where('parent_id', $cat->id)->first();
-
-            if ( ! $sub_category) {
-                $prod = Product::where('slug', $subcat)->first();
-            }
-
-            $subcat = $sub_category;
-        }
-
-        // Check if there is Auction set.
-        if ($prod) {
-            if ( ! $prod->status) {
-                abort(404);
-            }
-
-            $prod->increment('viewed', 1);
-
-            $seo = Seo::getProductData($prod);
-            $gdl = TagManager::getGoogleProductDataLayer($prod);
-
+        if ($auction) {
+            if ( ! $auction->status) { abort(404); }
+            
+            $auction->increment('viewed');
+            
             $bc = new Breadcrumb();
-            $crumbs = $bc->product($group, $cat, $subcat, $prod)->resolve();
-            $bookscheme = $bc->productBookSchema($prod);
-
-            return view('front.catalog.product.index', compact('prod', 'group', 'cat', 'subcat', 'seo', 'crumbs', 'bookscheme', 'gdl'));
+            $crumbs = $bc->auction($group, $auction)->resolve();
+            
+            $schema = $bc->auctionBookSchema($auction);
+            $seo = Seo::getAuctionData($auction);
+            $gdl = TagManager::getGoogleAuctionDataLayer($auction);
+            
+            return view('front.catalog.auction.index', compact('auction', 'group', 'seo', 'crumbs', 'schema', 'gdl'));
         }
-
-        // If only group...
-        if ($group && ! $cat && ! $subcat) {
-            if ($group == 'zemljovidi-i-vedute') {
-                $group = 'Zemljovidi i vedute';
-            }
-
-            $categories = Category::where('group', $group)->first('id');
-
-            if ( ! $categories) {
-                abort(404);
-            }
-        }
-
-        if ($cat) {
-            $cat->count = Helper::resolveCache('cats_count')->remember($cat->id, config('cache.life'), function () use ($cat) {
-                return $cat->products()->count();
-            });
-            //$cat->count = $cat->products()->count();
-        }
-        if ($subcat) {
-            $subcat->count = Helper::resolveCache('cats_count')->remember($cat->id, config('cache.life'), function () use ($subcat) {
-                return $subcat->products()->count();
-            });
-            //$subcat->products()->count();
-        }
-
+        
         $meta_tags = Seo::getMetaTags($request, 'filter');
-
-        $crumbs = (new Breadcrumb())->category($group, $cat, $subcat)->resolve();
-
-        return view('front.catalog.category.index', compact('group', 'cat', 'subcat', 'prod', 'crumbs', 'meta_tags'));
+        $crumbs    = (new Breadcrumb())->group($group)->resolve();
+        
+        return view('front.catalog.auction.list', compact('group', 'meta_tags', 'crumbs'));
     }
-
-
-    /**
-     * @param null $prod
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function resolveOldUrl($prod = null)
-    {
-        if ($prod) {
-            $prod = substr($prod, 0, strrpos($prod, '-'));
-            $prod = Product::where('slug', 'LIKE', $prod . '%')->first();
-
-            if ($prod) {
-                return redirect()->to(url($prod->url), 301);
-            }
-        }
-
-        abort(404);
-    }
-
-
-    /**
-     * @param null $prod
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function resolveOldCategoryUrl(string $group = null, $cat = null, $subcat = null)
-    {
-        if ($group) {
-            return redirect()->route('catalog.route', ['group' => $group, 'cat' => $cat, 'subcat' => $subcat]);
-        }
-
-        abort(404);
-    }
-
-
-    /**
-     *
-     *
-     * @param Author $author
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function author(Request $request, Author $author = null, Category $cat = null, Category $subcat = null)
-    {
-        if ( ! $author) {
-            $letters = Helper::resolveCache('authors')->remember('letters', config('cache.life'), function () {
-                return Author::letters();
-            });
-            $letter = $this->checkLetter($letters);
-
-            if ($request->has('letter')) {
-                $letter = $request->input('letter');
-            }
-
-            $currentPage = request()->get('page', 1);
-
-            $authors = Helper::resolveCache('authors')->remember($letter . '.' . $currentPage, config('cache.life'), function () use ($letter) {
-                return Author::query()->select('id', 'title', 'url')
-                                      ->where('status',  1)
-                                      ->where('letter', $letter)
-                                      ->orderBy('title')
-                                      ->withCount('products')
-                                      ->paginate(36)
-                                      ->appends(request()->query());
-            });
-
-            $meta_tags = Seo::getMetaTags($request, 'ap_filter');
-
-            return view('front.catalog.authors.index', compact('authors', 'letters', 'letter', 'meta_tags'));
-        }
-
-        $letter = null;
-
-        if ($cat) { $cat->count = $cat->products()->count(); }
-        if ($subcat) { $subcat->count = $subcat->products()->count(); }
-
-        $seo = Seo::getAuthorData($author, $cat, $subcat);
-
-        $crumbs = null;
-
-        return view('front.catalog.category.index', compact('author', 'letter', 'cat', 'subcat', 'seo', 'crumbs'));
-    }
-
-
-    /**
-     *
-     *
-     * @param Publisher $publisher
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function publisher(Request $request, Publisher $publisher = null, Category $cat = null, Category $subcat = null)
-    {
-        if ( ! $publisher) {
-            $letters = Helper::resolveCache('publishers')->remember('letters', config('cache.life'), function () {
-                return Publisher::letters();
-            });
-            $letter = $this->checkLetter($letters);
-
-            if ($request->has('letter')) {
-                $letter = $request->input('letter');
-            }
-
-            $currentPage = request()->get('page', 1);
-
-            $publishers = Helper::resolveCache('publishers')->remember($letter . '.' . $currentPage, config('cache.life'), function () use ($letter) {
-                return Publisher::query()->select('id', 'title', 'url')
-                                         ->where('status',  1)
-                                         ->where('letter', $letter)
-                                         ->orderBy('title')
-                                         ->withCount('products')
-                                         ->paginate(36)
-                                         ->appends(request()->query());
-            });
-
-            $meta_tags = Seo::getMetaTags($request, 'ap_filter');
-
-            return view('front.catalog.publishers.index', compact('publishers', 'letters', 'letter', 'meta_tags'));
-        }
-
-        $letter = null;
-
-        if ($cat) { $cat->count = $cat->products()->count(); }
-        if ($subcat) { $subcat->count = $subcat->products()->count(); }
-
-        $seo = Seo::getPublisherData($publisher, $cat, $subcat);
-
-        $crumbs = null;
-
-        return view('front.catalog.category.index', compact('publisher', 'letter', 'cat', 'subcat', 'seo', 'crumbs'));
-    }
-
-
+    
+    
     /**
      *
      *
@@ -248,7 +71,7 @@ class CatalogRouteController extends Controller
                 return redirect()->back()->with(['error' => 'Oops..! Zaboravili ste upisati pojam za pretraživanje..!']);
             }
 
-            $group = null; $cat = null; $subcat = null;
+            $group = null;
 
             $ids = Helper::search(
                 $request->input(config('settings.search_keyword'))
@@ -268,22 +91,6 @@ class CatalogRouteController extends Controller
         }
 
         return response()->json(['error' => 'Greška kod pretrage..! Molimo pokušajte ponovo ili nas kotaktirajte! HVALA...']);
-    }
-
-
-    /**
-     * @param Request $request
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function actions(Request $request, Category $cat = null, $subcat = null)
-    {
-        $ids = Product::query()->whereNotNull('special')->pluck('id');
-        $group = 'snizenja';
-
-        $crumbs = null;
-
-        return view('front.catalog.category.index', compact('group', 'cat', 'subcat', 'ids', 'crumbs'));
     }
 
 
