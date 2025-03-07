@@ -21,24 +21,27 @@
 
             <div class="col-12 col-sm-6 mb-5">
 
-                        <h3 class=" mb-2">Impressum</h3>
-                        <p>
+                        <h3 class="mb-3">Impressum</h3>
+                        <p class="mb-3">
 
-                           <strong> ZUZI, obrt za uslužne djelatnosti, VL. MIRJANA VULIĆ ŠALDIĆ</strong></p>
+                           <strong> Aukcije 4 antikvarijata</strong></p>
 
-                <p> Sjedište: Antuna Šoljana 33, 10000 Zagreb<br><br>
+                <p> Antikvarijat Biblos, Palmotićeva 28, Zagreb<br>
 
-                            OIB: 69101336685<br>
-                            MBO: 97981036<br>
-                            Broj obrtnice: 21011606742<br>
-                    <br>
-                            IBAN: HR1624020061140345999<br>
-                            Banka: ERSTE & STEIERMÄRKISCHE BANK d.d. Rijeka<br>
-                            Swift: ESBCHR22<br><br>
+                    Antikvarijat Bono, Petrinjska 83, Zagreb<br>
 
-                            IBAN: HR0623900011101297120<br>
-                            Banka: HRVATSKA POSTANSKA BANKA d.d. Zagreb<br>
-                            Swift: HPBZHR2X
+                    Antikvarijat mali neboder, Ciottina 20b, Rijeka<br>
+
+                    Antikvarijat Vremeplov, Lopašićeva 11 , Zagreb
+
+
+                </p>
+
+                <p>
+                    +385977820935 (Tamara-english)<br>
+                    +385912213198 (Tomo)<br>
+                    +385981629674 (Daniel)<br>
+                    +385989395989 (Morana)
                 </p>
 
             </div>
@@ -68,7 +71,7 @@
                             <label class="form-label" for="cf-message">Upit:&nbsp;@include('back.layouts.partials.required-star')</label>
                             <textarea class="form-control" id="cf-message" rows="6" placeholder="" name="message"></textarea>
                             @error('message')<div class="invalid-feedback">Molimo upišite poruku!</div>@enderror
-                            <button class="btn btn-primary mt-4" type="submit">Pošaljite upit</button>
+                            <button class="btn btn-dark mt-4" type="submit">Pošaljite upit</button>
                         </div>
                     </div>
                     <input type="hidden" name="recaptcha" id="recaptcha">
