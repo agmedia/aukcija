@@ -50,6 +50,15 @@ class Auction extends Model
     {
         return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
     }
+    
+    
+    /**
+     * @return Relation
+     */
+    public function attributes()
+    {
+        return $this->hasMany(AuctionAttribute::class, 'auction_id')->with('attribute');
+    }
 
 
     /**
@@ -99,7 +108,7 @@ class Auction extends Model
         $id = $this->insertGetId($this->getModelArray());
 
         if ($id) {
-            //$this->resolveCategories($id);
+            $this->resolveAttributes($id);
 
             $auction = $this->find($id);
 
@@ -126,7 +135,7 @@ class Auction extends Model
         $updated = $this->update($this->getModelArray(false));
 
         if ($updated) {
-            //$this->resolveCategories($this->id);
+            $this->resolveAttributes($this->id);
 
             $this->update([
                 'url'             => AuctionHelper::url($this),
@@ -330,21 +339,21 @@ class Auction extends Model
 
         return preg_replace('/ face=("|\')(.*?)("|\')/', '', $clean);
     }
-
-
+    
+    
     /**
      * @param int $auction_id
      *
      * @return bool
      */
-    private function resolveCategories(int $auction_id): bool
+    private function resolveAttributes(int $auction_id): bool
     {
-        if ( ! empty($this->request->category) && is_array($this->request->category)) {
-            AuctionCategory::storeData($this->request->category, $auction_id);
-
+        if ( ! empty($this->request->product_attributes) && is_array($this->request->product_attributes)) {
+            AuctionAttribute::storeData($this->request->product_attributes, $auction_id);
+            
             return true;
         }
-
+        
         return false;
     }
 

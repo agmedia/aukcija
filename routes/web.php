@@ -53,34 +53,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('attribute/{attributes}/edit', [AttributesController::class, 'edit'])->name('attributes.edit');
         Route::patch('attribute/{attributes}', [AttributesController::class, 'update'])->name('attributes.update');
         Route::delete('attribute/{attributes}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
-        
-        // KATEGORIJE
-       /* Route::get('categories', [CategoryController::class, 'index'])->name('categories');
-        Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
-        Route::post('category', [CategoryController::class, 'store'])->name('category.store');
-        Route::get('category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
-        Route::patch('category/{category}', [CategoryController::class, 'update'])->name('category.update');
-        Route::delete('category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');*/
     });
-
-    // NARUDŽBE
-    /*Route::get('orders', [OrderController::class, 'index'])->name('orders');
-    Route::get('order/create', [OrderController::class, 'create'])->name('orders.create');
-    Route::post('order', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('order/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::get('order/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::patch('order/{order}', [OrderController::class, 'update'])->name('orders.update');*/
 
     // MARKETING
     Route::prefix('marketing')->group(function () {
-        // AKCIJE
-        /*Route::get('actions', [ActionController::class, 'index'])->name('actions');
-        Route::get('action/create', [ActionController::class, 'create'])->name('actions.create');
-        Route::post('action', [ActionController::class, 'store'])->name('actions.store');
-        Route::get('action/{action}/edit', [ActionController::class, 'edit'])->name('actions.edit');
-        Route::patch('action/{action}', [ActionController::class, 'update'])->name('actions.update');
-        Route::delete('action/{action}', [ActionController::class, 'destroy'])->name('actions.destroy');*/
-
         // BLOG
         Route::get('blogs', [BlogController::class, 'index'])->name('blogs');
         Route::get('blog/create', [BlogController::class, 'create'])->name('blogs.create');

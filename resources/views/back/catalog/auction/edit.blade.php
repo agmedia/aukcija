@@ -222,6 +222,18 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="atributi" role="tabpanel">
+                        <div class="block">
+                            <div class="block-header block-header-default">
+                                <h3 class="block-title">Lista atributa</h3>
+                            </div>
+                            <div class="block-content block-content-full">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12">
+                                        @livewire('back.catalog.product-attribute-table', ['items' => isset($auction) ? $auction->attributes()->get()->toArray() : []])
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane" id="slike" role="tabpanel">
                         <div class="block">
@@ -275,7 +287,6 @@
 
                         </div>
                     </div>
-
                 </div>
                 <div class="block-content bg-body-light">
                     <div class="row justify-content-center push">
