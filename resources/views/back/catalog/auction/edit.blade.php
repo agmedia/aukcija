@@ -72,9 +72,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#slike"><i class="si si-picture"></i> {{ __('Slike') }}</a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" href="#seo">
                             <i class="si si-link"></i> {{ __('SEO') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="#ponude">
+                            <i class="si si-link"></i> {{ __('Ponude') }}
                         </a>
                     </li>
                 </ul>
@@ -285,6 +290,20 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="ponude" role="tabpanel">
+                        <div class="block">
+                            <div class="block-header block-header-default">
+                                <h3 class="block-title">Lista ponuda</h3>
+                            </div>
+                            <div class="block-content block-content-full">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12">
+                                        @livewire('back.catalog.auction-bids-table', ['bids' => isset($auction) ? $auction->bids()->get()->toArray() : []])
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

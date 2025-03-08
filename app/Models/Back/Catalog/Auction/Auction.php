@@ -59,6 +59,15 @@ class Auction extends Model
     {
         return $this->hasMany(AuctionAttribute::class, 'auction_id')->with('attribute');
     }
+    
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bids()
+    {
+        return $this->hasMany(AuctionBid::class, 'auction_id')->with('user');
+    }
 
 
     /**

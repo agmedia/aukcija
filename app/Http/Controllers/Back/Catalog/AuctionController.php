@@ -93,7 +93,7 @@ class AuctionController extends Controller
     public function edit(Auction $auction)
     {
         $data = $auction->getRelationsData();
-
+        
         return view('back.catalog.auction.edit', compact('auction', 'data'));
     }
 
