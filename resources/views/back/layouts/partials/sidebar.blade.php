@@ -74,6 +74,12 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
+                            <a class="nav-main-link{{ request()->routeIs(['bids', 'bid.*']) ? ' active' : '' }}" href="{{ route('bids') }}">
+                                <span class="nav-main-link-name">Ponude</span>
+                            </a>
+                        </li>
+                        <hr class="mt-1 mb-1" style="border-top: 1px solid #3f3f3f; margin-right: 40px;">
+                        <li class="nav-main-item">
                             <a class="nav-main-link{{ request()->routeIs(['attributes', 'attributes.*']) ? ' active' : '' }}" href="{{ route('attributes') }}">
                                 <span class="nav-main-link-name">Atributi</span>
                             </a>

@@ -3,6 +3,7 @@
 use App\Actions\Fortify\ForgotPasswordController;
 use App\Http\Controllers\Back\Catalog\AttributesController;
 use App\Http\Controllers\Back\Catalog\AuctionController;
+use App\Http\Controllers\Back\Catalog\BidController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\Marketing\BlogController;
 use App\Http\Controllers\Back\Settings\App\CurrencyController;
@@ -38,14 +39,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     // CATALOG
     Route::prefix('catalog')->group(function () {
-        // KATEGORIJE
+        // AUCTIONS
         Route::get('auctions', [AuctionController::class, 'index'])->name('auctions');
         Route::get('auction/create', [AuctionController::class, 'create'])->name('auctions.create');
         Route::post('auction', [AuctionController::class, 'store'])->name('auctions.store');
         Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
         Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
         Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
-        
+        // KATEGORIJE
+        Route::get('bids', [BidController::class, 'index'])->name('bids');
         // Atttributes
         Route::get('attributes', [AttributesController::class, 'index'])->name('attributes');
         Route::get('attribute/create', [AttributesController::class, 'create'])->name('attributes.create');
