@@ -24,14 +24,18 @@
                 <table class="table table-striped table-borderless table-vcenter">
                     <thead class="thead-light">
                     <tr>
+                        <th class="text-center" style="width: 36px;">#</th>
                         <th style="width: 80%;">Naslov</th>
-                        <th class="text-right"  class="text-center">Akcije</th>
+                        <th class="text-center">Redosljed</th>
+                        <th class="text-right">Akcije</th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse ($attributes as $attribute)
                         <tr>
+                            <td class="text-center">{{ $attribute->id }}.</td>
                             <td><span class="font-size-sm">{{ $attribute->title }}</span></td>
+                            <td class="text-center">{{ $attribute->sort_order }}</td>
                             <td class="text-right font-size-sm">
                                 <a class="btn btn-sm btn-alt-secondary" href="{{ route('attributes.edit', ['attributes' => $attribute]) }}">
                                     <i class="fa fa-fw fa-pencil-alt"></i>

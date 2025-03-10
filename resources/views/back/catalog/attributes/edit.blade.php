@@ -39,6 +39,11 @@
                                 <input type="text" class="form-control" id="title-input" name="title" value="{{ isset($attributes) && isset($attributes->title) ? $attributes->title : old('title') }}">
                             </div>
 
+                            <div class="form-group">
+                                <label for="sort-input">Redosljed</label>
+                                <input type="text" class="form-control" id="sort-input" name="sort_order" value="{{ isset($attributes) && isset($attributes->sort_order) ? $attributes->sort_order : old('sort_order') }}">
+                            </div>
+
                             <div class="form-group mb-4 d-none">
                                 <label for="title-input">Tip atributa</label>
                                 <select class="js-select2 form-control form-control" id="tip" name="type" style="width: 100%;" data-placeholder="Odaberite tip atributa...">
