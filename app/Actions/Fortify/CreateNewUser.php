@@ -49,21 +49,22 @@ class CreateNewUser implements CreatesNewUsers
         Bouncer::assign('customer')->to($public_user);
 
         UserDetail::create([
-            'user_id'    => $public_user->id,
-            'fname'      => '',
-            'lname'      => '',
-            'address'    => '',
-            'zip'        => '',
-            'city'       => '',
-            'state'      => '',
-            'phone'      => '',
-            'avatar'     => 'media/avatars/avatar1.jpg',
-            'bio'        => '',
-            'social'     => '',
-            'role'       => 'customer',
-            'status'     => 1,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'user_id'       => $public_user->id,
+            'user_group_id' => 0,
+            'fname'         => '',
+            'lname'         => '',
+            'address'       => '',
+            'zip'           => '',
+            'city'          => '',
+            'state'         => '',
+            'phone'         => '',
+            'avatar'        => 'media/avatars/avatar1.jpg',
+            'bio'           => '',
+            'social'        => '',
+            'role'          => 'customer',
+            'status'        => 1,
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
         ]);
 
         return $public_user;

@@ -20,9 +20,6 @@
                 <a class="navbar-tool ms-12" href="{{ route('login') }}" ><span class="navbar-tool-tooltip">Korisnički račun</span>
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
                 </a>
-                <a class="navbar-tool ms-12" href="{{ route('moj.racun') }}" ><span class="navbar-tool-tooltip">Moj račun</span>
-                    <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle text-danger"></i></div>
-                </a>
             </div>
 
             <div class="collapse navbar-collapse me-auto mx-auto order-lg-2 justify-content-center" id="navbarCollapse">
