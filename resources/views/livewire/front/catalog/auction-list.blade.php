@@ -1,27 +1,38 @@
 <div>
-    <section class="col">
+    <div class="row pt-3 mx-n2">
         @foreach ($auctions as $auction)
-            <div class="row mx-n2 mb-3" v-if="products.total">
-                <div class="col-md-3 col-6 px-2 mb-4 d-flex align-items-stretch">
-                    <div class="card product-card shadow pb-2">
-                        <a class="card-img-top d-block overflow-hidden">
-                            <img loading="lazy" :src="{{ $auction->image }}" width="250" height="300">
-                        </a>
-                        <div class="card-body py-2">
-                            <h3 class="product-title fs-sm mt-2 mb-1"><a :href="origin + product.url">{{ $auction->name }}</a></h3>
-                            <div class="product-price">
-                                <span class="text-primary">{{ $auction->current_price }}</span>
 
-                            </div>
+                <?php
+                $start =  \Illuminate\Support\Carbon::parse($auction->end_time);
+                $now =  \Illuminate\Support\Carbon::now();
+                $days_count = $now->diffInDays($start);
+                $days_count =  floor($days_count);
+                ?>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-6 px-2 px-lg-4 mb-4 d-flex align-items-stretch">
+                    <div class="card product-card-alt">
+                        <div class="product-thumb">
+                            <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ $auction->image }}" alt="{{ $auction->name }}"></a>
                         </div>
-                        <div class="product-floating-btn">
-                            <a class="btn btn-primary btn-shadow btn-sm" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction]) }}">+<i class="ci-cart fs-base ms-1"></i></a>
+                        <div class="card-body px-0">
+                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>
+                            <div class=" fs-5 fw-bold text-title text-primary">
+                                @if($auction->current_price > 0)
+                                    {{ \App\Helpers\Currency::main($auction->current_price, true) }}
+                                @else
+                                    {{ \App\Helpers\Currency::main($auction->starting_price, true) }}
+                                @endif
+                            </div>
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ {{$days_count}} DANA </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
         @endforeach
 
         {{ $auctions->links() }}
-    </section>
+    </div>
 </div>

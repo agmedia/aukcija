@@ -10,9 +10,10 @@
 
             <!-- Toolbar -->
             <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-                @if (isset($group) && $group && ! isset($prod))
+             {{--    @if (isset($group) && $group && ! isset($prod))
                     <button class="navbar-toggler" type="button" data-bs-target="#shop-sidebar" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-filter-alt"></i></button>
                 @endif
+                --}}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
                 <a class="navbar-tool d-none d-lg-flex" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#searchBox" role="button" aria-expanded="false" aria-controls="searchBox"><span class="navbar-tool-tooltip">Pretraži</span>
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
@@ -31,8 +32,13 @@
                 </form>
 
                 <!-- Navbar -->
-                <ul class="navbar-nav justify-content-centerpe-lg-2 me-lg-2">
-                    <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Sve aukcije')]) }}"><span>Aukcije</span></a></li>
+                <ul class="navbar-nav justify-content-center pe-lg-2 me-lg-2">
+                    <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Sve aukcije')]) }}"><span>Aukcije</span></a>
+
+
+                    </li>
+
+
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Arhiva')]) }}"><span>Arhiva</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'uvjeti-prodaje']) }}"><span>O nama</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>
