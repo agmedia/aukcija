@@ -35,10 +35,10 @@
 
     @if (request()->routeIs(['index']))
 
+        {{--  @include('front.layouts.partials.aukcija')--}}
+     @include('front.layouts.partials.indexbanner')
 
-        @include('front.layouts.partials.indexbanner')
-
-        {!! $page->description !!}
+       {!! $page->description !!}
 
 
 

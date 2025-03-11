@@ -36,9 +36,9 @@ class CreateNewUser implements CreatesNewUsers
         // Recaptcha
         $recaptcha = (new Recaptcha())->check($input);
 
-        if ( ! $recaptcha->ok()) {
+      /*  if ( ! $recaptcha->ok()) {
             return back()->withErrors(['error' => 'ReCaptcha Error! Kontaktirajte administratora!']);
-        }
+        }*/
 
         $public_user = User::create([
             'name'     => $input['name'],

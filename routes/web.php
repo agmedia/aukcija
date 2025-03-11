@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     // CATALOG
     Route::prefix('catalog')->group(function () {
-        // AUCTIONS
+        // KATEGORIJE
         Route::get('auctions', [AuctionController::class, 'index'])->name('auctions');
         Route::get('auction/create', [AuctionController::class, 'create'])->name('auctions.create');
         Route::post('auction', [AuctionController::class, 'store'])->name('auctions.store');

@@ -141,7 +141,10 @@
 <script src="{{ asset('js/shufflejs/dist/shuffle.min.js') }}"></script>
 <!-- Main theme script-->
 
-
+<link rel="stylesheet" media="screen" href="{{ asset(config('settings.images_domain') . 'vendor/lightgallery/css/lightgallery-bundle.min.css') }}">
+<script src="{{ asset(config('settings.images_domain') . 'vendor/lightgallery/lightgallery.min.js') }}"></script>
+<script src="{{ asset(config('settings.images_domain') . 'vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js') }}"></script>
+<script src="{{ asset(config('settings.images_domain') . 'vendor/lightgallery/plugins/zoom/lg-zoom.min.js') }}"></script>
 
 <script src="{{ asset('js/theme.min.js') }}"></script>
 
