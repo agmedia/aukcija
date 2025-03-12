@@ -2,6 +2,7 @@
 
 namespace App\Models\Front\Catalog\Auction;
 
+use App\Helpers\Helper;
 use App\Models\Back\Catalog\Auction\AuctionBid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class Auction extends Model
 {
+
     /**
      * @var string
      */
@@ -20,6 +22,7 @@ class Auction extends Model
      * @var array
      */
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
 
     /**
      * Get the route key for the model.
@@ -63,6 +66,16 @@ class Auction extends Model
         return substr($this->image, $from, $length);
     }
 
+
+    /**
+     * @return Relation
+     */
+    public function attributes()
+    {
+        return $this->hasMany(AuctionAttribute::class, 'auction_id')->with('attribute');
+    }
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -102,6 +115,33 @@ class Auction extends Model
     public function scopePopular(Builder $query, $count = 12): Builder
     {
         return $query->where('featured', 1)->orderBy('viewed', 'desc')->limit($count);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function attributesList(): array
+    {
+        return Helper::resolveCache('product')->remember('attribute', config('cache.life'), function () {
+            if ($this->attributes()->count() > 0) {
+                $response = [];
+
+                foreach ($this->attributes()->get() as $attribute) {
+                    $response[] = [
+                        'id' => $attribute->attribute_id,
+                        'group' => $attribute->group_title,
+                        'title' => $attribute->attribute->title,
+                        'value' => $attribute->value,
+                        'sort_order' => $attribute->attribute->sort_order,
+                    ];
+                }
+
+                return collect($response)->sortBy('sort_order')->toArray();
+            }
+
+            return [];
+        });
     }
 
 }
