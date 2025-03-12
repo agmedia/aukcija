@@ -184,12 +184,20 @@
                                             </div>
                                         </div>
 
+
+
                                         <div class="form-group row items-push mb-4">
                                             <div class="col-md-12">
                                                 <label for="categories">Odaberi kategorije</label>
-                                                <select class="form-control" id="category-select" name="category[]" style="width: 100%;" multiple>
+                                                <select class="form-control" id="category-select" name="group" style="width: 100%;" >
                                                     <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                                                    @foreach ($data['categories'] as $group => $cats)
+
+                                                    @foreach ($groups as $key => $title)
+                                                        <option value="{{ $title }}" class="pl-3 text-sm" {{ ((isset($auction) && $auction->group) and ($title == $auction->group)) ? 'selected' : '' }}>{{ $title }}</option>
+                                                    @endforeach
+
+
+                                                   {{-- @foreach ($groups as $group => $cats)
                                                         @foreach ($cats as $id => $category)
                                                             <option value="{{ $id }}" class="font-weight-bold small" {{ ((isset($auction)) and (in_array($id, $auction->categories()->pluck('id')->toArray()))) ? 'selected' : '' }}>{{ $category['title'] }}</option>
                                                             @if ( ! empty($category['subs']))
@@ -198,22 +206,9 @@
                                                                 @endforeach
                                                             @endif
                                                         @endforeach
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
-                                                {{--                                    <label for="dm-post-edit-slug">Kategorija <span class="text-danger">*</span></label>--}}
-                                                {{--                                    <select class="js-select2 form-control" id="category-select" name="category" style="width: 100%;" data-placeholder="Odaberite kategoriju">--}}
-                                                {{--                                        <option></option>--}}
-                                                {{--                                        @foreach ($data['categories'] as $group => $cats)--}}
-                                                {{--                                            @foreach ($cats as $id => $category)--}}
-                                                {{--                                                <option value="{{ $id }}" class="font-weight-bold small" {{ ((isset($auction)) and (in_array($id, $auction->categories()->pluck('id')->toArray()))) ? 'selected' : '' }}>{{ $group . ' >> ' . $category['title'] }}</option>--}}
-                                                {{--                                                @if ( ! empty($category['subs']))--}}
-                                                {{--                                                    @foreach ($category['subs'] as $sub_id => $subcategory)--}}
-                                                {{--                                                        <option value="{{ $sub_id }}" class="pl-3 text-sm" {{ ((isset($auction) && $auction->subcategory()) and ($sub_id == $auction->subcategory()->id)) ? 'selected' : '' }}>{{ $subcategory['title'] }}</option>--}}
-                                                {{--                                                    @endforeach--}}
-                                                {{--                                                @endif--}}
-                                                {{--                                            @endforeach--}}
-                                                {{--                                        @endforeach--}}
-                                                {{--                                    </select>--}}
+
                                                 @error('category')
                                                 <span class="text-danger font-italic">Kategorija je potrebna...</span>
                                                 @enderror

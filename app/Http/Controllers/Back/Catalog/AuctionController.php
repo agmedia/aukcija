@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Back\Catalog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Back\Catalog\Author;
+use App\Models\Back\Catalog\Groups\Groups;
+
 use App\Models\Back\Catalog\Category;
 use App\Models\Back\Catalog\Auction\Auction;
-use App\Models\Back\Catalog\Auction\AuctionAction;
+
 use App\Models\Back\Catalog\Auction\AuctionCategory;
 use App\Models\Back\Catalog\Auction\AuctionImage;
-use App\Models\Back\Catalog\Publisher;
+
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -36,11 +37,11 @@ class AuctionController extends Controller
         }
 
         //$categories = (new Category())->getList(false);
-        /*$authors    = Author::all()->pluck('title', 'id');
-        $publishers = Publisher::all()->pluck('title', 'id');*/
+        /*$authors    = Author::all()->pluck('title', 'id');*/
+        $groups = Groups::all()->pluck('title', 'id');
         $counts = [];//Auction::setCounts($query);
 
-        return view('back.catalog.auction.index', compact('auctions', /*'categories', 'authors', 'publishers',*/ 'counts'));
+        return view('back.catalog.auction.index', compact('auctions', 'groups', /*'authors', 'publishers',*/ 'counts'));
     }
 
 
@@ -93,8 +94,10 @@ class AuctionController extends Controller
     public function edit(Auction $auction)
     {
         $data = $auction->getRelationsData();
-        
-        return view('back.catalog.auction.edit', compact('auction', 'data'));
+
+        $groups = Groups::all()->pluck('title', 'id');
+
+        return view('back.catalog.auction.edit', compact('auction', 'groups', 'data'));
     }
 
 
