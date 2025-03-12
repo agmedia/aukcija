@@ -2,6 +2,7 @@
 
 use App\Actions\Fortify\ForgotPasswordController;
 use App\Http\Controllers\Back\Catalog\AttributesController;
+use App\Http\Controllers\Back\Catalog\GroupsController;
 use App\Http\Controllers\Back\Catalog\AuctionController;
 use App\Http\Controllers\Back\Catalog\BidController;
 use App\Http\Controllers\Back\DashboardController;
@@ -55,6 +56,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('attribute/{attributes}/edit', [AttributesController::class, 'edit'])->name('attributes.edit');
         Route::patch('attribute/{attributes}', [AttributesController::class, 'update'])->name('attributes.update');
         Route::delete('attribute/{attributes}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
+
+
+        // Groups
+        Route::get('groups', [GroupsController::class, 'index'])->name('groups');
+        Route::get('groups/create', [GroupsController::class, 'create'])->name('groups.create');
+        Route::post('group', [GroupsController::class, 'store'])->name('groups.store');
+        Route::get('group/{groups}/edit', [GroupsController::class, 'edit'])->name('groups.edit');
+        Route::patch('group/{groups}', [GroupsController::class, 'update'])->name('groups.update');
+        Route::delete('group/{groups}', [GroupsController::class, 'destroy'])->name('groups.destroy');
     });
 
     // MARKETING

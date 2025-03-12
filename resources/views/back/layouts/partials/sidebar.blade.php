@@ -74,6 +74,11 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
+                            <a class="nav-main-link{{ request()->routeIs(['groups', 'groups.*']) ? ' active' : '' }}" href="{{ route('groups') }}">
+                                <span class="nav-main-link-name">Kategorije</span>
+                            </a>
+                        </li>
+                        <li class="nav-main-item">
                             <a class="nav-main-link{{ request()->routeIs(['bids', 'bid.*']) ? ' active' : '' }}" href="{{ route('bids') }}">
                                 <span class="nav-main-link-name">Ponude</span>
                             </a>
