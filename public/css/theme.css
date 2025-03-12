@@ -104,6 +104,10 @@ hr {
     opacity: 1;
 }
 
+.img-thumb{
+    float: left;width:280px!important;height: 320px!important;background-size: cover!important;
+}
+
 .bg-symphony{
     background-image: url('../media/symphony.png');background-repeat:repeat;background-attachment:fixed;
 }

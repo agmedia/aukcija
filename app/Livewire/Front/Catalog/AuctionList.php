@@ -10,28 +10,28 @@ class AuctionList extends Component
 {
     use WithPagination;
     public $group = '';
-    
-    
+
+
     public function mount()
     {
         if ($this->group !== '') {
-        
+
         }
     }
-    
+
     public function render()
     {
         return view('livewire.front.catalog.auction-list', [
             'auctions' => $this->resolveAuctions()
         ]);
     }
-    
-    
+
+
     private function resolveAuctions()
     {
         //dd(Auction::query()->active()->paginate(20));
         return Auction::query()->active()->paginate(20);
-        
+
         /*foreach ($auctions as $auction) {
             $this->auctions[] = [
                 'id' => $auction->id,
@@ -39,8 +39,9 @@ class AuctionList extends Component
             ];
         }*/
     }
-    
-    
+
+
+
     /**
      * @return string
      */

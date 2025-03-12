@@ -12,7 +12,8 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-6 px-2 px-lg-4 mb-4 d-flex align-items-stretch">
                     <div class="card product-card-alt">
                         <div class="product-thumb">
-                            <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ $auction->image }}" alt="{{ $auction->name }}"></a>
+                            <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ $auction->thumb }}" width="280"  height="
+                            320" alt="{{ $auction->name }}" class="img-thumb"></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>

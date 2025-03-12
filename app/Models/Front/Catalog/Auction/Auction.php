@@ -2,6 +2,7 @@
 
 namespace App\Models\Front\Catalog\Auction;
 
+use App\Models\Back\Catalog\Auction\AuctionBid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -29,7 +30,7 @@ class Auction extends Model
     {
         return 'slug';
     }
-    
+
 
     /**
      * @return Relation
@@ -37,6 +38,17 @@ class Auction extends Model
     public function images()
     {
         return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
+    }
+
+
+    /**
+     * @param $value
+     *
+     * @return array|string|string[]
+     */
+    public function getThumbAttribute($value)
+    {
+        return str_replace('.webp', '-thumb.webp', $this->image);
     }
 
 
@@ -49,6 +61,14 @@ class Auction extends Model
         $length = strrpos($this->image, '-') - $from;
 
         return substr($this->image, $from, $length);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bids()
+    {
+        return $this->hasMany(AuctionBid::class, 'auction_id')->with('user');
     }
 
 
@@ -72,7 +92,7 @@ class Auction extends Model
     {
         return $query->where('status', 1)->orderBy('created_at', 'desc')->limit($count);
     }
-    
+
 
     /**
      * @param $query

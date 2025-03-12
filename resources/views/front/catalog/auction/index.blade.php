@@ -47,9 +47,9 @@
 
 
     <!-- Page Title-->
-    <div class="page-title-overlap  pt-4 bg-symphony">
-        <div class="container d-lg-block justify-content-end py-2 py-lg-3">
-            <div class="order-lg-2 mb-3 mt-3 mb-lg-0 pb-lg-1">
+    <div class="page-title-overlap  pt-3 bg-symphony">
+        <div class="container d-lg-block justify-content-end py-0">
+            <div class="order-lg-2 mt-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark flex-lg-nowrap justify-content-center ">
                         <li class="breadcrumb-item"><a class="text-nowrap" href="{{ route('index') }}"><i class="ci-home"></i>Naslovnica</a></li>
@@ -65,7 +65,7 @@
     </div>
     <section class="container pb-0">
         <!-- Product-->
-        <div class="bg-light shadow-lg rounded-3 px-4 py-lg-4 py-3 mb-5">
+        <div class="bg-light shadow-lg rounded-3 px-4 py-1 mb-5">
             <ul class="nav nav-tabs  " role="tablist">
                 <li class="nav-item"><a class="nav-link py-4 px-sm-4 active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije </a></li>
                 <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a>  </li>
@@ -122,17 +122,21 @@
                             <h2 class="h3 mb-3">{{ $auction->name }}</h2>
                             <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
                                 <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
-                                <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>15 views</div>
+                                <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>15 pregleda</div>
 
                             </div>
 
                             <!-- Description-->
-                            <p class="mb-4 pb-md-2 fs-sm">Hendrerit interdum sit massa lobortis. Habitant faucibus lorem dui mauris. Pellentesque nunc, tortor quam consequat odio. Sed faucibus id rhoncus, scelerisque tristique ultricies nam.</p>
+
                             <!-- Auction-->
                             <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
                                 <div class="col">
-                                    <h3 class="h6 mb-2 fs-sm text-muted">Treutna cijena</h3>
+                                    <h3 class="h6 mb-2 fs-sm text-muted">Trenutna cijena</h3>
+                                    @if($auction->current_price > 0)
                                     <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->current_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                    @else
+                                        <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                    @endif
                                 </div>
                                 <div class="col">
                                     <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
@@ -156,9 +160,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Place a bid--><a class="btn btn-lg bg-dark text-light d-block w-100 mb-4" href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
+
+
+
+                            <!-- Place a bid-->
+
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <a href="#signin-modal" data-bs-toggle="modal" type="button" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 5), true) }}</a>
+                                </div>
+                                <div class="col">
+                                    <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 10), true) }}</a>
+                                </div>
+                                <div class="col">
+                                    <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 15), true) }}</a>
+                                </div>
+                            </div>
+
+
+                            <a class="btn btn btn-dark d-block w-100 rounded-pill mb-4" href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
                             <!-- Product info-->
-                            <div class="pt-3">
+                            <div class="pt-0">
                                 <!-- Nav tabs-->
                                 <div class="mb-4" style="overflow-x: auto;">
                                     <ul class="nav nav-tabs nav-fill flex-nowrap text-nowrap mb-1" role="tablist">
@@ -167,29 +189,43 @@
 
                                     </ul>
                                 </div>
+
+                                {{-- dd($auction->bids) --}}
                                 <!-- Tabs content-->
-                                <div class="tab-content">
+                                @if( isset($auction->bids) and $auction->bids)
+                                    <div class="tab-content">
 
                                     <!-- Bid History-->
                                     <div class="tab-pane fade show active" id="bids" role="tabpanel">
                                         <ul class="list-unstyled mb-0">
+
+
+
+                                            @foreach($auction->bids as $bid)
+
+
                                             <!-- Bid-->
-                                            <li class="d-flex align-items-sm-center align-items-start w-100 mb-3 pb-3 border-bottom">
+                                            <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
                                                 <div class="d-sm-flex align-items-sm-center w-100">
                                                     <div class="mb-sm-0 mb-2">
-                                                        <h6 class="mb-1 fs-sm"><a href='nft-vendor.html' class='text-decoration-none text-accent'>@distrokid</a> placed a bid</h6><span class="fs-sm fw-normal text-muted">2 hours ago</span>
+                                                        <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
+                                                        <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
                                                     </div>
+
                                                     <div class="ms-sm-auto text-nowrap">
-                                                        <h6 class="mb-0 fs-lg fw-medium text-darker">795.48</h6>
+                                                        <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
                                                     </div>
                                                 </div>
                                             </li>
+
+                                            @endforeach
 
                                         </ul>
                                     </div>
                                     <!-- Provenance-->
 
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -201,26 +237,15 @@
                         <!-- Specs table-->
                         <div class="row pt-2">
                             <div class="col-lg-5 col-sm-6">
-                                <h3 class="h6">General specs</h3>
+                                <h3 class="h6">Specifikacije</h3>
                                 <ul class="list-unstyled fs-sm pb-2">
+                                    @foreach($auction->attributes as $att)
                                     <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Model:</span><span>Amazfit Smartwatch</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Gender:</span><span>Unisex</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Smartphone app:</span><span>Amazfit Watch</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">OS campitibility:</span><span>Android / iOS</span></li>
+
+                                    @endforeach
+
                                 </ul>
-                                <h3 class="h6">Physical specs</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Shape:</span><span>Rectangular</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Body material:</span><span>Plastics / Ceramics</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Band material:</span><span>Silicone</span></li>
-                                </ul>
-                                <h3 class="h6">Display</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Display type:</span><span>Color</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Display size:</span><span>1.28"</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Screen resolution:</span><span>176 x 176</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Touch screen:</span><span>No</span></li>
-                                </ul>
+
                             </div>
                             <div class="col-lg-5 col-sm-6 offset-lg-1">
                                 <h3 class="h6">Functions</h3>
@@ -259,146 +284,19 @@
 
         <div class="tns-carousel tns-controls-static tns-controls-inside">
             <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
-                <!-- Product-->
-                <div class="col ">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b1.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
 
 
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b2.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
+             @foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
+                       @if ($cat_product->id  != $auction->id)
+                           <div>
+                               @include('front.catalog.category.product', ['auction' => $cat_product])
+                           </div>
+                       @endif
+                   @endforeach
 
 
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b3.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
 
 
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b4.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b5.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b6.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Product-->
-                <div class="col">
-                    <!-- Product-->
-                    <div class="card product-card-alt">
-                        <div class="product-thumb">
-                            <a  href="#"><img src="media/books/b7.jpg" alt="Product"></a>
-                        </div>
-                        <div class="card-body px-0">
-                            <h3 class="product-title text-title text-black fs-6 mb-2"><a href="#">Bošković Ruđer Josip: De solis ac lunae defectibus libri V</a></h3>
-                            <div class=" fs-5 fw-bold text-title text-primary">24.00€ </div>
-
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ 3 DANA </span>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
