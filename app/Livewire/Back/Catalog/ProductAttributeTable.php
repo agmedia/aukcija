@@ -99,10 +99,10 @@ class ProductAttributeTable extends Component
      */
     private function setValues()
     {
-        $this->values = Attributes::query()->where('status', 1)->pluck('title', 'id')->toArray();
+        $this->values = Attributes::query()->where('status', 1)->orderBy('sort_order', 'ASC')->pluck('title', 'id')->toArray();
     }
-    
-    
+
+
     /**
      * @return void
      */

@@ -1,4 +1,22 @@
 <div>
+
+    <div class="d-flex justify-content-center justify-content-sm-between align-items-center mx-3 pt-2 pb-4 pb-sm-2">
+        <div class="d-flex flex-wrap">
+            <div class="d-flex align-items-center flex-nowrap me-3 me-sm-4 pb-3">
+                <select class="form-select pe-2" >
+                    <option value="">Sortiraj</option>
+                    <option value="novi">Najnovije</option>
+                    <option value="price_up">Najmanja cijena</option>
+                    <option value="price_down">Najveća cijena</option>
+                    <option value="naziv_up">A - Ž</option>
+                    <option value="naziv_down">Ž - A</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex pb-3"><span class="fs-sm text-muted btn btn-outline-secondary  text-nowrap ms-2 d-none d-sm-block">Ukupno 155 artikala</span></div>
+    </div>
+
+
     <div class="row pt-3 mx-n2">
         @foreach ($auctions as $auction)
 
@@ -13,7 +31,7 @@
                     <div class="card product-card-alt">
                         <div class="product-thumb">
                             <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ $auction->thumb }}" width="280"  height="
-                            320" alt="{{ $auction->name }}" class="img-thumb"></a>
+                            320" alt="{{ $auction->name }}" ></a>
                         </div>
                         <div class="card-body px-0">
                             <h3 class="product-title text-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>

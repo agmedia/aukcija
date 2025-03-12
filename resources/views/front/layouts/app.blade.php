@@ -127,6 +127,8 @@
 
 <!-- Back To Top Button-->
 <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up"></i></a>
+
+@include('front.layouts.modals.login')
 <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
 <link rel="stylesheet" media="screen" href="{{ asset(config('settings.images_domain') . 'css/tiny-slider.css?v=1.2') }}"/>
 <!-- Vendor scripts: js libraries and plugins-->

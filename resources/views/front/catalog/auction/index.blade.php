@@ -54,7 +54,7 @@
                     <ol class="breadcrumb breadcrumb-dark flex-lg-nowrap justify-content-center ">
                         <li class="breadcrumb-item"><a class="text-nowrap" href="{{ route('index') }}"><i class="ci-home"></i>Naslovnica</a></li>
                         @if ($group)
-                            <li class="breadcrumb-item text-nowrap active" aria-current="page"><a class="text-nowrap" href="{{ route('index') }}">{{ \Illuminate\Support\Str::ucfirst($group) }}</a></li>
+                            <li class="breadcrumb-item text-nowrap active" aria-current="page"><a class="text-nowrap" href="{{ route('catalog.route', ['group' => $group]) }}">{{ \Illuminate\Support\Str::ucfirst($group) }}</a></li>
                         @endif
                         <li class="breadcrumb-item text-nowrap active" aria-current="page">{{ \Illuminate\Support\Str::limit($auction->name, 50) }}</li>
                     </ol>
@@ -122,7 +122,7 @@
                             <h2 class="h3 mb-3">{{ $auction->name }}</h2>
                             <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
                                 <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
-                                <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>15 pregleda</div>
+                                <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
 
                             </div>
 
@@ -177,8 +177,17 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <div class="col">
+                                <input class="form-control rounded-pill d-block w-100  me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($auction->current_price + 5), true) }} ili više">
+                                </div>
+                                    <div class="col">
+                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill " href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
+                                    </div>
+                            </div>
 
-                            <a class="btn btn btn-dark d-block w-100 rounded-pill mb-4" href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
+
+
                             <!-- Product info-->
                             <div class="pt-0">
                                 <!-- Nav tabs-->
@@ -239,32 +248,17 @@
                             <div class="col-lg-5 col-sm-6">
                                 <h3 class="h6">Specifikacije</h3>
                                 <ul class="list-unstyled fs-sm pb-2">
+                                    @foreach ($auction->attributesList() as $attribute)
 
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Model:</span><span>Amazfit Smartwatch</span></li>
-
-
-
+                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
+                                    @endforeach
                                 </ul>
-
                             </div>
-                            <div class="col-lg-5 col-sm-6 offset-lg-1">
-                                <h3 class="h6">Functions</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Phone calls:</span><span>Incoming call notification</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Monitoring:</span><span>Heart rate / Physical activity</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">GPS support:</span><span>Yes</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Sensors:</span><span>Heart rate, Gyroscope, Geomagnetic, Light sensor</span></li>
-                                </ul>
-                                <h3 class="h6">Battery</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Battery:</span><span>Li-Pol</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Battery capacity:</span><span>190 mAh</span></li>
-                                </ul>
-                                <h3 class="h6">Dimensions</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Dimensions:</span><span>195 x 20 mm</span></li>
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Weight:</span><span>32 g</span></li>
-                                </ul>
+                            <div class="col-lg-5 col-sm-6 offset-lg-1 ">
+                                <h3 class="h6">Opis</h3>
+                                   <div class="fs-sm">
+                                        {!! $auction->description !!}
+                                   </div>
                             </div>
                         </div>
                     </div>
@@ -305,75 +299,7 @@
 
     </section>
 
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-secondary">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign in</a></li>
-                        <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign up</a></li>
-                    </ul>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body tab-content py-4">
-                    <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-                        <div class="mb-3">
-                            <label class="form-label" for="si-email">Email address</label>
-                            <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com" required>
-                            <div class="invalid-feedback">Please provide a valid email address.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="si-password">Password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="si-password" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="mb-3 d-flex flex-wrap justify-content-between">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="si-remember">
-                                <label class="form-check-label" for="si-remember">Remember me</label>
-                            </div><a class="fs-sm" href="#">Forgot password?</a>
-                        </div>
-                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-                    </form>
-                    <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-                        <div class="mb-3">
-                            <label class="form-label" for="su-name">Full name</label>
-                            <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
-                            <div class="invalid-feedback">Please fill in your name.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="su-email">Email address</label>
-                            <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required>
-                            <div class="invalid-feedback">Please provide a valid email address.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="su-password">Password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="su-password" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="su-password-confirm">Confirm password</label>
-                            <div class="password-toggle">
-                                <input class="form-control" type="password" id="su-password-confirm" required>
-                                <label class="password-toggle-btn" aria-label="Show/hide password">
-                                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 @endsection
 
