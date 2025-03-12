@@ -164,151 +164,160 @@
 
 
                             <!-- Place a bid-->
+                           @if($auction->current_price > 0)
+                                @php
+                                $base_price = $auction->current_price;
+                                @endphp
+                            @else
+                                @php
+                                    $base_price = $auction->starting_price;
+                                @endphp
+                        @endif
 
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <a href="#signin-modal" data-bs-toggle="modal" type="button" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 5), true) }}</a>
-                                </div>
-                                <div class="col">
-                                    <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 10), true) }}</a>
-                                </div>
-                                <div class="col">
-                                    <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->current_price + 15), true) }}</a>
-                                </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <a href="#signin-modal" data-bs-toggle="modal" type="button" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 5), true) }}</a>
                             </div>
-
-                            <div class="row mb-3">
-                                <div class="col">
-                                <input class="form-control rounded-pill d-block w-100  me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($auction->current_price + 5), true) }} ili više">
-                                </div>
-                                    <div class="col">
-                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill " href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
-                                    </div>
+                            <div class="col">
+                                <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 10), true) }}</a>
                             </div>
-
-
-
-                            <!-- Product info-->
-                            <div class="pt-0">
-                                <!-- Nav tabs-->
-                                <div class="mb-4" style="overflow-x: auto;">
-                                    <ul class="nav nav-tabs nav-fill flex-nowrap text-nowrap mb-1" role="tablist">
-
-                                        <li class="nav-item"><a class="nav-link active" href="#bids" data-bs-toggle="tab" role="tab">Zadnje ponude</a></li>
-
-                                    </ul>
-                                </div>
-
-                                {{-- dd($auction->bids) --}}
-                                <!-- Tabs content-->
-                                @if( isset($auction->bids) and $auction->bids)
-                                    <div class="tab-content">
-
-                                    <!-- Bid History-->
-                                    <div class="tab-pane fade show active" id="bids" role="tabpanel">
-                                        <ul class="list-unstyled mb-0">
-
-
-
-                                            @foreach($auction->bids as $bid)
-
-
-                                            <!-- Bid-->
-                                            <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
-                                                <div class="d-sm-flex align-items-sm-center w-100">
-                                                    <div class="mb-sm-0 mb-2">
-                                                        <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
-                                                        <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
-                                                    </div>
-
-                                                    <div class="ms-sm-auto text-nowrap">
-                                                        <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            @endforeach
-
-                                        </ul>
-                                    </div>
-                                    <!-- Provenance-->
-
-                                </div>
-                                @endif
+                            <div class="col">
+                                <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 15), true) }}</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                    </div>
-                    <!-- Tech specs tab-->
-                    <div class="tab-pane fade" id="specs" role="tabpanel">
 
-                        <!-- Specs table-->
-                        <div class="row pt-2">
-                            <div class="col-lg-5 col-sm-6">
-                                <h3 class="h6">Specifikacije</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    @foreach ($auction->attributesList() as $attribute)
+    <div class="row mb-3">
+        <div class="col">
+        <input class="form-control rounded-pill d-block w-100  me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($base_price + 5), true) }} ili više">
+        </div>
+            <div class="col">
+        <a class="btn btn btn-dark d-block d-block w-100 rounded-pill " href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
+            </div>
+    </div>
 
-                                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
-                                    @endforeach
-                                </ul>
+
+
+    <!-- Product info-->
+    <div class="pt-0">
+        <!-- Nav tabs-->
+        <div class="mb-4" style="overflow-x: auto;">
+            <ul class="nav nav-tabs nav-fill flex-nowrap text-nowrap mb-1" role="tablist">
+
+                <li class="nav-item"><a class="nav-link active" href="#bids" data-bs-toggle="tab" role="tab">Zadnje ponude</a></li>
+
+            </ul>
+        </div>
+
+        {{-- dd($auction->bids) --}}
+        <!-- Tabs content-->
+        @if( isset($auction->bids) and $auction->bids)
+            <div class="tab-content">
+
+            <!-- Bid History-->
+            <div class="tab-pane fade show active" id="bids" role="tabpanel">
+                <ul class="list-unstyled mb-0">
+
+
+
+                    @foreach($auction->bids as $bid)
+
+
+                    <!-- Bid-->
+                    <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
+                        <div class="d-sm-flex align-items-sm-center w-100">
+                            <div class="mb-sm-0 mb-2">
+                                <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
+                                <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
                             </div>
-                            <div class="col-lg-5 col-sm-6 offset-lg-1 ">
-                                <h3 class="h6">Opis</h3>
-                                   <div class="fs-sm">
-                                        {!! $auction->description !!}
-                                   </div>
+
+                            <div class="ms-sm-auto text-nowrap">
+                                <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
                             </div>
                         </div>
-                    </div>
+                    </li>
 
-                </div>
+                    @endforeach
+
+                </ul>
             </div>
+            <!-- Provenance-->
+
         </div>
-    </section>
-    <!-- Recent products-->
-    <section class="container py-5 pt-0 mb-lg-3">
-        <!-- Heading-->
-        <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
-            <h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
-            <a class="btn btn-sm btn-outline-dark mt-3" href="#">Pogledajte sve<i class="ci-arrow-right fs-ms ms-1"></i></a>
-        </div>
-        <!-- Grid-->
+        @endif
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tech specs tab-->
+<div class="tab-pane fade" id="specs" role="tabpanel">
 
-        <div class="tns-carousel tns-controls-static tns-controls-inside">
-            <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
+<!-- Specs table-->
+<div class="row pt-2">
+    <div class="col-lg-5 col-sm-6">
+        <h3 class="h6">Specifikacije</h3>
+        <ul class="list-unstyled fs-sm pb-2">
+            @foreach ($auction->attributesList() as $attribute)
+
+            <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="col-lg-5 col-sm-6 offset-lg-1 ">
+        <h3 class="h6">Opis</h3>
+           <div class="fs-sm">
+                {!! $auction->description !!}
+           </div>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+<!-- Recent products-->
+<section class="container py-5 pt-0 mb-lg-3">
+<!-- Heading-->
+<div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
+<h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
+<a class="btn btn-sm btn-outline-dark mt-3" href="#">Pogledajte sve<i class="ci-arrow-right fs-ms ms-1"></i></a>
+</div>
+<!-- Grid-->
+
+<div class="tns-carousel tns-controls-static tns-controls-inside">
+<div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
 
 
-             @foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
-                       @if ($cat_product->id  != $auction->id)
-                           <div>
-                               @include('front.catalog.category.product', ['auction' => $cat_product])
-                           </div>
-                       @endif
-                   @endforeach
+@foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
+@if ($cat_product->id  != $auction->id)
+   <div>
+       @include('front.catalog.category.product', ['auction' => $cat_product])
+   </div>
+@endif
+@endforeach
 
 
 
 
-            </div>
-        </div>
+</div>
+</div>
 
 
-        <!-- More button-->
+<!-- More button-->
 
-    </section>
+</section>
 
 
 
 @endsection
 
 @push('js_after')
-    <script type="application/ld+json">
-        {!! collect($crumbs)->toJson() !!}
-    </script>
-    <script type="application/ld+json">
-        {!! collect($schema)->toJson() !!}
-    </script>
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6134a372eae16400120a5035&product=sop' async='async'></script>
+<script type="application/ld+json">
+{!! collect($crumbs)->toJson() !!}
+</script>
+<script type="application/ld+json">
+{!! collect($schema)->toJson() !!}
+</script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6134a372eae16400120a5035&product=sop' async='async'></script>
 @endpush
