@@ -239,10 +239,10 @@
                             <div class="col-lg-5 col-sm-6">
                                 <h3 class="h6">Specifikacije</h3>
                                 <ul class="list-unstyled fs-sm pb-2">
-                                    @foreach($auction->attributes as $att)
+
                                     <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Model:</span><span>Amazfit Smartwatch</span></li>
 
-                                    @endforeach
+
 
                                 </ul>
 
