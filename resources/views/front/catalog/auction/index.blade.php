@@ -281,7 +281,7 @@
 <!-- Heading-->
 <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
 <h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
-<a class="btn btn-sm btn-outline-dark mt-3" href="#">Pogledajte sve<i class="ci-arrow-right fs-ms ms-1"></i></a>
+
 </div>
 <!-- Grid-->
 

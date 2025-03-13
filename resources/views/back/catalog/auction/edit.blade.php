@@ -291,6 +291,10 @@
                         <div class="block">
                             <div class="block-header block-header-default">
                                 <h3 class="block-title">Lista ponuda</h3>
+
+                                <button class="btn btn-sm btn-alt-secondary" onclick="event.preventDefault(); openModal();">
+                                    <i class="fa fa-fw fa-plus-circle"></i> Dodaj novu ponudu
+                                </button>
                             </div>
                             <div class="block-content block-content-full">
                                 <div class="row justify-content-center">
@@ -335,6 +339,57 @@
     </div>
 @endsection
 
+@push('modals')
+    <div class="modal fade" id="nova-ponuda" tabindex="-1" role="dialog" aria-labelledby="tax--modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popout" role="document">
+            <div class="modal-content rounded">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary">
+                        <h3 class="block-title">Dodaj novu ponudu</h3>
+                        <div class="block-options">
+                            <a class="text-muted font-size-h3" href="#" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-md-10">
+                                <div class="form-group mb-4">
+                                    <label for="tax-title">Iznos</label>
+                                    <input type="text" class="form-control" id="amount" name="amount">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tax-rate">Korisnik</label>
+                                    <select class="js-select2 form-control" id="user_id" name="user_id" style="width: 100%;" data-placeholder="Odaberite korisnika...">
+                                        <option></option>
+                                        <option name="1">Tomislav</option>
+
+                                    </select>
+                                </div>
+
+
+                                <input type="hidden" id="auction_id" name="auction_id" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right bg-light">
+                        <a class="btn btn-sm btn-light" data-dismiss="modal" aria-label="Close">
+                            Odustani <i class="fa fa-times ml-2"></i>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary" >
+                            Snimi <i class="fa fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@endpush
+
 @push('js_after')
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
@@ -346,6 +401,15 @@
 
     <!-- Page JS Helpers (CKEditor 5 plugins) -->
     <script>jQuery(function(){Dashmix.helpers(['datepicker']);});</script>
+
+    <script>
+        function openModal(item = {}) {
+
+
+            $('#nova-ponuda').modal('show');
+
+        }
+    </script>
 
     <script>
         $(() => {
@@ -360,6 +424,7 @@
 
             $('#category-select').select2({});
             $('#tax-select').select2({});
+            $('#user_id').select2({});
             $('#action-select').select2({
                 placeholder: 'Odaberite...',
                 minimumResultsForSearch: Infinity
