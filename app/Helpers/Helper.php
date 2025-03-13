@@ -514,7 +514,7 @@ class Helper
         $slug = null;
 
         if ($target) {
-            $product = Product::where('id', $target)->first();
+            $product = Auction::where('id', $target)->first();
 
             if ($product) {
                 $slug = $product->slug;
@@ -522,7 +522,7 @@ class Helper
         }
 
         $slug  = $slug ?: Str::slug($data[$tag]);
-        $exist = Product::where('slug', $slug)->count();
+        $exist = Auction::where('slug', $slug)->count();
 
         $cat_exist = Category::where('slug', $slug)->count();
 

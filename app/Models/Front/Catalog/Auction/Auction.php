@@ -123,7 +123,7 @@ class Auction extends Model
      */
     public function attributesList(): array
     {
-        return Helper::resolveCache('product')->remember('attribute', config('cache.life'), function () {
+        return Helper::resolveCache('auction')->remember('attribute', config('cache.life'), function () {
             if ($this->attributes()->count() > 0) {
                 $response = [];
 

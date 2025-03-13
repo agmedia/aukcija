@@ -2,11 +2,14 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\App;
+
 use App\Models\Back\Catalog\Auction\Auction;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 /**
@@ -26,7 +29,10 @@ class AuctionsTable extends DataTableComponent
      */
     public function configure(): void
     {
+
+        App::setLocale('hr');
         $this->setPrimaryKey('id');
+
     }
 
 
@@ -38,6 +44,23 @@ class AuctionsTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
+            Column::make("Image", "image")->hideIf(true),
+
+            ImageColumn::make('Slika')
+
+                ->location(
+
+                    fn($row) => ( 'http://aukcija.test/'. $row->image )
+
+                )
+
+                ->attributes(fn($row) => [
+
+                    'class' => 'rounded-full',
+                    'style' => 'height:80px',
+                    'alt' => $row->name . ' Avatar',
+
+                ]),
             Column::make("Šifra", "sku")
                 ->sortable()
                 ->searchable(),
@@ -83,4 +106,6 @@ class AuctionsTable extends DataTableComponent
 
         $item->save();
     }
+
+
 }

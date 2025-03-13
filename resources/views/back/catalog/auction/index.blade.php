@@ -28,7 +28,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Sve aukcije {{ $auctions->total() }}</h3>
             </div>
-            <div class="block-content">
+            <div class="block-content pb-4">
                 <livewire:auctions-table theme="bootstrap-4" />
             </div>
         </div>
