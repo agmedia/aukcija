@@ -15,7 +15,7 @@
                     @foreach ($data['items'] as $product)
                         <!-- Auction-->
                             <div>
-                                @include('front.catalog.category.product')
+                                @include('front.catalog.auction.single')
                             </div>
                         @endforeach
                     </div>
@@ -36,7 +36,7 @@
             @foreach ($data['items'] as $auction)
                 <!-- Auction-->
                     <div>
-                        @include('front.catalog.category.product')
+                        @include('front.catalog.auction.single')
                     </div>
                 @endforeach
             </div>

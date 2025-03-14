@@ -25,24 +25,25 @@ class BidController extends Controller
             'amount' => 'required',
         ]);
 
-        if (auth()->user()) {
-            $id = $request->input('id');
+        $auction = Auction::query()->where('id', $id)->first();
 
+        if (auth()->user() && $auction && $auction->end_time > now()) {
+            // Create new bid. Update auction. Send emails.
             AuctionBid::create([
-                'auction_id' => $id,
+                'auction_id' => $auction->id,
                 'user_id'    => auth()->id(),
                 'amount'     => $request->input('amount'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            Auction::query()->where('id', $id)->update([
+            $auction->update([
                 'current_price' => $request->input('amount'),
                 'updated_at'    => now(),
             ]);
 
             SendAuctionEmails::dispatchAfterResponse(
-                Auction::query()->find($id),
+                $auction,
                 auth()->user()
             );
 

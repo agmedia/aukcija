@@ -197,10 +197,11 @@
                                                 <!-- Bid History-->
                                                 <div class="tab-pane fade show active" id="bids" role="tabpanel">
                                                     <ul class="list-unstyled mb-0">
-                                                        @foreach($auction->bids->sortBy('created_at')->take(4) as $bid)
+                                                        @php $opacity = 100; @endphp
+                                                        @foreach($auction->bids()->orderBy('created_at', 'desc')->take(4)->get() as $bid)
                                                             <!-- Bid-->
                                                             <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
-                                                                <div class="d-sm-flex align-items-sm-center w-100">
+                                                                <div class="d-sm-flex align-items-sm-center w-100" style="opacity: {{ $opacity }}%;">
                                                                     <div class="mb-sm-0 mb-2">
                                                                         <h6 class="mb-1 fs-sm">Korisnik {{ rand(10, 999) }}</h6>
                                                                         <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
@@ -210,6 +211,7 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
+                                                            @php $opacity = $opacity - 20; @endphp
                                                         @endforeach
                                                     </ul>
                                                 </div>
@@ -260,7 +262,7 @@
                 @foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
                     @if ($cat_product->id  != $auction->id)
                         <div>
-                            @include('front.catalog.category.product', ['auction' => $cat_product])
+                            @include('front.catalog.auction.single', ['auction' => $cat_product])
                         </div>
                     @endif
                 @endforeach
