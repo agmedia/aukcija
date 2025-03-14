@@ -40,7 +40,7 @@
 
 
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Arhiva')]) }}"><span>Arhiva</span></a>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'uvjeti-prodaje']) }}"><span>O nama</span></a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'o-nama']) }}"><span>O nama</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kontakt') }}"><span>Kontakt</span></a></li>
                 </ul>
