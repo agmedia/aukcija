@@ -79,7 +79,7 @@ class CatalogRouteController extends Controller
 
             $crumbs = null;
 
-            return view('front.catalog.category.index', compact('group', 'cat', 'subcat', 'ids', 'crumbs'));
+            return view('front.catalog.category.index', compact('group', 'ids', 'crumbs'));
         }
 
         if ($request->has(config('settings.search_keyword') . '_api')) {

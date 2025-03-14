@@ -244,6 +244,9 @@ Route::prefix('api/v2')->group(function () {
 });
 
 
+Route::get('auction/user-bid', [\App\Http\Controllers\Front\BidController::class, 'store'])->name('auction.user.bid.store');
+
+
 /*******************************************************************************
  *                                Copyright : AGmedia                           *
  *                              email: filip@agmedia.hr                         *

@@ -23,6 +23,10 @@ class Auction extends Model
      */
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $appends = [
+        'base_price',
+    ];
+
 
     /**
      * Get the route key for the model.
@@ -46,15 +50,6 @@ class Auction extends Model
 
 
     /**
-     * @return Relation
-     */
-    public function images()
-    {
-        return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
-    }
-
-
-    /**
      * @param $value
      *
      * @return array|string|string[]
@@ -62,6 +57,28 @@ class Auction extends Model
     public function getThumbAttribute($value)
     {
         return str_replace('.webp', '-thumb.webp', $this->image);
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getBasePriceAttribute(): float
+    {
+        if ($this->current_price > 0) {
+            return $this->current_price;
+        }
+
+        return $this->starting_price;
+    }
+
+
+    /**
+     * @return Relation
+     */
+    public function images()
+    {
+        return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
     }
 
 

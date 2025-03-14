@@ -44,10 +44,9 @@
 
 @section('content')
 
-
-
+    @include('front.layouts.partials.session')
     <!-- Page Title-->
-    <div class="page-title-overlap  pt-3 bg-symphony">
+    <div class="page-title-overlap pt-3 bg-symphony">
         <div class="container d-lg-block justify-content-end py-0">
             <div class="order-lg-2 mt-2">
                 <nav aria-label="breadcrumb">
@@ -66,258 +65,210 @@
     <section class="container pb-0">
         <!-- Product-->
         <div class="bg-light shadow-lg rounded-3 px-4 py-1 mb-5">
-            <ul class="nav nav-tabs  " role="tablist">
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4 active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije </a></li>
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a>  </li>
-
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link py-4 px-sm-4 active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije</a></li>
+                <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a></li>
             </ul>
             <div class="py-lg-3 py-2 px-lg-3">
                 <div class="tab-content px-lg-3">
                     <div class="tab-pane fade show active" id="general" role="tabpanel">
-                     <div class="row gy-4">
-                    <!-- Product image-->
-                    <div class="col-lg-6 ">
+                        <div class="row gy-4">
+                            <!-- Product image-->
+                            <div class="col-lg-6 ">
+
+                                <div class="h-100 bg-light rounded-3 p-0">
+                                    <div class="product-gallery">
+                                        <div class="product-gallery-preview order-sm-2 gallery">
+                                            @if ( ! empty($auction->image))
+                                                <div class="product-gallery-preview-item active" id="first"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($auction->image) }}"><img  src="{{ asset($auction->image) }}"  alt="{{ $auction->name }}"></a></div>
 
 
-                        <div class="h-100 bg-light rounded-3 p-0">
-                            <div class="product-gallery">
-                                <div class="product-gallery-preview order-sm-2 gallery">
-                                    @if ( ! empty($auction->image))
-                                        <div class="product-gallery-preview-item active" id="first"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($auction->image) }}"><img  src="{{ asset($auction->image) }}"  alt="{{ $auction->name }}"></a></div>
+                                            @endif
 
-
-                                    @endif
-
-                                    @if ($auction->images->count())
-                                        @foreach ($auction->images as $key => $image)
-                                                <div class="product-gallery-preview-item" id="key{{ $key + 1 }}"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($image->image) }}"><img  src="{{ asset($image->image) }}" alt="{{ $image->alt }}"></a></div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <div class="product-gallery-thumblist order-sm-1">
-                                    @if ($auction->images->count())
-
-                                            <a class="product-gallery-thumblist-item active" href="#first"><img src="{{ asset($auction->image) }}" width="100" height="100" alt="{{ $auction->name }}" style="height:100px"></a>
-
-
-
-                                        @foreach ($auction->images as $key => $image)
-                                            <a class="product-gallery-thumblist-item" href="#key{{ $key + 1 }}"><img src="{{ asset($image->image) }}" width="100" height="100" alt="{{ $image->alt }}" style="height:100px"></a>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-                    </div>
-                    <!-- Product details-->
-                    <div class="col-lg-6">
-                        <div class="ps-xl-5 ps-lg-3">
-                            <!-- Meta-->
-                            <h2 class="h3 mb-3">{{ $auction->name }}</h2>
-                            <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
-                                <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
-                                <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
-
-                            </div>
-
-                            <!-- Description-->
-
-                            <!-- Auction-->
-                            <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
-                                <div class="col">
-                                    <h3 class="h6 mb-2 fs-sm text-muted">Trenutna cijena</h3>
-                                    @if($auction->current_price > 0)
-                                    <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->current_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
-                                    @else
-                                        <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
-                                    @endif
-                                </div>
-                                <div class="col">
-                                    <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
-                                    <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
-                                        <div class="countdown-days">
-                                            <span class="countdown-value">0</span>
-                                            <span class="countdown-label text-muted">d</span>
+                                            @if ($auction->images->count())
+                                                @foreach ($auction->images as $key => $image)
+                                                    <div class="product-gallery-preview-item" id="key{{ $key + 1 }}"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($image->image) }}"><img  src="{{ asset($image->image) }}" alt="{{ $image->alt }}"></a></div>
+                                                @endforeach
+                                            @endif
                                         </div>
-                                        <div class="countdown-hours">
-                                            <span class="countdown-value"></span>
-                                            <span class="countdown-label text-muted">h</span>
-                                        </div>
-                                        <div class="countdown-minutes">
-                                            <span class="countdown-value">0</span>
-                                            <span class="countdown-label text-muted">m</span>
-                                        </div>
-                                        <div class="countdown-seconds">
-                                            <span class="countdown-value">0</span>
-                                            <span class="countdown-label text-muted">s</span>
+                                        <div class="product-gallery-thumblist order-sm-1">
+                                            @if ($auction->images->count())
+
+                                                <a class="product-gallery-thumblist-item active" href="#first"><img src="{{ asset($auction->image) }}" width="100" height="100" alt="{{ $auction->name }}" style="height:100px"></a>
+
+
+
+                                                @foreach ($auction->images as $key => $image)
+                                                    <a class="product-gallery-thumblist-item" href="#key{{ $key + 1 }}"><img src="{{ asset($image->image) }}" width="100" height="100" alt="{{ $image->alt }}" style="height:100px"></a>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+                            <!-- Product details-->
+                            <div class="col-lg-6">
+                                <div class="ps-xl-5 ps-lg-3">
+                                    <!-- Meta-->
+                                    <h2 class="h3 mb-3">{{ $auction->name }}</h2>
+                                    <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
+                                        <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
+                                        <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
 
+                                    </div>
 
+                                    <!-- Auction-->
+                                    <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
+                                        <div class="col">
+                                            <h3 class="h6 mb-2 fs-sm text-muted">Trenutna cijena</h3>
+                                            @if($auction->current_price > 0)
+                                                <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->current_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                            @else
+                                                <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                            @endif
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
+                                            <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
+                                                <div class="countdown-days">
+                                                    <span class="countdown-value">0</span>
+                                                    <span class="countdown-label text-muted">d</span>
+                                                </div>
+                                                <div class="countdown-hours">
+                                                    <span class="countdown-value"></span>
+                                                    <span class="countdown-label text-muted">h</span>
+                                                </div>
+                                                <div class="countdown-minutes">
+                                                    <span class="countdown-value">0</span>
+                                                    <span class="countdown-label text-muted">m</span>
+                                                </div>
+                                                <div class="countdown-seconds">
+                                                    <span class="countdown-value">0</span>
+                                                    <span class="countdown-label text-muted">s</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <!-- Place a bid-->
-                           @if($auction->current_price > 0)
-                                @php
-                                $base_price = $auction->current_price;
-                                @endphp
-                            @else
-                                @php
-                                    $base_price = $auction->starting_price;
-                                @endphp
-                        @endif
+                                    <!-- Place a bid-->
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 5), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 5), true) }}</a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 10), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 10), true) }}</a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 15), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 15), true) }}</a>
+                                        </div>
+                                    </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <a href="#signin-modal" data-bs-toggle="modal" type="button" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 5), true) }}</a>
-                            </div>
-                            <div class="col">
-                                <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 10), true) }}</a>
-                            </div>
-                            <div class="col">
-                                <a href="#signin-modal" data-bs-toggle="modal" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($base_price + 15), true) }}</a>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <input class="form-control rounded-pill d-block w-100 me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + 5), true) }} ili više">
+                                        </div>
+                                        <div class="col">
+                                            <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="#signin-modal" data-bs-toggle="modal">Unesite ponudu</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product info-->
+                                    <div class="pt-0">
+                                        <!-- Nav tabs-->
+                                        <div class="mb-4" style="overflow-x: auto;">
+                                            <ul class="nav nav-tabs nav-fill flex-nowrap text-nowrap mb-1" role="tablist">
+                                                <li class="nav-item"><a class="nav-link active" href="#bids" data-bs-toggle="tab" role="tab">Zadnje ponude</a></li>
+                                            </ul>
+                                        </div>
+
+                                        {{-- dd($auction->bids) --}}
+                                        <!-- Tabs content-->
+                                        @if( isset($auction->bids) and $auction->bids)
+                                            <div class="tab-content">
+                                                <!-- Bid History-->
+                                                <div class="tab-pane fade show active" id="bids" role="tabpanel">
+                                                    <ul class="list-unstyled mb-0">
+                                                        @foreach($auction->bids as $bid)
+                                                            <!-- Bid-->
+                                                            <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
+                                                                <div class="d-sm-flex align-items-sm-center w-100">
+                                                                    <div class="mb-sm-0 mb-2">
+                                                                        <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
+                                                                        <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
+                                                                    </div>
+                                                                    <div class="ms-sm-auto text-nowrap">
+                                                                        <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- Tech specs tab-->
+                    <div class="tab-pane fade" id="specs" role="tabpanel">
+                        <!-- Specs table-->
+                        <div class="row pt-2">
+                            <div class="col-lg-5 col-sm-6">
+                                <h3 class="h6">Specifikacije</h3>
+                                <ul class="list-unstyled fs-sm pb-2">
+                                    @foreach ($auction->attributesList() as $attribute)
 
-    <div class="row mb-3">
-        <div class="col">
-        <input class="form-control rounded-pill d-block w-100  me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($base_price + 5), true) }} ili više">
-        </div>
-            <div class="col">
-        <a class="btn btn btn-dark d-block d-block w-100 rounded-pill " href="#signin-modal" data-bs-toggle="modal" >Unesite ponudu</a>
-            </div>
-    </div>
-
-
-
-    <!-- Product info-->
-    <div class="pt-0">
-        <!-- Nav tabs-->
-        <div class="mb-4" style="overflow-x: auto;">
-            <ul class="nav nav-tabs nav-fill flex-nowrap text-nowrap mb-1" role="tablist">
-
-                <li class="nav-item"><a class="nav-link active" href="#bids" data-bs-toggle="tab" role="tab">Zadnje ponude</a></li>
-
-            </ul>
-        </div>
-
-        {{-- dd($auction->bids) --}}
-        <!-- Tabs content-->
-        @if( isset($auction->bids) and $auction->bids)
-            <div class="tab-content">
-
-            <!-- Bid History-->
-            <div class="tab-pane fade show active" id="bids" role="tabpanel">
-                <ul class="list-unstyled mb-0">
-
-
-
-                    @foreach($auction->bids as $bid)
-
-
-                    <!-- Bid-->
-                    <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
-                        <div class="d-sm-flex align-items-sm-center w-100">
-                            <div class="mb-sm-0 mb-2">
-                                <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
-                                <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
+                                        <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
+                                    @endforeach
+                                </ul>
                             </div>
-
-                            <div class="ms-sm-auto text-nowrap">
-                                <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
+                            <div class="col-lg-5 col-sm-6 offset-lg-1 ">
+                                <h3 class="h6">Opis</h3>
+                                <div class="fs-sm">
+                                    {!! $auction->description !!}
+                                </div>
                             </div>
                         </div>
-                    </li>
+                    </div>
 
-                    @endforeach
-
-                </ul>
+                </div>
             </div>
-            <!-- Provenance-->
-
         </div>
-        @endif
-    </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tech specs tab-->
-<div class="tab-pane fade" id="specs" role="tabpanel">
+    </section>
 
-<!-- Specs table-->
-<div class="row pt-2">
-    <div class="col-lg-5 col-sm-6">
-        <h3 class="h6">Specifikacije</h3>
-        <ul class="list-unstyled fs-sm pb-2">
-            @foreach ($auction->attributesList() as $attribute)
+    <!-- Recent products-->
+    <section class="container py-5 pt-0 mb-lg-3">
+        <!-- Heading-->
+        <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
+            <h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
+        </div>
+        <!-- Grid-->
+        <div class="tns-carousel tns-controls-static tns-controls-inside">
+            <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
 
-            <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
-            @endforeach
-        </ul>
-    </div>
-    <div class="col-lg-5 col-sm-6 offset-lg-1 ">
-        <h3 class="h6">Opis</h3>
-           <div class="fs-sm">
-                {!! $auction->description !!}
-           </div>
-    </div>
-</div>
-</div>
+                @foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
+                    @if ($cat_product->id  != $auction->id)
+                        <div>
+                            @include('front.catalog.category.product', ['auction' => $cat_product])
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
 
-</div>
-</div>
-</div>
-</section>
-<!-- Recent products-->
-<section class="container py-5 pt-0 mb-lg-3">
-<!-- Heading-->
-<div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
-<h2 class="h5 mb-0 fw-bold pt-3 me-2  ">POPULARNE AUKCIJE</h2>
-
-</div>
-<!-- Grid-->
-
-<div class="tns-carousel tns-controls-static tns-controls-inside">
-<div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
-
-
-@foreach ($auction->inRandomOrder()->get()->unique()->take(10) as $cat_product)
-@if ($cat_product->id  != $auction->id)
-   <div>
-       @include('front.catalog.category.product', ['auction' => $cat_product])
-   </div>
-@endif
-@endforeach
-
-
-
-
-</div>
-</div>
-
-
-<!-- More button-->
-
-</section>
-
-
+    </section>
 
 @endsection
 
 @push('js_after')
-<script type="application/ld+json">
-{!! collect($crumbs)->toJson() !!}
-</script>
-<script type="application/ld+json">
-{!! collect($schema)->toJson() !!}
-</script>
-<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6134a372eae16400120a5035&product=sop' async='async'></script>
+    <script type="application/ld+json">
+        {!! collect($crumbs)->toJson() !!}
+    </script>
+    <script type="application/ld+json">
+        {!! collect($schema)->toJson() !!}
+    </script>
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6134a372eae16400120a5035&product=sop' async='async'></script>
 @endpush
