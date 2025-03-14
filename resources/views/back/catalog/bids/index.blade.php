@@ -24,14 +24,17 @@
                         <th>#</th>
                         <th style="width: 30%;">Aukcija</th>
                         <th>Korisnik</th>
-                        <th class="text-right">Iznos</th>
-                        <th class="text-right">Akcije</th>
+                        <th >Iznos</th>
+                        <th class="text-right" >Vrijeme</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     @forelse ($bids as $bid)
+
+
                         <tr>
-                            <td class="font-size-sm">{{ $loop->iteration }}</td>
+                            <td class="font-size-sm">{{ ($bids->total()-$loop->index)-(($bids->currentpage()-1) * $bids->perpage() ) }}</td>
                             <td class="font-size-sm">
                                 <a class="font-w600" href="{{ route('auctions.edit', ['auction' => $bid->auction]) }}">{{ $bid->auction->name }}</a>
                             </td>
@@ -39,11 +42,9 @@
                                 <a class="font-w600" href="{{ route('users.edit', ['user' => \App\Models\User::find($bid->user->id)]) }}">{{ $bid->user->name }}</a>
                             </td>
                             <td class="font-size-sm">{{ number_format($bid->amount, 2, ',', '.') }}</td>
-                            <td class="text-right font-size-sm">
-                                <a class="btn btn-sm btn-alt-secondary" href="#">
-                                    <i class="fa fa-fw fa-pencil-alt"></i>
-                                </a>
-                            </td>
+
+                            <td class="font-size-sm text-right">{{$bid->created_at }}</td>
+
                         </tr>
                     @empty
                         <tr class="text-center">

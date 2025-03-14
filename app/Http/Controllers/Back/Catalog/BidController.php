@@ -17,9 +17,9 @@ class BidController extends Controller
     public function index(Request $request)
     {
         if ($request->has('search') && ! empty($request->search)) {
-            $bids = AuctionBid::query()->with('user', 'auction')->paginate(config('settings.pagination.back'));
+            $bids = AuctionBid::query()->with('user', 'auction')->orderBy('created_at', 'DESC')->paginate(config('settings.pagination.back'));
         } else {
-            $bids = AuctionBid::query()->with('user', 'auction')->paginate(config('settings.pagination.back'));
+            $bids = AuctionBid::query()->with('user', 'auction')->orderBy('created_at','DESC')->paginate(config('settings.pagination.back'));
         }
 
         return view('back.catalog.bids.index', compact('bids'));
@@ -36,7 +36,7 @@ class BidController extends Controller
      */
     public function update(Request $request, AuctionBid $bid)
     {
-        
+
         return redirect()->back()->with(['error' => 'Whoops..! There was an error saving the attribute.']);
     }
 
@@ -50,7 +50,7 @@ class BidController extends Controller
      */
     public function destroy(Request $request, AuctionBid $bid)
     {
-        
+
         return redirect()->back()->with(['error' => 'Whoops..! There was an error deleting the attribute .']);
     }
 }
