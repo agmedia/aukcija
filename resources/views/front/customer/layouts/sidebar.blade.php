@@ -4,7 +4,7 @@
             <div class="d-md-flex align-items-center">
                 <div class="img-thumbnail rounded-circle position-relative flex-shrink-0 mx-auto mb-2 mx-md-0 mb-md-0" style="width: 6.375rem;"><img class="rounded-circle" src="https://www.zuzi.hr/media/img/apple-touch-icon.png" alt="Susan Gardner"></div>
                 <div class="ps-md-3">
-                    <h3 class="fs-base mb-0">{{ $user->details->fname ? $user->details->fname . ' ' . $user->details->lname: $user->name }}</h3><span class="text-accent fs-sm">{{ $user->email }}</span>
+                    <h3 class="fs-base mb-0">{{ $user->details->fname ? $user->details->fname . ' ' . $user->details->lname: $user->name }}</h3><span class="text-primary fs-sm">{{ $user->email }}</span>
                 </div>
             </div><a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Navigacija</a>
         </div>
@@ -21,7 +21,7 @@
 
                 <li class="border-bottom mb-0">
                     <a class="nav-link-style d-flex align-items-center px-4 py-3 {{ request()->routeIs('moje-narudzbe') ? 'active' : '' }}" href="{{ route('moj.racun.narudzbe') }}">
-                        <i class="ci-bag opacity-60 me-2"></i>Narudžbe
+                        <i class="ci-bag opacity-60 me-2"></i>Moje ponude
                     </a>
                 </li>
 

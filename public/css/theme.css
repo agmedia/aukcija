@@ -18060,7 +18060,7 @@ a.nav-link:hover .media-tab-media {
     transition: color 0.25s ease-in-out;
     color: #050505;
     font-size: .9375rem;
-    font-weight: 600;
+    font-weight: 500;
     padding:2px 0;
 }
 .widget-list-link:hover {

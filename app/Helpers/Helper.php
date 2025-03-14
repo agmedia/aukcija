@@ -333,7 +333,7 @@ class Helper
      */
     private static function products(array $data): Builder
     {
-        $prods = (new Product())->newQuery();
+        $prods = (new Auction())->newQuery();
 
         $prods->active()->available();
 

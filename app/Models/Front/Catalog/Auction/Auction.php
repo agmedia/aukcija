@@ -34,6 +34,16 @@ class Auction extends Model
         return 'slug';
     }
 
+    /**
+     * @param $value
+     *
+     * @return array|string|string[]
+     */
+    public function getImageAttribute($value)
+    {
+        return config('settings.images_domain') . str_replace('.jpg', '.webp', $value);
+    }
+
 
     /**
      * @return Relation

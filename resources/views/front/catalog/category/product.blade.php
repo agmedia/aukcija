@@ -6,7 +6,11 @@ $days_count =  floor($days_count);
 ?>
 <div class="card product-card-alt">
     <div class="">
-        <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ asset($auction->image) }}" width="288"  height="360"  alt="{{ $auction->name }}"></a>
+        <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ asset(str_replace('.jpg', '-thumb.webp', $auction->image)) }}" width="288"  height="360"  alt="{{ $auction->name }}"></a>
+
+
+
+
     </div>
     <div class="card-body px-0">
         <h3 class="product-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>
