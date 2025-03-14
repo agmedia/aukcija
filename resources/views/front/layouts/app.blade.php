@@ -6,19 +6,19 @@
     <!-- SEO Meta Tags-->
     <meta name="description" content="@yield('description')">
 
-    <meta name="author" content="Zuzi Shop">
+    <meta name="author" content="Aukcije 4 antikvarijata">
     @stack('meta_tags')
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ config('settings.images_domain') . 'media/img/favicon-32x32.png' }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ config('settings.images_domain') . 'media/img/favicon-32x32.png' }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ config('settings.images_domain') . 'media/img/favicon-16x16.png' }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ config('settings.images_domain') . 'media/img/apple-touch-icon.png' }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ config('settings.images_domain') . 'media/img/favicon-32x32.png' }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ config('settings.images_domain') . 'media/img/favicon-16x16.png' }}">
-    <link rel="mask-icon" href="{{ config('settings.images_domain') . 'safari-pinned-tab.svg' }}" color="#e50077">
+    <link rel="icon" type="image/png" href="{{ config('settings.images_domain') . 'favicon-96x96.png' }}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{{ config('settings.images_domain') . 'favicon.svg' }}" />
+    <link rel="shortcut icon" href="{{ config('settings.images_domain') . 'favicon.ico' }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ config('settings.images_domain') . 'apple-touch-icon.png' }}" />
+    <meta name="apple-mobile-web-app-title" content="aukcije4a.com" />
+    <link rel="manifest" href="{{ config('settings.images_domain') . 'site.webmanifest' }}" />
+
+
     <meta name="msapplication-TileColor" content="#e50077">
     <meta name="theme-color" content="#ffffff">
 

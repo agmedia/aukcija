@@ -66,8 +66,8 @@
         <!-- Product-->
         <div class="bg-light shadow-lg rounded-3 px-4 py-1 mb-5">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4 active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije</a></li>
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a></li>
+                <li class="nav-item"><a class="nav-link py-4 px-sm-4 fw-bold active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije</a></li>
+                <li class="nav-item"><a class="nav-link py-4 px-sm-4 fw-bold" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a></li>
             </ul>
             <div class="py-lg-3 py-2 px-lg-3">
                 <div class="tab-content px-lg-3">
