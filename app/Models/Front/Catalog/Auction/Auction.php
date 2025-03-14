@@ -83,18 +83,6 @@ class Auction extends Model
 
 
     /**
-     * @return string
-     */
-    public function imageName()
-    {
-        $from   = strrpos($this->image, '/') + 1;
-        $length = strrpos($this->image, '-') - $from;
-
-        return substr($this->image, $from, $length);
-    }
-
-
-    /**
      * @return Relation
      */
     public function attributes()

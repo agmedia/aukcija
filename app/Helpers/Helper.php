@@ -660,4 +660,18 @@ class Helper
         return false;
     }
 
+
+
+
+    /**
+     * @return string
+     */
+    public static function getImageName(string $image): string
+    {
+        $from   = strrpos($image, '/') + 1;
+        $length = strrpos($image, '-') - $from;
+
+        return substr($image, $from, $length);
+    }
+
 }

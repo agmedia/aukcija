@@ -5,23 +5,13 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\Breadcrumb;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Imports\ProductImport;
 use App\Models\Front\Blog;
 use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Page;
 use App\Models\Front\Faq;
-use App\Models\Front\Catalog\Author;
-use App\Models\Front\Catalog\Category;
-use App\Models\Front\Catalog\Product;
-use App\Models\Front\Catalog\Publisher;
 use App\Models\Seo;
 use App\Models\TagManager;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class CatalogRouteController extends Controller
 {
@@ -131,23 +121,6 @@ class CatalogRouteController extends Controller
     {
         $faq = Faq::where('status', 1)->get();
         return view('front.faq', compact('faq'));
-    }
-
-
-    /**
-     * @param array $letters
-     *
-     * @return string
-     */
-    private function checkLetter(Collection $letters): string
-    {
-        foreach ($letters->all() as $letter) {
-            if ($letter['active']) {
-                return $letter['value'];
-            }
-        }
-
-        return 'A';
     }
 
 }

@@ -25,7 +25,9 @@ return [
     'author_path'       => 'autor',
     'publisher_path'    => 'nakladnik',
     'group_path'        => 'Kategorija proizvoda',
-
+    //
+    'admin_email' => 'info@aukcija.hr',
+    //
     'about_page'        => 2,
     'unknown_author'    => 3282,
     'unknown_publisher' => 376,
@@ -115,12 +117,6 @@ return [
         'canceled_status' => [7, 5],
     ],
 
-    'special_action' => [
-        'title' => 'Količinski popust',
-        'start' => null,
-        'end' => null
-    ],
-
     'payment' => [
         'providers' => [
             //'wspay'  => \App\Models\Front\Checkout\Payment\Wspay::class,
@@ -142,7 +138,7 @@ return [
 
     'bid_increase' => [
         0 => [
-            'from' => '10',
+            'from' => null,
             'to' => '100',
             'amount' => 5
 
@@ -159,7 +155,7 @@ return [
         ],
         3 => [
             'from' => '1001',
-            'to' => '10000000000000000',
+            'to' => null,
             'amount' => 50
         ]
 

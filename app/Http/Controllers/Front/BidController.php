@@ -2,23 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Helpers\Helper;
-use App\Helpers\Njuskalo;
-use App\Helpers\Recaptcha;
 use App\Http\Controllers\Controller;
-use App\Imports\ProductImport;
-use App\Mail\ContactFormMessage;
+use App\Jobs\SendAuctionEmails;
 use App\Models\Back\Catalog\Auction\AuctionBid;
 use App\Models\Front\Catalog\Auction\Auction;
-use App\Models\Front\Page;
-use App\Models\Sitemap;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Intervention\Image\Facades\Image;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class BidController extends Controller
 {
@@ -30,39 +18,36 @@ class BidController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        $request->validate([
+            'id'     => 'required',
+            'amount' => 'required',
+        ]);
 
-        if ($this->bidRequestPass($request)) {
+        if (auth()->user()) {
+            $id = $request->input('id');
+
             AuctionBid::create([
-                'auction_id' => $request->input('id'),
+                'auction_id' => $id,
                 'user_id'    => auth()->id(),
                 'amount'     => $request->input('amount'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            Auction::query()->update([
+            Auction::query()->where('id', $id)->update([
                 'current_price' => $request->input('amount'),
-                'updated_at' => now(),
+                'updated_at'    => now(),
             ]);
+
+            SendAuctionEmails::dispatchAfterResponse(
+                Auction::query()->find($id),
+                auth()->user()
+            );
+
+            return back()->with(['success' => 'Hvala na ponudi..!']);
         }
 
-        return back()->with(['success' => 'Hvala na ponudi..!']);
-    }
-
-
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    private function bidRequestPass(Request $request): bool
-    {
-        if (auth()->user() && $request->has('id') && $request->has('amount')) {
-            return true;
-        }
-
-        return false;
+        return back()->with(['error' => 'Došlo je do greške..!']);
     }
 
 }
