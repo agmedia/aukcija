@@ -1,5 +1,5 @@
 <!-- Footer-->
-<footer class="bg-symphony pt-sm-5">
+<footer class="bg-symphony pt-sm-5 border-top">
 
     <div class="container pt-2 pb-0">
         <div class="row">
@@ -71,7 +71,7 @@
         </div>
     </div>
     <!-- Second row-->
-    <div class="pt-4 bg-white">
+    <div class="pt-4 bg-white border-top">
 
 
         <div class="container">

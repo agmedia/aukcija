@@ -5,11 +5,11 @@ $days_count = $now->diffInDays($start);
 $days_count =  floor($days_count);
 ?>
 <div class="card product-card-alt">
-    <div class="product-thumb">
-        <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ asset($auction->image) }}" width="280"  height="320"  alt="{{ $auction->name }}"></a>
+    <div class="">
+        <a  href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}"><img src="{{ asset($auction->image) }}" width="288"  height="360"  alt="{{ $auction->name }}"></a>
     </div>
     <div class="card-body px-0">
-        <h3 class="product-title text-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>
+        <h3 class="product-title text-black fs-6 mb-2"><a href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug($auction->group), 'auction' => $auction->slug]) }}">{{ $auction->name }}</a></h3>
         <div class=" fs-5 fw-bold text-title text-primary">
             @if($auction->current_price > 0)
             {{ \App\Helpers\Currency::main($auction->current_price, true) }}

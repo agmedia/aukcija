@@ -21,7 +21,7 @@
 
 
     <!-- Page Title-->
-    <div class=" bg-symphony pt-4 pb-3" >
+    <div class=" bg-symphony pt-4 pb-3 border-bottom" >
         <div class="container d-lg-block justify-content-start py-2 py-lg-3">
 
             @if (isset($group) && $group)
@@ -53,7 +53,7 @@
         </div>
 
     </div>
-    <div class="container pb-4 mb-2 mb-md-4 mt-4 px-5">
+    <div class="container pb-4 mb-2 mb-md-4 mt-4 px-3">
         <div class="row">
 
             @livewire('front.catalog.auction-list', ['group' => (isset($group) && $group) ? $group : ''])

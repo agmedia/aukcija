@@ -109,12 +109,13 @@ hr {
 }
 
 .bg-symphony{
-    background-image: url('../media/symphony.png');background-repeat:repeat;background-attachment:fixed;
+    background-image: url('../media/round.png');background-repeat:repeat;background-attachment:fixed;
 }
 
 .offcanvas-collapse .offcanvas-cap {
     display: none;
 }
+
 
 #searchBox {
 
@@ -813,7 +814,7 @@ progress {
 
 @media (min-width: 1380px) {
     .container-xl, .container-lg, .container-md, .container-sm, .container {
-        max-width: 1360px;
+        max-width: 1379px;
     }
 }
 .row {

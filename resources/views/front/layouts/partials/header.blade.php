@@ -1,4 +1,4 @@
-<header class="bg-light shadow-sm navbar-sticky">
+<header class="bg-light shadow-sm navbar-sticky border-top border-bottom">
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-none d-sm-block flex-shrink-0 me-4 order-lg-1 p-0" href="{{ route('index') }}">

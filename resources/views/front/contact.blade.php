@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Page Title (Light)-->
-    <div class="bg-symphony pt-4 pb-3" >
+    <div class="bg-symphony pt-4 pb-3 border-bottom" >
         <div class="container   py-2 py-lg-3">
 
             <div class=" pe-lg-4 text-center ">

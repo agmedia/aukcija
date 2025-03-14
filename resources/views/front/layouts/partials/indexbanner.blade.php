@@ -1,4 +1,4 @@
-<section class=" pt-5 pb-4 pb-lg-5 bg-symphony" >
+<section class=" pt-5 pb-4 pb-lg-5 bg-symphony  border-bottom" >
     <div class="container py-lg-4">
 
         <div class="row d-lg-flex justify-content-between align-items-center ">

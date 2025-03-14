@@ -46,14 +46,36 @@
 
     @else
 
-        <div class=" bg-symphony pt-4 pb-3" >
-            <div class="container  py-2 py-lg-3">
+        <div class=" bg-symphony pt-4 pb-3 border-bottom" >
+            <div class="container d-lg-block justify-content-start py-2 py-lg-3">
 
-                <div class=" pe-lg-4 text-center">
-                    <h1 class="h2 text-primary text-title">{{ $page->title }}</h1>
+                @if (isset($page) && $page)
+                    <div class="order-lg-2 mb-3 mb-lg-0 pb-lg-2">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-dark flex-lg-nowrap justify-content-center ">
+                                <li class="breadcrumb-item"><a class="text-nowrap" href="{{ route('index') }}"><i class="ci-home"></i>Naslovnica</a></li>
+                                <li class="breadcrumb-item text-nowrap active" aria-current="page">{{ $page->title }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                @endif
+
+                <div class="order-lg-1  text-center ">
+
+                        <h1 class="h3 text-primary mb-0">{{ $page->title }}</h1>
+
+
+
                 </div>
+
+
+
             </div>
+
         </div>
+
+
 
         <div class="container">
             <div class="mt-5 mb-5">
