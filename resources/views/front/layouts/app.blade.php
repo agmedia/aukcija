@@ -136,9 +136,6 @@
 <script src="{{ asset('js/bootstrap.bundle.min.js?v=1.2') }}"></script>
 <script src="{{ asset('js/tiny-slider.js?v=1.2') }}"></script>
 <script src="{{ asset('js/smooth-scroll.polyfills.min.js?v=1.2') }}"></script>
-
-
-
 <script src="{{ asset('js/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ asset('js/shufflejs/dist/shuffle.min.js') }}"></script>
 <!-- Main theme script-->

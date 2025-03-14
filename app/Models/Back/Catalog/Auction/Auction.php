@@ -173,6 +173,8 @@ class Auction extends Model
             $slug              = $this->request->slug;
         }
 
+        $min_increment = $this->resolveMinIncrement(isset($this->request->starting_price) ? $this->request->starting_price : '10');
+
         $response = [
             'sku'              => $this->request->sku,
             'ean'              => $this->request->ean,
@@ -185,7 +187,7 @@ class Auction extends Model
             'starting_price'   => isset($this->request->starting_price) ? $this->request->starting_price : 0,
             'current_price'    => isset($this->request->current_price) ? $this->request->current_price : 0,
             'reserve_price'    => isset($this->request->reserve_price) ? $this->request->reserve_price : 0,
-            'min_increment'    => $this->request->min_increment ?: 0,
+            'min_increment'    => $min_increment,
             'start_time'       => $this->request->start_time ? Carbon::make($this->request->start_time) : null,
             'end_time'         => $this->request->end_time ? Carbon::make($this->request->end_time) : null,
             'status'           => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
@@ -449,6 +451,25 @@ class Auction extends Model
         }
 
         return $slug;
+    }
+
+
+    /**
+     * @param string $price
+     *
+     * @return int|float
+     */
+    private function resolveMinIncrement(string $price): int|float
+    {
+        $increases = config('settings.bid_increase');
+
+        foreach ($increases as $value) {
+            if ($value['from'] <= $price && $value['to'] > $price) {
+                return $value['amount'];
+            }
+        }
+
+        return 5;
     }
 
 

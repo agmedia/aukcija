@@ -138,24 +138,24 @@ return [
 
     'bid_increase' => [
         0 => [
-            'from' => null,
+            'from' => '10',
             'to' => '100',
             'amount' => 5
 
         ],
         1 => [
-            'from' => '101',
+            'from' => '100',
             'to' => '200',
             'amount' => 10
         ],
         2 => [
-            'from' => '201',
+            'from' => '200',
             'to' => '1000',
             'amount' => 20
         ],
         3 => [
-            'from' => '1001',
-            'to' => null,
+            'from' => '1000',
+            'to' => '1000000',
             'amount' => 50
         ]
 

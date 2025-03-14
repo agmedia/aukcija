@@ -154,23 +154,31 @@
                                     <!-- Place a bid-->
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 5), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 5), true) }}</a>
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + $auction->min_increment), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
                                         </div>
                                         <div class="col">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 10), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 10), true) }}</a>
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 2)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
                                         </div>
                                         <div class="col">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + 15), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + 15), true) }}</a>
+                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 3)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <input class="form-control rounded-pill d-block w-100 me-3" type="text" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + 5), true) }} ili više">
+                                            <input class="form-control rounded-pill d-block w-100 me-3" type="text" id="bid-amount-input" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }} ili više">
                                         </div>
                                         <div class="col">
-                                            <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="#signin-modal" data-bs-toggle="modal">Unesite ponudu</a>
+                                            @if (auth()->guest())
+                                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="#signin-modal" data-bs-toggle="modal">Unesite ponudu</a>
+                                            @else
+                                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="javascript:void(0); addAuctionBid();">Unesite ponudu</a>
+                                            @endif
                                         </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div id="bid-result-div" class="col font-size-sm"></div>
                                     </div>
 
                                     <!-- Product info-->
@@ -184,17 +192,17 @@
 
                                         {{-- dd($auction->bids) --}}
                                         <!-- Tabs content-->
-                                        @if( isset($auction->bids) and $auction->bids)
+                                        @if( isset($auction->bids) and $auction->bids()->count())
                                             <div class="tab-content">
                                                 <!-- Bid History-->
                                                 <div class="tab-pane fade show active" id="bids" role="tabpanel">
                                                     <ul class="list-unstyled mb-0">
-                                                        @foreach($auction->bids as $bid)
+                                                        @foreach($auction->bids->sortBy('created_at')->take(4) as $bid)
                                                             <!-- Bid-->
                                                             <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
                                                                 <div class="d-sm-flex align-items-sm-center w-100">
                                                                     <div class="mb-sm-0 mb-2">
-                                                                        <h6 class="mb-1 fs-sm">{{substr($bid->user->name, 0, strrpos($bid->user->name, ' '))}}     </h6>
+                                                                        <h6 class="mb-1 fs-sm">Korisnik {{ rand(10, 999) }}</h6>
                                                                         <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
                                                                     </div>
                                                                     <div class="ms-sm-auto text-nowrap">
@@ -264,6 +272,43 @@
 @endsection
 
 @push('js_after')
+    <script>
+        function addAuctionBid() {
+            let entered_amount = document.getElementById('bid-amount-input').value;
+            let min_amount = {{ $auction->base_price + $auction->min_increment }};
+
+            if (entered_amount >= min_amount) {
+                let body = {
+                    '_token': '{{ csrf_token() }}',
+                    id: {{ $auction->id }},
+                    amount: entered_amount
+                };
+
+                $.post('{{ route('auctions.user.bid.api') }}', body, (data, status) => {
+                    if (status == 'success' && data.status == 200) {
+                        setAuctionBidResult('green', 'Hvala na ponudi. Email je već na putu.');
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2500);
+                    }
+
+                    if (data.status == 500) {
+                        setAuctionBidResult('red', 'Došlo je do greške. Molimo kontaktirajte administratora..!');
+                    }
+                });
+
+            } else {
+                setAuctionBidResult('red', 'Ponuda je premala, molimo podebljajte.');
+            }
+        }
+
+        function setAuctionBidResult(color, text) {
+            document.getElementById('bid-result-div').style.color = color;
+            document.getElementById('bid-result-div').textContent = text;
+        }
+    </script>
+
     <script type="application/ld+json">
         {!! collect($crumbs)->toJson() !!}
     </script>

@@ -167,11 +167,9 @@ Route::prefix('api/v2')->group(function () {
     Route::post('/auctions/change/status', [\App\Http\Controllers\Api\v2\ProductController::class, 'changeStatus'])->name('auctions.change.status');
     Route::post('auctions/update-item/single', [\App\Http\Controllers\Api\v2\ProductController::class, 'updateItem'])->name('auctions.update.item');
     Route::post('auctions/delete/action', [\App\Http\Controllers\Api\v2\ProductController::class, 'destroyAction'])->name('auctions.destroy.action');
-    Route::post('/products/destroy/api', [ProductController::class, 'destroyApi'])->name('products.destroy.api');
+    //
+    Route::post('auctions/user/bid', [\App\Http\Controllers\Front\BidController::class, 'storeApi'])->name('auctions.user.bid.api');
 
-    Route::post('/actions/destroy/api', [ActionController::class, 'destroyApi'])->name('actions.destroy.api');
-    Route::post('/authors/destroy/api', [AuthorController::class, 'destroyApi'])->name('authors.destroy.api');
-    Route::post('/publishers/destroy/api', [PublisherController::class, 'destroyApi'])->name('publishers.destroy.api');
     Route::post('/blogs/destroy/api', [BlogController::class, 'destroyApi'])->name('blogs.destroy.api');
     Route::post('/blogs/upload/image', [BlogController::class, 'uploadBlogImage'])->name('blogs.upload.image');
 

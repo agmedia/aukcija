@@ -32,12 +32,6 @@ class AuctionController extends Controller
 
         $auctions = $query->paginate(20)->appends(request()->query());
 
-        if ($request->has('status')) {
-
-        }
-
-        //$categories = (new Category())->getList(false);
-        /*$authors    = Author::all()->pluck('title', 'id');*/
         $groups = Groups::all()->pluck('title', 'id');
         $counts = [];//Auction::setCounts($query);
 
