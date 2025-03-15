@@ -70,4 +70,13 @@ class CustomerController extends Controller
         return redirect()->back()->with(['error' => 'Oops..! Greška prilikom snimanja.']);
     }
 
+
+    public function markNotificationsAsRead(Request $request)
+    {
+        $user = auth()->user();
+        $user->unreadNotifications()->update(['read_at' => now()]);
+
+        return back()->with(['success' => 'Notifikacije su pročitane..!']);
+    }
+
 }
