@@ -28,7 +28,7 @@
                     <!-- Notifications -->
                     <div class="navbar-tool ms-2 dropdown">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="#">
-                            @if (auth()->user()->unreadNotifications->count() > 0)
+                            @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)
                                 <span class="navbar-tool-label">{{ auth()->user()->unreadNotifications->count() }}</span>
                             @endif
                             <i class="navbar-tool-icon ci-bell"></i>
@@ -39,7 +39,7 @@
                                 <h6 class="dropdown-header">Vaše notifikacije</h6>
                                 <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-open opacity-80"></i></a>
 
-                                @if (auth()->user()->unreadNotifications->count() > 0)
+                                @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)
                                     <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifikacije</h5>
                                     <ul class="list-unstyled mt-10">
                                         @foreach(auth()->user()->unreadNotifications as $notifications)
