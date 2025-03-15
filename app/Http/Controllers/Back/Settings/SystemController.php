@@ -44,12 +44,21 @@ class SystemController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function notificationTest(Request $request)
     {
         $user = auth()->user();
 
         if ($user) {
             $user->notify(new TestNotification());
+
+            return back()->with(['success' => 'Ponuda je uspješno snimljen!']);
         }
+
+        return back()->with(['error' => 'Ops..! Greška prilikom snimanja.']);
     }
 }

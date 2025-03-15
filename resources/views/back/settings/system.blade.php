@@ -25,6 +25,9 @@
                             </div>
                         </div>
                     </div>
+                    <dov class="block-content">
+                        <a href="{{ route('system.notifications.test') }}" class="btn btn-alt-secondary my-4">Pošalji testnu notifikaciju</a>
+                    </dov>
                 </div>
             </div>
         </div>

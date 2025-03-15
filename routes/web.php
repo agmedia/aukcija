@@ -178,7 +178,7 @@ Route::prefix('api/v2')->group(function () {
     Route::post('/blogs/upload/image', [BlogController::class, 'uploadBlogImage'])->name('blogs.upload.image');
     //
     Route::post('system/notifications/status', [SystemController::class, 'notificationStatus'])->name('system.notifications.status.api');
-    Route::post('system/notifications/test', [SystemController::class, 'notificationTest'])->name('system.notifications.test.api');
+    Route::get('system/notifications/test', [SystemController::class, 'notificationTest'])->name('system.notifications.test');
 
     // FILTER
     Route::prefix('filter')->group(function () {
