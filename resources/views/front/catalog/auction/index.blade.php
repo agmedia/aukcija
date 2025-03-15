@@ -151,6 +151,8 @@
                                         </div>
                                     </div>
 
+
+
                                     <!-- Place a bid-->
                                     <div class="row mb-3">
                                         <div class="col">
