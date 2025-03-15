@@ -1,10 +1,11 @@
 @if(session('success'))
     <!-- Success alert -->
-    <div class="alert alert-success d-flex" role="alert">
+    <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
         <div class="alert-icon">
             <i class="ci-check-circle"></i>
         </div>
-        <div>Uspjeh..! {{ session('success') }}</div>
+        <span class="fw-medium me-2">Uspjeh..! </span> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 @if(session('error'))

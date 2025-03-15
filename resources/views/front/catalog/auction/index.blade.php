@@ -44,7 +44,7 @@
 
 @section('content')
 
-    @include('front.layouts.partials.session')
+
     <!-- Page Title-->
     <div class="page-title-overlap pt-3 bg-symphony">
         <div class="container d-lg-block justify-content-end py-0">
@@ -60,6 +60,7 @@
                 </nav>
             </div>
 
+
         </div>
     </div>
     <section class="container pb-0">
@@ -73,6 +74,7 @@
                 <div class="tab-content px-lg-3">
                     <div class="tab-pane fade show active" id="general" role="tabpanel">
                         <div class="row gy-4">
+                            @include('front.layouts.partials.session')
                             <!-- Product image-->
                             <div class="col-lg-6 ">
 
