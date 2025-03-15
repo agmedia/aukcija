@@ -27,6 +27,62 @@ class BidController extends Controller
 
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $auction = new Auction();
+
+        $data           = $auction->getRelationsData();
+        $active_actions = null;
+
+        return view('back.catalog.auction.edit', compact('data', 'active_actions'));
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $auction = new Auction();
+
+        $stored = $auction->validateRequest($request)->create();
+
+        if ($stored) {
+            $auction->storeImages($stored);
+
+            return redirect()->route('auctions.edit', ['auction' => $stored])->with(['success' => 'Artikl je uspješno snimljen!']);
+        }
+
+        return redirect()->back()->with(['error' => 'Ops..! Greška prilikom snimanja.']);
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Auction $auction
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Auction $auction)
+    {
+        $data = $auction->getRelationsData();
+
+        $groups = Groups::all()->pluck('title', 'id');
+
+        return view('back.catalog.auction.edit', compact('auction', 'groups', 'data'));
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request

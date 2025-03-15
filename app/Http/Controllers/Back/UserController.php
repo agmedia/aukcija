@@ -36,7 +36,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('back.user.edit');
+        $roles = Role::selectList();
+
+        return view('back.user.edit', compact('roles'));
     }
     
     
@@ -51,7 +53,13 @@ class UserController extends Controller
     {
         $user = new User();
 
+        $stored = $user->validateRequest($request)->make();
 
+        if ($stored) {
+            return redirect()->route('users.edit', ['user' => $stored])->with(['success' => 'Korisnik je uspješno snimljen!']);
+        }
+
+        return redirect()->back()->with(['error' => 'Oops..! Greška prilikom snimanja.']);
     }
     
     

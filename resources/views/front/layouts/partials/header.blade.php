@@ -22,14 +22,43 @@
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
                 </a>
 
-                <div class="navbar-tool ms-2 dropdown"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="marketplace-cart.html"><span class="navbar-tool-label">3</span><i class="navbar-tool-icon ci-bell"></i></a>
+                <div class="navbar-tool ms-2 dropdown">
+                    <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="#">
+                        @if (auth()->user()->unreadNotifications->count() > 0)
+                            <span class="navbar-tool-label">{{ auth()->user()->unreadNotifications->count() }}</span>
+                        @endif
+                        <i class="navbar-tool-icon ci-bell"></i>
+                    </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
                         <div style="min-width: 14rem;">
-                            <h6 class="dropdown-header">Account</h6><a class="dropdown-item d-flex align-items-center" href="dashboard-settings.html"><i class="ci-settings opacity-60 me-2"></i>Settings</a><a class="dropdown-item d-flex align-items-center" href="dashboard-purchases.html"><i class="ci-basket opacity-60 me-2"></i>Purchases</a><a class="dropdown-item d-flex align-items-center" href="dashboard-favorites.html"><i class="ci-heart opacity-60 me-2"></i>Favorites<span class="fs-xs text-muted ms-auto">4</span></a>
-                            <div class="dropdown-divider"></div>
-                            <h6 class="dropdown-header">Seller Dashboard</h6><a class="dropdown-item d-flex align-items-center" href="dashboard-sales.html"><i class="ci-dollar opacity-60 me-2"></i>Sales<span class="fs-xs text-muted ms-auto">$1,375.00</span></a><a class="dropdown-item d-flex align-items-center" href="dashboard-products.html"><i class="ci-package opacity-60 me-2"></i>Products<span class="fs-xs text-muted ms-auto">5</span></a><a class="dropdown-item d-flex align-items-center" href="dashboard-add-new-product.html"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a><a class="dropdown-item d-flex align-items-center" href="dashboard-payouts.html"><i class="ci-currency-exchange opacity-60 me-2"></i>Payouts</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item d-flex align-items-center" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign Out</a>
+                            <h6 class="dropdown-header">Vaše notifikacije</h6>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-open opacity-80"></i></a>
+
+                            @if (auth()->user()->unreadNotifications->count() > 0)
+                                <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifikacije</h5>
+                                <ul class="list-unstyled mt-10">
+                                    @foreach(auth()->user()->unreadNotifications as $notifications)
+                                        <li>
+                                            <a class="text-body-color-dark media mb-10" href="#">
+                                                <div class="ml-5 mr-15">
+                                                    <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
+                                                </div>
+                                                <div class="media-body pr-10">
+                                                    <p class="mb-0">{{ $notifications->data['title'] }}</p>
+                                                    <div class="text-muted font-size-sm font-italic mb-0">{{ date_format(date_create($notifications->created_at), 'd.m.Y. h:i:s') }}</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-center mb-0" href="javascript:void(0)">
+                                    <i class="fa fa-flag mr-5"></i> Pročitaj sve
+                                </a>
+                            @else
+                                <h5 class="h6 text-center py-5 mb-2 text-uppercase font-w300">Nemate novih notifikacija!</h5>
+                            @endif
                         </div>
                     </div>
                 </div>

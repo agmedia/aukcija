@@ -165,16 +165,20 @@ class User extends Authenticatable
             ]);
         }
 
-        $public_user = User::create([
+        $user = User::create([
             'name'     => $this->request->username,
             'email'    => $this->request->email,
             'password' => Hash::make($this->request->password),
         ]);
 
-        Bouncer::assign('customer')->to($public_user);
+        if ( ! isset($this->request->role) && $this->request->role == ''){
+            $this->request->role = 'customer';
+        }
+
+        Bouncer::assign($this->request->role)->to($user);
 
         UserDetail::create([
-            'user_id'    => $public_user->id,
+            'user_id'    => $user->id,
             'fname'      => $this->request->fname,
             'lname'      => $this->request->lname,
             'address'    => $this->request->address,
@@ -187,13 +191,13 @@ class User extends Authenticatable
             'avatar'     => 'media/avatars/avatar1.jpg',
             'bio'        => '',
             'social'     => '',
-            'role'       => 'customer',
+            'role'       => $this->request->role,
             'status'     => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
-        return $public_user;
+        return $user;
     }
 
 
@@ -228,7 +232,6 @@ class User extends Authenticatable
             }
 
             UserDetail::where('user_id', $this->id)->update([
-                'user_id'    => $this->id,
                 'fname'      => $this->request->fname,
                 'lname'      => $this->request->lname,
                 'address'    => $this->request->address,

@@ -195,6 +195,13 @@
                                 </li>
                             </ul>
                         </li>
+                        @if (auth()->user()->can('*'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->routeIs(['system', 'system.*']) ? ' active' : '' }}" href="{{ route('system.index') }}">
+                                    <span class="nav-main-link-name">Sustav</span>
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-main-item">
                             <a class="nav-main-link{{ request()->routeIs(['history', 'history.*']) ? ' active' : '' }}" href="{{ route('history') }}">
                                 <span class="nav-main-link-name">History log</span>

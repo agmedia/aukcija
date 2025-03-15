@@ -18,6 +18,7 @@ use App\Http\Controllers\Back\Settings\HistoryController;
 use App\Http\Controllers\Back\Settings\PageController;
 use App\Http\Controllers\Back\Settings\QuickMenuController;
 use App\Http\Controllers\Back\Settings\SettingsController;
+use App\Http\Controllers\Back\Settings\SystemController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\Widget\WidgetController;
 use App\Http\Controllers\Back\Widget\WidgetGroupController;
@@ -49,6 +50,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
         // KATEGORIJE
         Route::get('bids', [BidController::class, 'index'])->name('bids');
+        Route::get('auction/create', [AuctionController::class, 'create'])->name('auctions.create');
+        Route::post('auction', [AuctionController::class, 'store'])->name('auctions.store');
+        Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
+        Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
+        Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
         // Atttributes
         Route::get('attributes', [AttributesController::class, 'index'])->name('attributes');
         Route::get('attribute/create', [AttributesController::class, 'create'])->name('attributes.create');
@@ -106,7 +112,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
         // API
         Route::get('api', [ApiController::class, 'index'])->name('api.index');
-
+        //
+        Route::get('system', [SystemController::class, 'index'])->name('system.index');
 
         // INFO PAGES
         Route::get('pages', [PageController::class, 'index'])->name('pages');
@@ -256,6 +263,8 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('moj-racun')->group(func
     Route::get('/', [CustomerController::class, 'index'])->name('moj.racun');
     Route::patch('/snimi/{user}', [CustomerController::class, 'save'])->name('moj.racun.snimi');
     Route::get('/narudzbe', [CustomerController::class, 'orders'])->name('moj.racun.narudzbe');
+    //
+    Route::get('notifications/delete/by-user', [CustomerController::class, 'markNotificationsAsRead'])->name('moj.racun.read.notifications');
 });
 /**
  * FRONT ROUTES

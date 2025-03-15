@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendAuctionEmails;
+use App\Jobs\SendAuctionNotifications;
 use App\Models\Back\Catalog\Auction\AuctionBid;
 use App\Models\Front\Catalog\Auction\Auction;
 use Illuminate\Http\JsonResponse;
@@ -43,6 +44,11 @@ class BidController extends Controller
             ]);
 
             SendAuctionEmails::dispatchAfterResponse(
+                $auction,
+                auth()->user()
+            );
+
+            SendAuctionNotifications::dispatchAfterResponse(
                 $auction,
                 auth()->user()
             );
