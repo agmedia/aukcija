@@ -68,7 +68,6 @@ class AttributesController extends Controller
      */
     public function edit(Attributes $attributes)
     {
-        //dd($attributes->toArray());
         return view('back.catalog.attributes.edit', compact('attributes'));
     }
 
@@ -102,12 +101,9 @@ class AttributesController extends Controller
      */
     public function destroy(Request $request, Attributes $attributes)
     {
-        $for_d     = Attributes::query()->where('group', $attributes->group)->pluck('id');
-        $destroyed = Attributes::query()->where('group', $attributes->group)->delete();
+        $destroyed = Attributes::query()->find($attributes->id)->delete();
 
         if ($destroyed) {
-            AttributesTranslation::query()->whereIn('attribute_id', $for_d)->delete();
-
             return redirect()->route('attributes')->with(['success' => 'Attribute was succesfully deleted!']);
         }
 

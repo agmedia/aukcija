@@ -48,7 +48,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
         Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
         Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
-        // KATEGORIJE
+        // PONUDE
         Route::get('bids', [BidController::class, 'index'])->name('bids');
         Route::get('bid/create', [BidController::class, 'create'])->name('bids.create');
         Route::post('bid', [BidController::class, 'store'])->name('bids.store');
@@ -62,8 +62,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('attribute/{attributes}/edit', [AttributesController::class, 'edit'])->name('attributes.edit');
         Route::patch('attribute/{attributes}', [AttributesController::class, 'update'])->name('attributes.update');
         Route::delete('attribute/{attributes}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
-
-
         // Groups
         Route::get('groups', [GroupsController::class, 'index'])->name('groups');
         Route::get('groups/create', [GroupsController::class, 'create'])->name('groups.create');
@@ -130,9 +128,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('faq/{faq}/edit', [FaqController::class, 'edit'])->name('faqs.edit');
         Route::patch('faq/{faq}', [FaqController::class, 'update'])->name('faqs.update');
         Route::delete('faq/{faq}', [FaqController::class, 'destroy'])->name('faqs.destroy');
-
-        //Route::get('application', [SettingsController::class, 'index'])->name('settings');
-
+        //
         Route::prefix('application')->group(function () {
             // GEO ZONES
             Route::get('geo-zones', [GeoZoneController::class, 'index'])->name('geozones');
