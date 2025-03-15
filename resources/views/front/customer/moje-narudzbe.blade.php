@@ -8,7 +8,7 @@
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Broj ponude - {{ $order->id }}: {{ $order->auction->name }}</h5>
+                        <h5 class="modal-title">Broj ponude - {{ $order->id }}</h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pb-0">
@@ -19,17 +19,17 @@
                                 </a>
                                 <div class="ps-sm-4 pt-2">
                                     <h3 class="product-title fs-base mb-2"><a href="{{ url($order->auction->url) }}">{{ $order->auction->name }}</a></h3>
-                                    <div class="fs-lg text-accent pt-2">{{ number_format($order->auction->starting_price, 2, ',', '.') }}</div>
+                                    <div class="fs-lg text-primary pt-2">{{ number_format($order->auction->starting_price, 2, ',', '.') }}€</div>
                                 </div>
                             </div>
                             <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-                                <div class="text-muted mb-2">Ponuda</div>{{ number_format($order->amount, 2, ',', '.') }}
+                                <div class="text-muted mb-2">Ponuda</div>{{ number_format($order->amount, 2, ',', '.') }}€
                             </div>
                         </div>
                     </div>
                     <!-- Footer-->
                     <div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md">
-                        <div class="px-2 py-1"><span class="text-muted">{{ $order->auction->name }}:&nbsp;</span><span>{{ number_format($order->amount, 2, ',', '.') }}</span></div>
+                        <div class="px-2 py-1"><span class="text-muted">Vrijeme:&nbsp;</span><span>{{ \Illuminate\Support\Carbon::make($order->created_at)->format('d.m.Y H:i:s') }}</span></div>
                     </div>
                 </div>
             </div>
@@ -62,10 +62,10 @@
                         <tbody>
                         @forelse ($orders as $order)
                             <tr>
-                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details{{ $order->id }}" data-bs-toggle="modal">{{ $loop->iteration }}: {{ $order->auction->name }}</a></td>
-                                <td class="py-3">{{ \Illuminate\Support\Carbon::make($order->created_at)->format('d.m.Y') }}</td>
+                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details{{ $order->id }}" data-bs-toggle="modal">{{ ($orders->total()-$loop->index)-(($orders->currentpage()-1) * $orders->perpage() ) }}: {{ $order->auction->name }}</a></td>
+                                <td class="py-3">{{ \Illuminate\Support\Carbon::make($order->created_at)->format('d.m.Y H:i:s') }}</td>
                                 <td class="py-3"><span class="badge bg-info m-0">{{ $order->auction->status }}</span></td>
-                                <td class="py-3">{{ number_format($order->amount, 2, ',', '.') }} kn</td>
+                                <td class="py-3">{{ number_format($order->amount, 2, ',', '.') }} €</td>
                             </tr>
                         @empty
                             <tr>

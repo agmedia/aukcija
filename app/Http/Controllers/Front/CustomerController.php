@@ -47,7 +47,7 @@ class CustomerController extends Controller
     public function orders(Request $request)
     {
         $user = auth()->user();
-        $orders = $user->bids()->paginate(config('settings.pagination.front'));
+        $orders = $user->bids()->orderBy('created_at', 'DESC')->paginate(config('settings.pagination.front'));
 
         return view('front.customer.moje-narudzbe', compact('user', 'orders'));
     }
