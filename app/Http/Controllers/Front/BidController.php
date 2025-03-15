@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FrontController;
 use App\Jobs\SendAuctionEmails;
 use App\Jobs\SendAuctionNotifications;
 use App\Models\Back\Catalog\Auction\AuctionBid;
@@ -11,7 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class BidController extends Controller
+class BidController extends FrontController
 {
 
     /**
@@ -30,7 +31,7 @@ class BidController extends Controller
 
         if (auth()->user() && $auction && $auction->end_time > now()) {
             // Create new bid. Update auction. Send emails.
-            AuctionBid::create([
+            AuctionBid::query()->create([
                 'auction_id' => $auction->id,
                 'user_id'    => auth()->id(),
                 'amount'     => $request->input('amount'),
@@ -48,10 +49,12 @@ class BidController extends Controller
                 auth()->user()
             );
 
-            SendAuctionNotifications::dispatchAfterResponse(
-                $auction,
-                auth()->user()
-            );
+            if ($this->notifications_status) {
+                SendAuctionNotifications::dispatchAfterResponse(
+                    $auction,
+                    auth()->user()
+                );
+            }
 
             return back()->with(['success' => 'Hvala na ponudi..!']);
         }

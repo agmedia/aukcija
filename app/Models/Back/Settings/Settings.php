@@ -51,7 +51,7 @@ class Settings extends Model
                 return collect(json_decode($styles->value));
             }
 
-            return $styles->value;
+            return $styles->value == '1' ? intval($styles->value) : $styles->value;
         }
 
         return collect();

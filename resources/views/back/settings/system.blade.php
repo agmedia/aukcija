@@ -10,15 +10,22 @@
         </div>
     </div>
 
-    @include('back.layouts.partials.session')
-
     <div class="content content-full">
-        <div class="block">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">User Notifications</h3>
-            </div>
-            <div class="block-content">
+        @include('back.layouts.partials.session')
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">Omogući sustav notifikacija</h3>
+                        <div class="block-options">
+                            <div class="custom-control custom-switch custom-control-success">
+                                <input type="checkbox" class="custom-control-input" id="status-notifications" onclick="setNotificationStatus({{ $notifications_status ? 0 : 1 }})" @if ($notifications_status) checked @endif>
+                                <label class="custom-control-label" for="status-notifications"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -26,5 +33,26 @@
 @endsection
 
 @push('js_after')
+    <script>
+        function setNotificationStatus(status) {
+            let body = {
+                '_token': '{{ csrf_token() }}',
+                'status': status
+            };
 
+            $.post('{{ route('system.notifications.status.api') }}', body, (data, status) => {
+                if (status == 'success' && data.status == 200) {
+                    successToast.fire({ timer: 1500 });
+                }
+
+                if (data.status == 500) {
+                    return errorToast.fire(response.data.message);
+                }
+
+                console.log('prošao')
+                console.log(data, status)
+            });
+        }
+
+    </script>
 @endpush

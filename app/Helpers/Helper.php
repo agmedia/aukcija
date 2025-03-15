@@ -462,13 +462,13 @@ class Helper
      *
      * @return \Illuminate\Cache\TaggedCache|mixed|object
      */
-    public static function resolveCache(string $tag): ?object
+    public static function resolveCache(string $tag = 'ag_app_tag'): ?object
     {
         if (env('APP_ENV') == 'local') {
             return Cache::getFacadeRoot();
         }
 
-        return Cache::tags([$tag]);
+        return Cache::tags($tag);
     }
 
 
@@ -476,15 +476,15 @@ class Helper
      * @param string $tag
      * @param string $key
      *
-     * @return object|bool|mixed|null
+     * @return bool|mixed
      */
-    public static function flushCache(string $tag, string $key)
+    public static function flushCache(string $tag = 'ag_app_tag', string $key = 'ag_app_key')
     {
         if (env('APP_ENV') == 'local') {
             return Cache::getFacadeRoot();
         }
 
-        return Cache::tags([$tag])->forget($key);
+        return Cache::tags($tag)->forget($key);
     }
 
 

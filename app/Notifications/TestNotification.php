@@ -2,25 +2,22 @@
 
 namespace App\Notifications;
 
-use App\Models\Front\Catalog\Auction\Auction;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Str;
 
-class UserBidNotification extends Notification
+class TestNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(
-        protected Auction $auction,
-        protected User $user
-    ) {}
+    public function __construct()
+    {
+        //
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -39,12 +36,10 @@ class UserBidNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        $auction_link = route('catalog.route', ['group' => Str::slug($this->auction->group), 'auction' => $this->auction->slug]);
-
         return [
             'icon' => 'success',
-            'title' => 'Vaša ponuda je bila uspješna.',
-            'message' => 'Dali ste ponudu od ' . $this->auction->current_price . ' na aukciju ' . '<a href="' . $auction_link . '">' . $this->auction->name . '</a>'
+            'title' => 'Ovo je TEST notifikacija',
+            'message' => '...'
         ];
     }
 }

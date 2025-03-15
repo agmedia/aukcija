@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\Breadcrumb;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FrontController;
 use App\Models\Front\Blog;
 use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\Front\Page;
@@ -13,7 +14,7 @@ use App\Models\Seo;
 use App\Models\TagManager;
 use Illuminate\Http\Request;
 
-class CatalogRouteController extends Controller
+class CatalogRouteController extends FrontController
 {
     
     /**

@@ -27,11 +27,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-        //
-        $uvjeti_kupnje = Page::where('subgroup', 'Uvjeti kupnje')->get();
-        View::share('uvjeti_kupnje', $uvjeti_kupnje);
-
-        $nacini_placanja = Page::where('group', 'Načini plaćanja')->get();
-        View::share('nacini_placanja', $nacini_placanja);
     }
 }
