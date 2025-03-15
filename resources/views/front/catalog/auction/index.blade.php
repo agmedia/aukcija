@@ -66,18 +66,11 @@
     <section class="container pb-0">
         <!-- Product-->
         <div class="bg-light shadow-lg rounded-3 px-4 py-1 mb-5">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4 fw-bold active" href="#general" data-bs-toggle="tab" role="tab">Osnovne informacije</a></li>
-                <li class="nav-item"><a class="nav-link py-4 px-sm-4 fw-bold" href="#specs" data-bs-toggle="tab" role="tab">Detaljan opis</a></li>
-            </ul>
             <div class="py-lg-3 py-2 px-lg-3">
-                <div class="tab-content px-lg-3">
-                    <div class="tab-pane fade show active" id="general" role="tabpanel">
-                        <div class="row gy-4">
+                        <div class="row pt-4 gy-4 mb-2">
                             @include('front.layouts.partials.session')
                             <!-- Product image-->
                             <div class="col-lg-6 ">
-
                                 <div class="h-100 bg-light rounded-3 p-0">
                                     <div class="product-gallery">
                                         <div class="product-gallery-preview order-sm-2 gallery">
@@ -107,13 +100,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <!-- Product details-->
                             <div class="col-lg-6">
-                                <div class="ps-xl-5 ps-lg-3">
+                                <div class="ps-xl-4 ps-lg-3">
                                     <!-- Meta-->
-                                    <h2 class="h3 mb-3">{{ $auction->name }}</h2>
+                                    <h1 class="h4 mb-3 pt-3">{{ $auction->name }}</h1>
                                     <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
                                         <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
                                         <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
@@ -225,33 +217,35 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Tech specs tab-->
-                    <div class="tab-pane fade" id="specs" role="tabpanel">
-                        <!-- Specs table-->
-                        <div class="row pt-2">
-                            <div class="col-lg-5 col-sm-6">
-                                <h3 class="h6">Specifikacije</h3>
-                                <ul class="list-unstyled fs-sm pb-2">
-                                    @foreach ($auction->attributesList() as $attribute)
-
-                                        <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            <div class="col-lg-5 col-sm-6 offset-lg-1 ">
-                                <h3 class="h6">Opis</h3>
-                                <div class="fs-sm">
-                                    {!! $auction->description !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </section>
+
+    <div class="container pt-lg-3  pb-sm-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-11   ">
+               <div class="row pt-2 px-4">
+                <div class="col-lg-6   ">
+                    <h3 class="h6">Opis</h3>
+                    <div class="fs-sm">
+                        {!! $auction->description !!}
+                    </div>
+                </div>
+                <div class="col-lg-6  ps-xl-5 ps-lg-3 ">
+                    <h3 class="h6">Specifikacije</h3>
+                    <ul class="list-unstyled fs-sm pb-2">
+                        @foreach ($auction->attributesList() as $attribute)
+
+                            <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">{{ $attribute['title'] }}:</span><span>{{ $attribute['value'] }}</span></li>
+                        @endforeach
+                    </ul>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+    <hr class="mb-2">
 
     <!-- Recent products-->
     <section class="container py-5 pt-0 mb-lg-3">
