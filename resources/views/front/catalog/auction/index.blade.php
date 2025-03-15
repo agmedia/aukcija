@@ -206,7 +206,7 @@
                                                                 <div class="d-sm-flex align-items-sm-center w-100" style="opacity: {{ $opacity }}%;">
                                                                     <div class="mb-sm-0 mb-2">
                                                                         <h6 class="mb-1 fs-sm">Korisnik {{ rand(10, 999) }}</h6>
-                                                                        <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->format('d.m.Y H:i:s')}}</span>
+                                                                        <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->locale('hr')->diffForHumans()/*->format('d.m.Y H:i:s')*/}}</span>
                                                                     </div>
                                                                     <div class="ms-sm-auto text-nowrap">
                                                                         <h6 class="mb-0 fs-md fw-medium text-darker">{{ \App\Helpers\Currency::main($bid->amount, true) }}</h6>
