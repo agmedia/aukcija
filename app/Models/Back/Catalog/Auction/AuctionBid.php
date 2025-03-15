@@ -63,8 +63,8 @@ class AuctionBid extends Model
         // Validate the request.
         $request->validate([
             'auction_id' => 'required',
-            'user_id' => 'required',
-            'amount' => 'required',
+            'user_id'    => 'required',
+            'amount'     => 'required',
         ]);
 
         $this->request = $request;
@@ -85,10 +85,7 @@ class AuctionBid extends Model
         if ($id) {
             $bid = $this->find($id);
 
-            $bid->auction->update([
-                'current_price' => $this->request->amount,
-                'updated_at' => now(),
-            ]);
+            $this->updateAuctionCurrentPrice($bid->auction);
 
             return $bid;
         }
@@ -107,10 +104,7 @@ class AuctionBid extends Model
         $updated = $this->update($this->getModelArray(false));
 
         if ($updated) {
-            $this->auction->update([
-                'current_price' => $this->request->amount,
-                'updated_at' => now(),
-            ]);
+            $this->updateAuctionCurrentPrice($this->auction);
 
             return $this;
         }
@@ -138,5 +132,19 @@ class AuctionBid extends Model
         }
 
         return $response;
+    }
+
+
+    /**
+     * @param Auction $auction
+     *
+     * @return bool
+     */
+    private function updateAuctionCurrentPrice(Auction $auction): bool
+    {
+        return $auction->update([
+            'current_price' => $this->request->amount,
+            'updated_at'    => now(),
+        ]);
     }
 }
