@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -56,6 +57,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'front_username'
     ];
 
     /**
@@ -93,6 +95,15 @@ class User extends Authenticatable
     public function bids()
     {
         return $this->hasMany(AuctionBid::class, 'user_id')->with('auction');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getFrontUsernameAttribute(): string
+    {
+        return substr($this->name, 0, 1) . '_' . substr(md5($this->name), 0, 4);
     }
 
 

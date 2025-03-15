@@ -205,7 +205,7 @@
                                                             <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
                                                                 <div class="d-sm-flex align-items-sm-center w-100" style="opacity: {{ $opacity }}%;">
                                                                     <div class="mb-sm-0 mb-2">
-                                                                        <h6 class="mb-1 fs-sm">Korisnik {{ rand(10, 999) }}</h6>
+                                                                        <h6 class="mb-1 fs-sm">Korisnik {{ $bid->user->front_username }}</h6>
                                                                         <span class="fs-sm fw-normal text-muted">{{ \Illuminate\Support\Carbon::make($bid->created_at)->locale('hr')->diffForHumans()/*->format('d.m.Y H:i:s')*/}}</span>
                                                                     </div>
                                                                     <div class="ms-sm-auto text-nowrap">
