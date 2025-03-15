@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Back\Catalog;
 
 use App\Http\Controllers\Controller;
+use App\Models\Back\Catalog\Auction\Auction;
 use App\Models\Back\Catalog\Auction\AuctionBid;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BidController extends Controller
@@ -16,11 +18,9 @@ class BidController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('search') && ! empty($request->search)) {
-            $bids = AuctionBid::query()->with('user', 'auction')->orderBy('created_at', 'DESC')->paginate(config('settings.pagination.back'));
-        } else {
-            $bids = AuctionBid::query()->with('user', 'auction')->orderBy('created_at','DESC')->paginate(config('settings.pagination.back'));
-        }
+        $bids = AuctionBid::query()->with('user', 'auction')
+                                   ->orderBy('created_at', 'DESC')
+                                   ->paginate(config('settings.pagination.back'));
 
         return view('back.catalog.bids.index', compact('bids'));
     }
@@ -33,12 +33,10 @@ class BidController extends Controller
      */
     public function create()
     {
-        $auction = new Auction();
+        $auctions = Auction::query()->pluck('name', 'id')->toArray();
+        $users = User::query()->pluck('name', 'id')->toArray();
 
-        $data           = $auction->getRelationsData();
-        $active_actions = null;
-
-        return view('back.catalog.auction.edit', compact('data', 'active_actions'));
+        return view('back.catalog.bids.edit', compact('auctions', 'users'));
     }
 
 
@@ -51,14 +49,12 @@ class BidController extends Controller
      */
     public function store(Request $request)
     {
-        $auction = new Auction();
+        $bid = new AuctionBid();
 
-        $stored = $auction->validateRequest($request)->create();
+        $stored = $bid->validateRequest($request)->create();
 
         if ($stored) {
-            $auction->storeImages($stored);
-
-            return redirect()->route('auctions.edit', ['auction' => $stored])->with(['success' => 'Artikl je uspješno snimljen!']);
+            return redirect()->route('bids.edit', ['bid' => $stored])->with(['success' => 'Ponuda je uspješno snimljen!']);
         }
 
         return redirect()->back()->with(['error' => 'Ops..! Greška prilikom snimanja.']);
@@ -72,13 +68,12 @@ class BidController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Auction $auction)
+    public function edit(AuctionBid $bid)
     {
-        $data = $auction->getRelationsData();
+        $auctions = Auction::query()->pluck('name', 'id')->toArray();
+        $users = User::query()->pluck('name', 'id')->toArray();
 
-        $groups = Groups::all()->pluck('title', 'id');
-
-        return view('back.catalog.auction.edit', compact('auction', 'groups', 'data'));
+        return view('back.catalog.bids.edit', compact('bid', 'users', 'auctions'));
     }
 
 
@@ -92,8 +87,13 @@ class BidController extends Controller
      */
     public function update(Request $request, AuctionBid $bid)
     {
+        $updated = $bid->validateRequest($request)->edit();
 
-        return redirect()->back()->with(['error' => 'Whoops..! There was an error saving the attribute.']);
+        if ($updated) {
+            return redirect()->route('bids.edit', ['bid' => $updated])->with(['success' => 'Ponuda je uspješno snimljen!']);
+        }
+
+        return redirect()->back()->with(['error' => 'Ops..! Greška prilikom snimanja.']);
     }
 
 
@@ -106,7 +106,33 @@ class BidController extends Controller
      */
     public function destroy(Request $request, AuctionBid $bid)
     {
+        $destroyed = $bid->delete();
 
-        return redirect()->back()->with(['error' => 'Whoops..! There was an error deleting the attribute .']);
+        if ($destroyed) {
+            return redirect()->route('bids')->with(['success' => 'Ponuda je uspješno obrisana!']);
+        }
+
+        return redirect()->route('bids')->with(['error' => 'Ops..! Greška prilikom brisanja.']);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyApi(Request $request)
+    {
+        if ($request->has('id')) {
+            $destroyed = AuctionBid::destroy($request->input('id'));
+
+            if ($destroyed) {
+                return response()->json(['success' => 200]);
+            }
+        }
+
+        return response()->json(['error' => 300]);
     }
 }

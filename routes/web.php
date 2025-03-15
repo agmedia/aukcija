@@ -50,11 +50,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
         // KATEGORIJE
         Route::get('bids', [BidController::class, 'index'])->name('bids');
-        Route::get('auction/create', [AuctionController::class, 'create'])->name('auctions.create');
-        Route::post('auction', [AuctionController::class, 'store'])->name('auctions.store');
-        Route::get('auction/{auction}/edit', [AuctionController::class, 'edit'])->name('auctions.edit');
-        Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auctions.update');
-        Route::delete('auction/{auction}', [AuctionController::class, 'destroy'])->name('auctions.destroy');
+        Route::get('bid/create', [BidController::class, 'create'])->name('bids.create');
+        Route::post('bid', [BidController::class, 'store'])->name('bids.store');
+        Route::get('bid/{bid}/edit', [BidController::class, 'edit'])->name('bids.edit');
+        Route::patch('bid/{bid}', [BidController::class, 'update'])->name('bids.update');
+        Route::delete('bid/{bid}', [BidController::class, 'destroy'])->name('bids.destroy');
         // Atttributes
         Route::get('attributes', [AttributesController::class, 'index'])->name('attributes');
         Route::get('attribute/create', [AttributesController::class, 'create'])->name('attributes.create');
@@ -176,6 +176,7 @@ Route::prefix('api/v2')->group(function () {
     Route::post('auctions/delete/action', [\App\Http\Controllers\Api\v2\ProductController::class, 'destroyAction'])->name('auctions.destroy.action');
     //
     Route::post('auctions/user/bid', [\App\Http\Controllers\Front\BidController::class, 'storeApi'])->name('auctions.user.bid.api');
+    Route::post('auctions/user/bid/destroy', [BidController::class, 'destroyApi'])->name('auctions.user.bid.api.destroy');
 
     Route::post('/blogs/destroy/api', [BlogController::class, 'destroyApi'])->name('blogs.destroy.api');
     Route::post('/blogs/upload/image', [BlogController::class, 'uploadBlogImage'])->name('blogs.upload.image');

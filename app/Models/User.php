@@ -57,7 +57,8 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        'front_username'
+        'front_username',
+        'enabled'
     ];
 
     /**
@@ -104,6 +105,15 @@ class User extends Authenticatable
     public function getFrontUsernameAttribute(): string
     {
         return substr($this->name, 0, 1) . '_' . substr(md5($this->name), 0, 4);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getEnabledAttribute(): string
+    {
+        return $this->details->status;
     }
 
 
