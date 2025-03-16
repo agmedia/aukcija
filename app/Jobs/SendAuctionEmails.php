@@ -31,7 +31,10 @@ class SendAuctionEmails implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->user->email)->send(new UserBid($this->auction, $this->user));
+        if ($this->user->details->use_emails) {
+            Mail::to($this->user->email)->send(new UserBid($this->auction, $this->user));
+        }
+
         Mail::to(config('settings.admin_email'))->send(new UserBidReceived($this->auction, $this->user));
 
         $mails = [];
@@ -42,12 +45,15 @@ class SendAuctionEmails implements ShouldQueue
                 $mails[$bid->user->id] = [
                     'user' => $bid->user,
                     'email' => $bid->user->email,
+                    'use_emails' => $bid->user->details->use_emails,
                 ];
             }
         }
 
         foreach ($mails as $email) {
-            Mail::to($email['email'])->send(new UserOutbided($this->auction, $email['user']));
+            if ($email['use_emails']) {
+                Mail::to($email['email'])->send(new UserOutbided($this->auction, $email['user']));
+            }
         }
     }
 }

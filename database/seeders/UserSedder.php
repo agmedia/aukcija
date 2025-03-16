@@ -26,8 +26,8 @@ class UserSedder extends Seeder
         // create admins details
         DB::insert(
             "INSERT INTO `user_details` (`user_id`, `user_group_id`, `fname`, `lname`, `address`, `zip`, `city`, `state`, `phone`, `oib`, `company`, `can_bid`, `use_notifications`, `use_emails`, `avatar`, `bio`, `social`, `role`, `status`, `created_at`, `updated_at`) VALUES
-              (1, 0, 'Filip', 'Jankoski', 'Kovačića 23', '44320', 'Kutina', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '790117367', 'admin', 1, NOW(), NOW()),
-              (2, 0, 'Tomislav', 'Jureša', 'Malešnica bb', '10000', 'Zagreb', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '', 'admin', 1, NOW(), NOW()),
+              (1, 0, 'Filip', 'Jankoski', 'Kovačića 23', '44320', 'Kutina', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '790117367', 'master', 1, NOW(), NOW()),
+              (2, 0, 'Tomislav', 'Jureša', 'Malešnica bb', '10000', 'Zagreb', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '', 'master', 1, NOW(), NOW()),
               (3, 0, 'Bobo', 'Customer', 'Customerska bb', '44320', 'Kutina', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '', 'customer', 1, NOW(), NOW()),
               (4, 0, 'Tomek', 'Customer', 'Customerska bb', '10000', 'Zagreb', 'Croatia', '', '', '', 1, 1, 1, 'media/avatars/avatar0.jpg', 'Lorem ipsum...', '', 'customer', 1, NOW(), NOW())"
         );

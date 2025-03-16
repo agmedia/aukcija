@@ -27,7 +27,9 @@ class SendAuctionNotifications implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->user->notify(new UserBidNotification($this->auction, $this->user));
+        if ($this->user->details->use_notifications) {
+            $this->user->notify(new UserBidNotification($this->auction, $this->user));
+        }
 
         $admin = User::query()->where('email', config('settings.admin_email'))->first();
 
@@ -50,7 +52,7 @@ class SendAuctionNotifications implements ShouldQueue
         foreach ($mails as $email) {
             $user = User::query()->where('email', $email['email'])->first();
 
-            if ($user) {
+            if ($user && $user->details->use_notifications) {
                 $user->notify(new UserOutbidedNotification($this->auction, $this->user));
             }
         }

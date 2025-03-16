@@ -24,7 +24,7 @@
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
                 </a>
 
-                @if ($notifications_status)
+                @if ($notifications_status && (auth()->guest() || (auth()->user() && auth()->user()->details->use_notifications)))
                     <!-- Notifications -->
                     <div class="navbar-tool ms-2 dropdown">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="#">
