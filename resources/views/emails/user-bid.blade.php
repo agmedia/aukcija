@@ -1,16 +1,20 @@
 @extends('emails.layouts.base')
 
 @section('content')
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-        <tr>
-            <td style="padding: 20px 20px 10px 20px; font-family: sans-serif; font-size: 18px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-                Aukcija {{ $auction->name }}<br>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 20px 20px 10px 20px; font-family: sans-serif; font-size: 18px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-                User {{ $user->name }}<br>
-            </td>
-        </tr>
-    </table>
+
+   <p> Poštovani/a {{ $user->name }},</p>
+
+   <p> Zahvaljujemo na sudjelovanju u aukciji za artikl "{{ $auction->name }}".</p>
+
+   <p> Vaša ponuda od {{ \App\Helpers\Currency::main($auction->current_price, true) }} je uspješno zabilježena.</p>
+
+   <p> Ako vaša ponuda ostane najveća do završetka aukcije, dobit ćete e-mail s uputama za uplatu.</p>
+
+   <p> Možete pratiti aukciju i postaviti novu ponudu na sljedećem linku: <a href="{{ route('catalog.route', ['group' => Str::slug($auction->group), 'auction' => $auction->slug])}}">Link na aukciju</a></p>
+
+   <p> Sretno i hvala što koristite našu platformu!</p>
+
+   <p> Aukcije 4 antikvarijata<br>
+    info@aukcije4a.com</p>
+
 @endsection

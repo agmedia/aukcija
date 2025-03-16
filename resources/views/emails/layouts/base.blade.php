@@ -194,7 +194,7 @@
 
             /* What it does: Adjust typography on small screens to improve readability */
             .email-container p {
-                font-size: 17px !important;
+                font-size: 15px !important;
             }
         }
 
@@ -268,7 +268,7 @@
 
         <!-- 1 Column Text : BEGIN -->
         <tr>
-            <td style="background-color: #ffffff;">
+            <td style="background-color: #ffffff; padding: 30px 10px">
                 @yield('content')
             </td>
         </tr>
@@ -281,7 +281,7 @@
     <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
         <tr>
             <td style="padding: 20px;  font-size: 12px; line-height: 15px; text-align: center; color: #373f50;">
-                Aukcije 4 antikvarijata © {{ now()->year }}. {{ __('front/ricekakis.sva_prava') }}. <br><a href="info/uvjeti-prodaje" style="color:#ffffff;">{{ __('front/cart.opci_uvjeti') }}</a>
+                Aukcije 4 antikvarijata © {{ now()->year }}. Sva prava pridržana. <br><a href="info/uvjeti-prodaje" style="color:#ffffff;">Opći uvjeti korištenja.</a>
                 <br>
             </td>
         </tr>
