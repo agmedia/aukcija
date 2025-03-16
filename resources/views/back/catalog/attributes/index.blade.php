@@ -44,7 +44,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="2">Trenutno nema atributa.</td>
+                            <td colspan="4">Trenutno nema atributa.</td>
                         </tr>
                     @endforelse
                     </tbody>

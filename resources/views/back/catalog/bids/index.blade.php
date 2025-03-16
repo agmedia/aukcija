@@ -53,7 +53,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="2">Trenutno nema ponuda.</td>
+                            <td colspan="6">Trenutno nema ponuda.</td>
                         </tr>
                     @endforelse
                     </tbody>

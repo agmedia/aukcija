@@ -75,7 +75,7 @@
                         </li>
                         <li class="nav-main-item">
                             <a class="nav-main-link{{ request()->routeIs(['groups', 'groups.*']) ? ' active' : '' }}" href="{{ route('groups') }}">
-                                <span class="nav-main-link-name">Kategorije</span>
+                                <span class="nav-main-link-name">Grupe</span>
                             </a>
                         </li>
                         <li class="nav-main-item">

@@ -5,9 +5,9 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Kategorije </h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Grupe</h1>
                 <a class="btn btn-hero-success my-2" href="{{ route('groups.create') }}">
-                    <i class="far fa-fw fa-plus-square"></i><span class="d-none d-sm-inline ml-1">Dodaj novu kategoriju</span>
+                    <i class="far fa-fw fa-plus-square"></i><span class="d-none d-sm-inline ml-1">Dodaj novu grupu</span>
                 </a>
             </div>
         </div>
@@ -18,7 +18,7 @@
 
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Kategorije ({{ $groups->total() }})</h3>
+                <h3 class="block-title">Grupe ({{ $groups->total() }})</h3>
             </div>
             <div class="block-content">
                 <table class="table table-striped table-borderless table-vcenter">
@@ -44,7 +44,7 @@
                         </tr>
                     @empty
                         <tr class="text-center">
-                            <td colspan="2">Trenutno nema kategorija.</td>
+                            <td colspan="4">Trenutno nema grupa.</td>
                         </tr>
                     @endforelse
                     </tbody>
