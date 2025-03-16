@@ -38,8 +38,9 @@
                             <div style="min-width: 14rem;">
                                 <div class="d-flex align-items-center dropdown-header">
                                 <h6 class="mb-0 w-100">Vaše notifikacije </h6>
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="Označi sve kao pročitano" class="" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-eye-off"></i></a>
-
+                                    {{--
+                                    <a type="button" href="{{ route('moj.racun.read.notifications') }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Označi sve kao pročitano" class="" ><i class="ci-eye-off"></i></a>
+                                    --}}
                                 </div>
 
                                 @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)
@@ -64,8 +65,8 @@
                                         @endforeach
                                     </ul>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-center mb-0" href="javascript:void(0)">
-                                        <i class="fa fa-flag mr-5"></i> Pročitaj sve
+                                    <a class="dropdown-item text-center mb-0" href="{{ route('moj.racun.read.notifications') }}">
+                                        <i class="fa fa-flag mr-5"></i> Označi sve kao pročitano
                                     </a>
                                 @else
                                     <h5 class="h6 dropdown-item d-flex align-items-center text-center py-3 mb-2  font-w300">Nemate novih notifikacija!</h5>
