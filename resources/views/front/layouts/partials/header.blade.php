@@ -36,8 +36,11 @@
 
                         <div class="dropdown-menu dropdown-menu-end">
                             <div style="min-width: 14rem;">
-                                <h6 class="dropdown-header">Vaše notifikacije</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-eye opacity-80"></i></a>
+                                <div class="d-flex align-items-center dropdown-header">
+                                <h6 class="mb-0 w-100">Vaše notifikacije </h6>
+                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="Označi sve kao pročitano" class="" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-eye-off"></i></a>
+
+                                </div>
 
                                 @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)
                                   <!--  <h5 class="h6 text-center py-2 mb-0 border-b text-uppercase">Notifikacije</h5>-->
