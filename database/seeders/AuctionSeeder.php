@@ -29,24 +29,5 @@ class AuctionSeeder extends Seeder
         AuctionImage::factory(1000)->create();
         
         AuctionBid::factory(2500)->create();
-
-
-        $groups = [
-            'Knjige', 'Zemljovidi', 'Filatelija', 'Numizmatika'
-        ];
-
-        foreach ($groups as $key => $group) {
-            Groups::query()->insertGetId([
-                'group' => Str::slug($group),
-                'group_title' => $group,
-                'title' => $group,
-                'description' => fake()->sentence(),
-                'type' => 'text',
-                'sort_order' => $key + 1,
-                'status' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
     }
 }

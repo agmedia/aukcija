@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Front\Catalog\Auction\AuctionBid;
 use App\Models\Roles\Role;
+use Bouncer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,6 +20,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
+
     use HasApiTokens, HasRolesAndAbilities;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -76,7 +78,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
@@ -88,8 +90,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class, 'user_id');
     }
-    
-    
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -128,7 +130,7 @@ class User extends Authenticatable
     {
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255']
+            'email'    => ['required', 'string', 'email', 'max:255']
         ]);
 
         $this->request = $request;
@@ -147,13 +149,13 @@ class User extends Authenticatable
     public function validateFrontRequest(Request $request)
     {
         $request->validate([
-            'fname' => ['required', 'string', 'max:255'],
-            'lname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'fname'   => ['required', 'string', 'max:255'],
+            'lname'   => ['required', 'string', 'max:255'],
+            'email'   => ['required', 'string', 'email', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'zip' => ['required', 'string', 'max:255'],
-            'state' => ['required', 'string', 'max:255']
+            'city'    => ['required', 'string', 'max:255'],
+            'zip'     => ['required', 'string', 'max:255'],
+            'state'   => ['required', 'string', 'max:255']
         ]);
 
         $this->request = $request;
@@ -181,30 +183,34 @@ class User extends Authenticatable
             'password' => Hash::make($this->request->password),
         ]);
 
-        if ( ! isset($this->request->role) && $this->request->role == ''){
+        if ( ! isset($this->request->role) && $this->request->role == '') {
             $this->request->role = 'customer';
         }
 
         Bouncer::assign($this->request->role)->to($user);
 
         UserDetail::create([
-            'user_id'    => $user->id,
-            'fname'      => $this->request->fname,
-            'lname'      => $this->request->lname,
-            'address'    => $this->request->address,
-            'zip'        => $this->request->zip,
-            'city'       => $this->request->city,
-            'state'      => $this->request->state,
-            'phone'      => $this->request->phone,
-            'company'      => $this->request->company,
-            'oib'      => $this->request->oib,
-            'avatar'     => 'media/avatars/avatar1.jpg',
-            'bio'        => '',
-            'social'     => '',
-            'role'       => $this->request->role,
-            'status'     => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'user_id'           => $user->id,
+            'user_group_id'     => 0,
+            'fname'             => $this->request->fname,
+            'lname'             => $this->request->lname,
+            'address'           => $this->request->address,
+            'zip'               => $this->request->zip,
+            'city'              => $this->request->city,
+            'state'             => $this->request->state,
+            'phone'             => $this->request->phone,
+            'company'           => $this->request->company,
+            'oib'               => $this->request->oib,
+            'can_bid'           => (isset($this->request->can_bid) and $this->request->can_bid == 'on') ? 1 : 0,
+            'use_notifications' => (isset($this->request->use_notifications) and $this->request->use_notifications == 'on') ? 1 : 0,
+            'use_emails'        => (isset($this->request->use_emails) and $this->request->use_emails == 'on') ? 1 : 0,
+            'avatar'            => 'media/avatars/avatar1.jpg',
+            'bio'               => '',
+            'social'            => '',
+            'role'              => $this->request->role,
+            'status'            => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+            'created_at'        => now(),
+            'updated_at'        => now()
         ]);
 
         return $user;
@@ -220,9 +226,9 @@ class User extends Authenticatable
     {
         if (isset($this->request->username)) {
             $this->update([
-                'name'     => $this->request->username,
-                'email'    => $this->request->email,
-                'updated_at'       => Carbon::now()
+                'name'       => $this->request->username,
+                'email'      => $this->request->email,
+                'updated_at' => Carbon::now()
             ]);
         }
 
@@ -233,7 +239,7 @@ class User extends Authenticatable
         }
 
         if ($this->id) {
-            if (!isset($this->request->role)){
+            if ( ! isset($this->request->role)) {
                 $this->request->role = 'customer';
             }
 
@@ -242,21 +248,25 @@ class User extends Authenticatable
             }
 
             UserDetail::where('user_id', $this->id)->update([
-                'fname'      => $this->request->fname,
-                'lname'      => $this->request->lname,
-                'address'    => $this->request->address,
-                'zip'        => $this->request->zip,
-                'city'       => $this->request->city,
-                'state'      => $this->request->state,
-                'phone'      => $this->request->phone,
-                'company'    => $this->request->company,
-                'oib'        => $this->request->oib,
-                'avatar'     => 'media/avatars/avatar1.jpg',
-                'bio'        => '',
-                'social'     => '',
-                'role'       => $this->request->role,
-                'status'     => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-                'updated_at' => Carbon::now()
+                'user_group_id'     => 0,
+                'fname'             => $this->request->fname,
+                'lname'             => $this->request->lname,
+                'address'           => $this->request->address,
+                'zip'               => $this->request->zip,
+                'city'              => $this->request->city,
+                'state'             => $this->request->state,
+                'phone'             => $this->request->phone,
+                'company'           => $this->request->company,
+                'oib'               => $this->request->oib,
+                'can_bid'           => (isset($this->request->can_bid) and $this->request->can_bid == 'on') ? 1 : 0,
+                'use_notifications' => (isset($this->request->use_notifications) and $this->request->use_notifications == 'on') ? 1 : 0,
+                'use_emails'        => (isset($this->request->use_emails) and $this->request->use_emails == 'on') ? 1 : 0,
+                'avatar'            => 'media/avatars/avatar1.jpg',
+                'bio'               => '',
+                'social'            => '',
+                'role'              => $this->request->role,
+                'status'            => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+                'updated_at'        => now()
             ]);
 
             return $this->find($this->id);

@@ -34,8 +34,8 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('phone')->nullable();
-            $table->string('oib')->nullable();
             $table->string('company')->nullable();
+            $table->string('oib')->nullable();
             $table->boolean('can_bid')->default(1);
             $table->boolean('use_notifications')->default(1);
             $table->boolean('use_emails')->default(1);
