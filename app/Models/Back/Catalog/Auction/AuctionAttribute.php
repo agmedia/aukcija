@@ -19,6 +19,8 @@ class AuctionAttribute extends Model
      * @var array $guarded
      */
     protected $guarded = [];
+
+    public $timestamps = false;
     
     
     /**

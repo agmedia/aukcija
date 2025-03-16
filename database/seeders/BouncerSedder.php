@@ -90,9 +90,13 @@ class BouncerSedder extends Seeder
          *
          */
         $users = User::whereIn('id', [1, 2])->get();
-
         foreach ($users as $user) {
             $user->assign('master');
+        }
+
+        $users = User::whereIn('id', [3, 4])->get();
+        foreach ($users as $user) {
+            $user->assign('customer');
         }
     }
 }
