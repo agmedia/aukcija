@@ -148,6 +148,12 @@
 
 
                                     <!-- Place a bid-->
+
+
+
+
+                                    @if(auth()->user()->details->can_bid and auth()->user() or auth()->guest())
+
                                     <div class="row mb-3">
                                         <div class="col">
                                             <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + $auction->min_increment), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
@@ -172,6 +178,18 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                    @else
+                                        <div class="row mb-3">
+                                            <div class="alert alert-primary  d-flex" role="alert">
+                                                <div class="alert-icon">
+                                                    <i class="ci-bell"></i>
+                                                </div>
+                                                <div class="fs-md">Onemogućeno vam je davanje ponuda. Za više informacije  <a href="{{ route('kontakt') }}" class="alert-link">kontaktirajte nas</a>.</div>
+                                            </div>
+
+                                        </div>
+                                    @endif
 
                                     <div class="row mb-3">
                                         <div id="bid-result-div" class="col font-size-sm"></div>
