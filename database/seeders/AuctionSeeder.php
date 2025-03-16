@@ -22,7 +22,7 @@ class AuctionSeeder extends Seeder
         
         Auction::factory(500)->create();
         
-        //AuctionAttribute::factory(1500)->create();
+        AuctionAttribute::factory(1500)->create();
         
         AuctionImage::factory(1000)->create();
         

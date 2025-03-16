@@ -36,6 +36,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('oib')->nullable();
             $table->string('company')->nullable();
+            $table->boolean('can_bid')->default(1);
+            $table->boolean('use_notifications')->default(1);
+            $table->boolean('use_emails')->default(1);
             $table->string('avatar')->default('images/avatars/default_avatar.jpg');
             $table->longText('bio')->nullable();
             $table->string('social')->nullable();
