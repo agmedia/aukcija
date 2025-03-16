@@ -82,22 +82,18 @@ class Helper
     public static function search(string $target = '', bool $builder = false)
     {
         if ($target != '') {
-            $response = collect();
-
             $products = Auction::active()->where('name', 'like', '%' . $target . '%')
                 ->orWhere('meta_description', 'like', '%' . $target . '%')
                 ->orWhere('sku', 'like', '%' . $target . '%')
-                ->pluck('id');
-
-            if ( ! $products->count()) {
-                $products = collect();
-            }
+                ->orWhereHas('attributes', function (Builder $query) use ($target) {
+                    $query->where('value', 'like', '%' . $target . '%');
+                });
 
             if ($builder) {
-                return $response;
+                return $products;
             }
 
-            return $response['products']->toJson();
+            return $products->pluck('id')->toArray();
         }
 
         return false;

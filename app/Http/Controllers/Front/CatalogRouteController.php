@@ -63,14 +63,13 @@ class CatalogRouteController extends FrontController
             }
 
             $group = null;
+            $crumbs = null;
 
             $ids = Helper::search(
                 $request->input(config('settings.search_keyword'))
             );
 
-            $crumbs = null;
-
-            return view('front.catalog.category.index', compact('group', 'ids', 'crumbs'));
+            return view('front.catalog.auction.list', compact('group', 'ids', 'crumbs'));
         }
 
         if ($request->has(config('settings.search_keyword') . '_api')) {

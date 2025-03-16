@@ -12,18 +12,10 @@
     @endpush
 @endif
 
-
 @section('content')
-
-
-
-
-
-
     <!-- Page Title-->
     <div class=" bg-symphony pt-4 pb-3 border-bottom" >
         <div class="container d-lg-block justify-content-start py-2 py-lg-3">
-
             @if (isset($group) && $group)
                 <div class="order-lg-2 mb-3 mb-lg-0 pb-lg-2">
                     <nav aria-label="breadcrumb">
@@ -33,33 +25,23 @@
                         </ol>
                     </nav>
                 </div>
-
             @endif
-
-                <div class="order-lg-1  text-center ">
-                    @if (isset($group) && $group)
-                        <h1 class="h3 text-primary mb-0">{{ \Illuminate\Support\Str::ucfirst($group) }}</h1>
-                    @endif
-
-
-                </div>
-
+            <div class="order-lg-1  text-center ">
+                @if (isset($group) && $group)
+                    <h1 class="h3 text-primary mb-0">{{ \Illuminate\Support\Str::ucfirst($group) }}</h1>
+                @endif
+            </div>
             @if (Route::currentRouteName() == 'pretrazi')
                 <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
                     <h1 class="h3 text-dark mb-0"><span class="small fw-light me-2">Rezultati za:</span> {{ request()->input('pojam') }}</h1>
                 </div>
             @endif
-
         </div>
-
     </div>
     <div class="container pb-4 mb-2 mb-md-4 mt-4 px-3">
         <div class="row">
-
-            @livewire('front.catalog.auction-list', ['group' => (isset($group) && $group) ? $group : ''])
-
+            @livewire('front.catalog.auction-list', ['group' => (isset($group) && $group) ? $group : '', 'ids' => (isset($ids) && $ids) ? $ids : []])
         </div>
-
     </div>
 
 @endsection

@@ -6,19 +6,39 @@ use App\Models\Front\Catalog\Auction\Auction;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ *
+ */
 class AuctionList extends Component
 {
+
     use WithPagination;
+
+    /**
+     * @var string
+     */
     public $group = '';
 
+    /**
+     * @var array 
+     */
+    public $ids = [];
 
+
+    /**
+     * @return void
+     */
     public function mount()
     {
-        if ($this->group !== '') {
+        if ( ! empty($this->ids)) {
 
         }
     }
 
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|object
+     */
     public function render()
     {
         return view('livewire.front.catalog.auction-list', [
@@ -27,19 +47,19 @@ class AuctionList extends Component
     }
 
 
+    /**
+     * @return mixed
+     */
     private function resolveAuctions()
     {
-        //dd(Auction::query()->active()->paginate(20));
-        return Auction::query()->active()->paginate(20);
+        $auctions = Auction::query()->active();
 
-        /*foreach ($auctions as $auction) {
-            $this->auctions[] = [
-                'id' => $auction->id,
-                'title' => $auction->title,
-            ];
-        }*/
+        if ( ! empty($this->ids)) {
+            $auctions = $auctions->whereIn('id', $this->ids);
+        }
+
+        return $auctions->paginate(20);
     }
-
 
 
     /**
