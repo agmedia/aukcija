@@ -9,7 +9,9 @@ use App\Http\Controllers\FrontController;
 use App\Models\Front\AgCart;
 use App\Models\Front\Checkout\Order;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends FrontController
 {
@@ -56,6 +58,28 @@ class CustomerController extends FrontController
 
     /**
      * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function notifications(Request $request)
+    {
+        $user = auth()->user();
+        $notifications = $user->notifications()->orderBy('created_at', 'DESC')->paginate(config('settings.pagination.front'));
+
+        return view('front.customer.moje-notifikacije', compact('user', 'notifications'));
+    }
+
+
+    public function details(Request $request)
+    {
+        $user = auth()->user();
+
+        return view('front.customer.details', compact('user'));
+    }
+
+
+    /**
+     * @param Request $request
      * @param User    $user
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -65,14 +89,19 @@ class CustomerController extends FrontController
         $updated = $user->validateFrontRequest($request)->edit();
 
         if ($updated) {
-            return redirect()->route('moj-racun', ['user' => $updated])->with(['success' => 'Korisnik je uspješno snimljen!']);
+            return redirect()->route('moj.racun', ['user' => $updated])->with(['success' => 'Korisnik je uspješno snimljen!']);
         }
 
         return redirect()->back()->with(['error' => 'Oops..! Greška prilikom snimanja.']);
     }
 
 
-    public function markNotificationsAsRead(Request $request)
+    /**
+     * @param Request|null $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function markNotificationsAsRead(Request $request = null)
     {
         $user = auth()->user();
         $user->unreadNotifications()->update(['read_at' => now()]);
@@ -80,4 +109,61 @@ class CustomerController extends FrontController
         return back()->with(['success' => 'Notifikacije su pročitane..!']);
     }
 
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    public function readOneNotification(Request $request)
+    {
+        $request->validate(['id' => 'required']);
+        $user = auth()->user();
+
+        if ($user) {
+            $unread = $user->unreadNotifications()->where('id', $request->input('id'))->first();
+
+            Log::info($unread);
+
+            if ($unread) {
+                return $unread->markAsRead();
+            }
+        }
+
+        return 0;
+    }
+
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function changeSettings(Request $request): JsonResponse
+    {
+        $request->validate([
+            'target' => 'required',
+            'status' => 'required'
+        ]);
+
+        Log::info($request->all());
+
+        $user = auth()->user();
+
+        if ($user) {
+            if ($request->input('target') == "use_emails") {
+                $updated = $user->details()->update(['use_emails' => ($request->input('status') == 'true') ? 1 : 0]);
+            }
+
+            if ($request->input('target') == "use_notifications") {
+                $updated = $user->details()->update(['use_notifications' => ($request->input('status') == 'true') ? 1 : 0]);
+            }
+
+            if ($updated) {
+                return response()->json(['success' => 200]);
+            }
+        }
+
+        return response()->json(['error' => 300]);
+    }
 }

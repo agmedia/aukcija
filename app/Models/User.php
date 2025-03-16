@@ -247,6 +247,16 @@ class User extends Authenticatable
                 Role::change($this->id, $this->request->role);
             }
 
+            if ( ! isset($this->request->can_bid)) {
+                $can_bid = $this->details->can_bid;
+                $use_notifications = $this->details->use_notifications;
+                $use_emails = $this->details->use_emails;
+            } else {
+                $can_bid = (isset($this->request->can_bid) and $this->request->can_bid == 'on') ? 1 : 0;
+                $use_notifications = (isset($this->request->use_notifications) and $this->request->use_notifications == 'on') ? 1 : 0;
+                $use_emails = (isset($this->request->use_emails) and $this->request->use_emails == 'on') ? 1 : 0;
+            }
+
             UserDetail::where('user_id', $this->id)->update([
                 'user_group_id'     => 0,
                 'fname'             => $this->request->fname,
@@ -258,9 +268,9 @@ class User extends Authenticatable
                 'phone'             => $this->request->phone,
                 'company'           => $this->request->company,
                 'oib'               => $this->request->oib,
-                'can_bid'           => (isset($this->request->can_bid) and $this->request->can_bid == 'on') ? 1 : 0,
-                'use_notifications' => (isset($this->request->use_notifications) and $this->request->use_notifications == 'on') ? 1 : 0,
-                'use_emails'        => (isset($this->request->use_emails) and $this->request->use_emails == 'on') ? 1 : 0,
+                'can_bid'           => $can_bid,
+                'use_notifications' => $use_notifications,
+                'use_emails'        => $use_emails,
                 'avatar'            => 'media/avatars/avatar1.jpg',
                 'bio'               => '',
                 'social'            => '',

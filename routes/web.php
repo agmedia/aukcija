@@ -179,6 +179,9 @@ Route::prefix('api/v2')->group(function () {
     //
     Route::post('system/notifications/status', [SystemController::class, 'notificationStatus'])->name('system.notifications.status.api');
     Route::get('system/notifications/test', [SystemController::class, 'notificationTest'])->name('system.notifications.test');
+    Route::post('system/notification/single/delete/by-user', [CustomerController::class, 'readOneNotification'])->name('system.notifications.delete.single');
+
+    Route::post('user/details/settings', [CustomerController::class, 'changeSettings'])->name('user.change.settings');
 
     // FILTER
     Route::prefix('filter')->group(function () {
@@ -263,6 +266,8 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('moj-racun')->group(func
     Route::get('/', [CustomerController::class, 'index'])->name('moj.racun');
     Route::patch('/snimi/{user}', [CustomerController::class, 'save'])->name('moj.racun.snimi');
     Route::get('/narudzbe', [CustomerController::class, 'orders'])->name('moj.racun.narudzbe');
+    Route::get('/notifikacije', [CustomerController::class, 'notifications'])->name('moj.racun.notifikacije');
+    Route::get('/detalji', [CustomerController::class, 'details'])->name('moj.racun.detalji');
     //
     Route::get('notifications/delete/by-user', [CustomerController::class, 'markNotificationsAsRead'])->name('moj.racun.read.notifications');
 });
