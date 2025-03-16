@@ -28,7 +28,7 @@
                         <th style="width: 30%;">Aukcija</th>
                         <th>Korisnik</th>
                         <th >Iznos</th>
-                        <th class="text-right" >Vrijeme</th>
+                        <th class="text-right">Vrijeme</th>
                         <th class="text-right">Akcije</th>
                     </tr>
                     </thead>

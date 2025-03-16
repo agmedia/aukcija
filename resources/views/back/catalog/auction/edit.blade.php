@@ -1,16 +1,12 @@
 @extends('back.layouts.backend')
-
 @push('css_before')
     <link rel="stylesheet" href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/dropzone/min/dropzone.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/plugins/slim/slim.css') }}">
-
     @stack('auction_css')
 @endpush
-
 @section('content')
-
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
@@ -27,15 +23,11 @@
     <!-- Page Content -->
     <div class="content content-full">
         @include('back.layouts.partials.session')
-
-
-
         <form action="{{ isset($auction) ? route('auctions.update', ['auction' => $auction]) : route('auctions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if (isset($auction))
                 {{ method_field('PATCH') }}
             @endif
-
             <div class="block">
                 <div class="block-header block-header-default">
                     <a class="btn btn-light" href="{{ route('auctions') }}">
@@ -55,11 +47,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
             <div class="block block-rounded">
                 <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                     <li class="nav-item">
@@ -68,7 +57,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#atributi"><i class="si si-settings"></i> {{ __('Atributi') }}</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="#slike"><i class="si si-picture"></i> {{ __('Slike') }}</a>
                     </li>
@@ -83,11 +71,9 @@
                         </a>
                     </li>
                 </ul>
-
                 <div class="block-content tab-content">
                     <div class="tab-pane active" id="osnovno" role="tabpanel">
                         <div class="block">
-
                             <div class="block-content">
                                 <div class="row justify-content-center push">
                                     <div class="col-md-12">
@@ -113,7 +99,6 @@
                                                 <span class="text-danger font-italic">Cijena je potrebna...</span>
                                                 @enderror
                                             </div>
-
                                             <div class="col-md-3">
                                                 <label for="price-input">Trenutna cijena <span class="text-danger">*</span> <span class="small text-gray">(S PDV-om)</span></label>
                                                 <div class="input-group">
@@ -126,7 +111,6 @@
                                                 <span class="text-danger font-italic">Cijena je potrebna...</span>
                                                 @enderror
                                             </div>
-
                                             <div class="col-md-3">
                                                 <label for="sku-input">Šifra <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="sku-input" name="sku" placeholder="Upišite šifru artikla" value="{{ isset($auction) ? $auction->sku : old('sku') }}">
@@ -137,7 +121,6 @@
                                                 <span class="text-danger small font-italic">{{ $message }}</span>
                                                 @enderror
                                             </div>
-
                                             <div class="col-md-3">
                                                 <label for="price-input">Porez</label>
                                                 <select class="js-select2 form-control" id="tax-select" name="tax_id" style="width: 100%;" data-placeholder="Odaberite porez...">
@@ -147,14 +130,8 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
-
                                         </div>
-
-
-
                                         <div class="form-group row items-push mb-3">
-
                                             <div class="col-md-6">
                                                 <label for="special-from-input">Trajanje aukcije</label>
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy" data-week-start="1" data-autoclose="true" data-today-highlight="true">
@@ -171,51 +148,28 @@
                                             </span>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
-                                        <!-- CKEditor 5 Classic (js-ckeditor5-classic in Helpers.ckeditor5()) -->
-                                        <!-- For more info and examples you can check out http://ckeditor.com -->
                                         <div class="form-group row mb-4">
                                             <div class="col-md-12">
                                                 <label for="description-editor">Opis</label>
                                                 <textarea id="description-editor" name="description">{!! isset($auction) ? $auction->description : old('description') !!}</textarea>
                                             </div>
                                         </div>
-
-
-
                                         <div class="form-group row items-push mb-4">
                                             <div class="col-md-12">
                                                 <label for="categories">Odaberi kategorije</label>
                                                 <select class="form-control" id="category-select" name="group" style="width: 100%;" >
-                                                    <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-
+                                                    <option></option>
                                                     @foreach ($groups as $key => $title)
                                                         <option value="{{ $title }}" class="pl-3 text-sm" {{ ((isset($auction) && $auction->group) and ($title == $auction->group)) ? 'selected' : '' }}>{{ $title }}</option>
                                                     @endforeach
-
-
-                                                   {{-- @foreach ($groups as $group => $cats)
-                                                        @foreach ($cats as $id => $category)
-                                                            <option value="{{ $id }}" class="font-weight-bold small" {{ ((isset($auction)) and (in_array($id, $auction->categories()->pluck('id')->toArray()))) ? 'selected' : '' }}>{{ $category['title'] }}</option>
-                                                            @if ( ! empty($category['subs']))
-                                                                @foreach ($category['subs'] as $sub_id => $subcategory)
-                                                                    <option value="{{ $sub_id }}" class="pl-3 text-sm" {{ ((isset($auction) && $auction->subcategory()) and ($sub_id == $auction->subcategory()->id)) ? 'selected' : '' }}>{{ $category['title'] . ' >> ' . $subcategory['title'] }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        @endforeach
-                                                    @endforeach --}}
                                                 </select>
-
                                                 @error('category')
                                                 <span class="text-danger font-italic">Kategorija je potrebna...</span>
                                                 @enderror
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -243,11 +197,6 @@
                             <div class="block-content block-content-full">
                                 <div class="row justify-content-center">
                                     <div class="col-md-12">
-                                        <!-- Dropzone (functionality is auto initialized by the plugin itself in js/plugins/dropzone/dropzone.min.js) -->
-                                        <!-- For more info and examples you can check out http://www.dropzonejs.com/#usage -->
-                                        <!--                            <div class="dropzone">
-                                                                        <div class="dz-message" data-dz-message><span>Klikni ovdje ili dovuci slike za uplad</span></div>
-                                                                    </div>-->
                                         @include('back.catalog.auction.edit-photos')
                                     </div>
                                 </div>
@@ -284,26 +233,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="tab-pane" id="ponude" role="tabpanel">
-                        <div class="block">
-                            <div class="block-header block-header-default">
-                                <h3 class="block-title">Lista ponuda</h3>
-
-                                <button class="btn btn-sm btn-alt-secondary" onclick="event.preventDefault(); openModal();">
-                                    <i class="fa fa-fw fa-plus-circle"></i> Dodaj novu ponudu
-                                </button>
-                            </div>
-                            <div class="block-content block-content-full">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-12">
-                                        @livewire('back.catalog.auction-bids-table', ['bids' => isset($auction) ? $auction->bids()->get()->toArray() : []])
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @livewire('back.catalog.auction-bids-table', ['auction' => isset($auction) ? $auction : []])
                     </div>
                 </div>
                 <div class="block-content bg-body-light">
@@ -323,13 +256,7 @@
                     </div>
                 </div>
             </div>
-
         </form>
-
-
-
-
-
         @if (isset($auction))
             <form id="delete-auction-form{{ $auction->id }}" action="{{ route('auctions.destroy', ['auction' => $auction]) }}" method="POST" style="display: none;">
                 @csrf
@@ -339,56 +266,6 @@
     </div>
 @endsection
 
-@push('modals')
-    <div class="modal fade" id="nova-ponuda" tabindex="-1" role="dialog" aria-labelledby="tax--modal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-popout" role="document">
-            <div class="modal-content rounded">
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary">
-                        <h3 class="block-title">Dodaj novu ponudu</h3>
-                        <div class="block-options">
-                            <a class="text-muted font-size-h3" href="#" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="block-content">
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-10">
-                                <div class="form-group mb-4">
-                                    <label for="tax-title">Iznos</label>
-                                    <input type="text" class="form-control" id="amount" name="amount">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="tax-rate">Korisnik</label>
-                                    <select class="js-select2 form-control" id="user_id" name="user_id" style="width: 100%;" data-placeholder="Odaberite korisnika...">
-                                        <option></option>
-                                        <option name="1">Tomislav</option>
-
-                                    </select>
-                                </div>
-
-
-                                <input type="hidden" id="auction_id" name="auction_id" value="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block-content block-content-full text-right bg-light">
-                        <a class="btn btn-sm btn-light" data-dismiss="modal" aria-label="Close">
-                            Odustani <i class="fa fa-times ml-2"></i>
-                        </a>
-                        <button type="button" class="btn btn-sm btn-primary" >
-                            Snimi <i class="fa fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-@endpush
 
 @push('js_after')
     <!-- Page JS Plugins -->
@@ -401,15 +278,6 @@
 
     <!-- Page JS Helpers (CKEditor 5 plugins) -->
     <script>jQuery(function(){Dashmix.helpers(['datepicker']);});</script>
-
-    <script>
-        function openModal(item = {}) {
-
-
-            $('#nova-ponuda').modal('show');
-
-        }
-    </script>
 
     <script>
         $(() => {
