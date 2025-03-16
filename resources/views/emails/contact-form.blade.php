@@ -4,14 +4,15 @@
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         <tr>
             <td style="padding: 20px 20px 10px 20px; font-family: sans-serif; font-size: 18px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-                Contact Form Message.<br>
+                Upit sa kontakt obrasca.<br>
             </td>
         </tr>
         <tr>
             <td style="padding: 20px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                You have a new message.<br>
+                Imate novi upit.<br>
                 <br>
-                {{--<table cellspacing="0" cellpadding="0" border="0" width="100%">
+
+             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
                         <td style="width: 26%">Name:</td>
                         <td style="width: 74%"><b>{{ $contact['name'] }}</b></td>
@@ -26,12 +27,12 @@
                             <td><b>{{ $contact['phone'] }}</b></td>
                         </tr>
                     @endif
-                </table>--}}
+                </table>
             </td>
         </tr>
         <tr>
             <td style="padding: 5px 20px 30px 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                {{--<pre>{!! $contact['message'] !!}</pre>--}}
+             <pre>{!! $contact['message'] !!}</pre>
             </td>
         </tr>
         <tr>

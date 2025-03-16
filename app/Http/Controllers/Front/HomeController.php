@@ -77,6 +77,8 @@ class HomeController extends FrontController
         // Recaptcha
         $recaptcha = (new Recaptcha())->check($request->toArray());
 
+
+
         if ( ! $recaptcha->ok()) {
             return back()->withErrors(['error' => 'ReCaptcha Error! Kontaktirajte administratora!']);
         }

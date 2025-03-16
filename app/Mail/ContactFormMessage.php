@@ -39,7 +39,7 @@ class TestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact form Mail',
+            subject: 'Upit sa kontakt obrasca - aukcije4a.com',
         );
     }
 
