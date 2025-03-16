@@ -56,7 +56,7 @@ class BidController extends FrontController
                 );
             }
 
-            return back()->with(['success' => 'Hvala na ponudi..!']);
+            return back()->with(['success' => 'Hvala na ponudi. Potvrda je poslana na vaš email.']);
         }
 
         return back()->with(['error' => 'Došlo je do greške..!']);

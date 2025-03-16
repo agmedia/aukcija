@@ -152,7 +152,7 @@
 
 
 
-                                    @if(auth()->user()->details->can_bid and auth()->user() or auth()->guest())
+                                    @if(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
 
                                     <div class="row mb-3">
                                         <div class="col">
@@ -192,7 +192,9 @@
                                     @endif
 
                                     <div class="row mb-3">
-                                        <div id="bid-result-div" class="col font-size-sm"></div>
+                                        <div id="bid-result-div"></div>
+
+
                                     </div>
 
                                     <!-- Product info-->
@@ -304,7 +306,7 @@
 
                 $.post('{{ route('auctions.user.bid.api') }}', body, (data, status) => {
                     if (status == 'success' && data.status == 200) {
-                        setAuctionBidResult('green', 'Hvala na ponudi. Email je već na putu.');
+                        setAuctionBidResult('green', '<div class="alert alert-success d-flex" role="alert"> <div class="alert-icon"> <i class="ci-check-circle"></i> </div> <div>Hvala na ponudi. Potvrda je poslana na vaš email.</div> </div>');
 
                         setTimeout(() => {
                             window.location.reload();
@@ -312,18 +314,18 @@
                     }
 
                     if (data.status == 500) {
-                        setAuctionBidResult('red', 'Došlo je do greške. Molimo kontaktirajte administratora..!');
+                        setAuctionBidResult('red', ' <div class="alert alert-danger d-flex" role="alert"> <div class="alert-icon"> <i class="ci-announcement"></i> </div> <div >Došlo je do greške. Molimo kontaktirajte administratora..!</div> </div>');
                     }
                 });
 
             } else {
-                setAuctionBidResult('red', 'Ponuda je premala, molimo podebljajte.');
+                setAuctionBidResult('red', '<div class="alert alert-danger d-flex" role="alert"> <div class="alert-icon"> <i class="ci-announcement"></i> </div> <div>Ponuda je premala, korigirajte ponudu!</div> </div>');
             }
         }
 
         function setAuctionBidResult(color, text) {
             document.getElementById('bid-result-div').style.color = color;
-            document.getElementById('bid-result-div').textContent = text;
+            document.getElementById('bid-result-div').innerHTML = text;
         }
     </script>
 
