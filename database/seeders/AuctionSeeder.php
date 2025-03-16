@@ -20,7 +20,7 @@ class AuctionSeeder extends Seeder
     public function run(): void
     {
         //
-        Attributes::factory(100)->create();
+        Attributes::factory(30)->create();
         
         Auction::factory(500)->create();
         
@@ -32,15 +32,15 @@ class AuctionSeeder extends Seeder
 
 
         $groups = [
-            'Knjige', 'Zemljovidi', 'Numizmatika'
+            'Knjige', 'Zemljovidi', 'Filatelija', 'Numizmatika'
         ];
 
         foreach ($groups as $key => $group) {
             Groups::query()->insertGetId([
                 'group' => Str::slug($group),
                 'group_title' => $group,
-                'title' => 1,
-                'description' => fake()->randomNumber(3),
+                'title' => $group,
+                'description' => fake()->sentence(),
                 'type' => 'text',
                 'sort_order' => $key + 1,
                 'status' => 1,

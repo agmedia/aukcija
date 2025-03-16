@@ -124,7 +124,7 @@
         "user_id": null,
         "code": "payment",
         "key": "list.wspay",
-        "value": "[{\"title\":\"Kreditna kartica \\/ Debitna kartica (WSPay)\",\"code\":\"wspay\",\"min\":null,\"data\":{\"price\":\"0\",\"short_description\":null,\"description\":\"WSPay sustav za internet autorizaciju i naplatu kreditnih i debitnih kartica.\",\"shop_id\":\"ANTIQUE\",\"secret_key\":\"5641494149cb4P\",\"type\":\"1\",\"callback\":\"https:\\/\\/www.dev.antikvarijat-vremeplov.hr\\/narudzba\",\"test\":\"1\"},\"geo_zone\":\"6\",\"status\":true,\"sort_order\":\"0\"}]",
+        "value": "[{\"title\":\"Kreditna kartica \\/ Debitna kartica (WSPay)\",\"code\":\"wspay\",\"min\":null,\"data\":{\"price\":\"0\",\"short_description\":null,\"description\":\"WSPay sustav za internet autorizaciju i naplatu kreditnih i debitnih kartica.\",\"shop_id\":\"\",\"secret_key\":\"\",\"type\":\"1\",\"callback\":\"https:\\/\\/www.dev.antikvarijat-vremeplov.hr\\/narudzba\",\"test\":\"1\"},\"geo_zone\":\"6\",\"status\":true,\"sort_order\":\"0\"}]",
         "json": 1,
         "created_at": "2024-03-20 11:34:53",
         "updated_at": "2024-10-08 14:19:12"
@@ -134,7 +134,7 @@
         "user_id": null,
         "code": "payment",
         "key": "list.corvus",
-        "value": "[{\"title\":\"Corvus Pay\",\"code\":\"corvus\",\"min\":null,\"data\":{\"price\":null,\"short_description\":\"Pla\\u0107anje karticama\",\"description\":null,\"shop_id\":\"10451\",\"secret_key\":\"Hq2ASR08JK4wz9Ru5YXYoMiOS\",\"callback\":null,\"test\":\"0\"},\"geo_zone\":\"4\",\"status\":true,\"sort_order\":\"0\"}]",
+        "value": "[{\"title\":\"Corvus Pay\",\"code\":\"corvus\",\"min\":null,\"data\":{\"price\":null,\"short_description\":\"Pla\\u0107anje karticama\",\"description\":null,\"shop_id\":\"\",\"secret_key\":\"\",\"callback\":null,\"test\":\"0\"},\"geo_zone\":\"4\",\"status\":true,\"sort_order\":\"0\"}]",
         "json": 1,
         "created_at": "2024-10-03 12:59:55",
         "updated_at": "2024-11-04 08:47:13"
