@@ -37,11 +37,11 @@
                         <div class="dropdown-menu dropdown-menu-end">
                             <div style="min-width: 14rem;">
                                 <h6 class="dropdown-header">Vaše notifikacije</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-open opacity-80"></i></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.read.notifications') }}"><i class="ci-eye opacity-80"></i></a>
 
                                 @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)
-                                    <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifikacije</h5>
-                                    <ul class="list-unstyled mt-10">
+                                  <!--  <h5 class="h6 text-center py-2 mb-0 border-b text-uppercase">Notifikacije</h5>-->
+                                    <ul class="list-unstyled mt-3">
                                         @foreach(auth()->user()->unreadNotifications as $notifications)
                                             <li>
                                                 <a class="text-body-color-dark media mb-10" href="#">
@@ -49,8 +49,12 @@
                                                         <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
                                                     </div>
                                                     <div class="media-body pr-10">
-                                                        <p class="mb-0">{{ $notifications->data['title'] }}</p>
-                                                        <div class="text-muted font-size-sm font-italic mb-0">{{ date_format(date_create($notifications->created_at), 'd.m.Y. h:i:s') }}</div>
+
+                                                        <p class="dropdown-item d-flex align-items-center mb-0 pb-0" href="dashboard-products.html">{{ $notifications->data['title'] }}
+
+                                                        </p>
+                                                        <span class="dropdown-item d-flex align-items-center pt-0 fs-xs text-muted ms-auto">{{ date_format(date_create($notifications->created_at), 'd.m.Y. h:i:s') }}</span>
+
                                                     </div>
                                                 </a>
                                             </li>
@@ -61,7 +65,7 @@
                                         <i class="fa fa-flag mr-5"></i> Pročitaj sve
                                     </a>
                                 @else
-                                    <h5 class="h6 text-center py-5 mb-2 text-uppercase font-w300">Nemate novih notifikacija!</h5>
+                                    <h5 class="h6 dropdown-item d-flex align-items-center text-center py-3 mb-2  font-w300">Nemate novih notifikacija!</h5>
                                 @endif
                             </div>
                         </div>
