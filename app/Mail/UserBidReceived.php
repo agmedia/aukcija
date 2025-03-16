@@ -29,7 +29,7 @@ class UserBidReceived extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'User Bid Received',
+            subject: 'Nova ponuda je zaprimljena – aukcije4a.com',
         );
     }
 

@@ -268,7 +268,7 @@
 
         <!-- 1 Column Text : BEGIN -->
         <tr>
-            <td style="background-color: #ffffff; padding: 30px 10px">
+            <td style="background-color: #ffffff; padding: 30px 20px">
                 @yield('content')
             </td>
         </tr>

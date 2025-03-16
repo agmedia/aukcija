@@ -29,7 +29,7 @@ class UserOutbided extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'User Outbided',
+            subject: 'Vaša ponuda je nadjačana – aukcije4a.com',
         );
     }
 

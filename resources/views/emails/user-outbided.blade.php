@@ -1,11 +1,18 @@
 @extends('emails.layouts.base')
 
 @section('content')
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-        <tr>
-            <td style="padding: 20px 20px 10px 20px; font-family: sans-serif; font-size: 18px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-                Contact Form Message.<br>
-            </td>
-        </tr>
-    </table>
+
+
+        <p> Poštovani/a {{ $user->name }},</p>
+
+        <p> Vaša ponuda u aukciji za artikl "<strong>{{ $auction->name }}</strong>". je nadjačana na  <strong>{{ \App\Helpers\Currency::main($auction->current_price, true) }}</strong>. </p>
+
+        <p> Ukoliko želite postaviti novu ponudu, to možete učiniti  na sljedećem linku:<br> <a href="{{ route('catalog.route', ['group' => Str::slug($auction->group), 'auction' => $auction->slug])}}">Link na aukciju</a></p>
+
+        <p> Sretno i hvala što koristite našu platformu!</p>
+
+        <p> Aukcije 4 antikvarijata<br>
+            info@aukcije4a.com</p>
+
+
 @endsection
