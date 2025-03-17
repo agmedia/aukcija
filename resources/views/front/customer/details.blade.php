@@ -18,16 +18,28 @@
                 <div class="row push">
                     <div class="col-lg-12">
                         <div class="form-group row mb-3">
-                            <div class="custom-control custom-switch custom-control-success">
-                                <input type="checkbox" class="custom-control-input" id="use-emails-status" name="use_emails" {{ (isset($user->details->use_emails) and $user->details->use_emails) ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="use-emails-status">Želim primati Email</label>
+
+
+                            <div class="border-bottom p-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="use-emails-status" name="use_emails" {{ (isset($user->details->use_emails) and $user->details->use_emails) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="use-emails-status">Želim primati Email</label>
+                                </div>
+                                <div class="form-text pt-2">Želim dobivati email obavijesti o ponudama</div>
                             </div>
+
+
                         </div>
                         <div class="form-group row mb-3">
-                            <div class="custom-control custom-switch custom-control-success">
-                                <input type="checkbox" class="custom-control-input" id="use-notifications-status" name="use_notifications" {{ (isset($user->details->use_notifications) and $user->details->use_notifications) ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="use-notifications-statuss">Želim primati notifikacije</label>
+                            <div class="border-bottom p-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="use-notifications-status" name="use_notifications" {{ (isset($user->details->use_notifications) and $user->details->use_notifications) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="use-notifications-statuss">Želim primati notifikacije</label>
                             </div>
+                                <div class="form-text pt-2">Želim dobivati email notifikacije o punudama</div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
