@@ -18517,7 +18517,7 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
     margin: 0.625rem;
     transition: border-color 0.2s ease-in-out;
     border: 1px solid #e3e9ef;
-    border-radius: 0.3125rem;
+    border-radius: 0;
     text-decoration: none !important;
     overflow: hidden;
 }
