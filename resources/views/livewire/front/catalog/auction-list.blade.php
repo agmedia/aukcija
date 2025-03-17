@@ -12,7 +12,7 @@
                 </select>
             </div>
 
-            <div class="d-flex me-2 pb-3">
+            <div class="d-flex me-0 pb-3">
                 <select class="form-select pe-0" style="min-width:160px" wire:model="group" wire:change="selectGroup()">
                     <option value="">Odaberi grupu</option>
                     @foreach ($groups as $group)
