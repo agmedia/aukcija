@@ -126,8 +126,8 @@
 
                 <!-- Navbar -->
                 <ul class="navbar-nav justify-content-center pe-lg-2 me-lg-2">
-                    <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Sve aukcije')]) }}"><span>Aukcije</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug('Arhiva')]) }}"><span>Arhiva</span></a>
+                    <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route') }}"><span>Aukcije</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug(config('settings.archive_auctions_path'))]) }}"><span>Arhiva</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'o-nama']) }}"><span>O nama</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kontakt') }}"><span>Kontakt</span></a></li>

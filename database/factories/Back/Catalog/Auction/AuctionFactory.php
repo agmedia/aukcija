@@ -41,7 +41,7 @@ class AuctionFactory extends Factory
             'slug' => Str::slug($name),
             'url' => env('APP_URL') . '/' . Str::slug($group) . '/' . Str::slug($name),
             'starting_price' => $price,
-            'current_price' => 0,
+            'current_price' => $price,
             'reserve_price' => 0,
             'min_increment' => $price / 10,
             'start_time' => now()->subDay(),

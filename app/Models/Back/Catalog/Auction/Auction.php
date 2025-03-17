@@ -166,8 +166,14 @@ class Auction extends Model
      */
     private function getModelArray(bool $insert = true): array
     {
+        $current_price = isset($this->request->current_price) ? $this->request->current_price : 0;
+
         if ($insert) {
             $slug = $this->resolveSlug();
+
+            if ( ! $current_price) {
+                $current_price = isset($this->request->starting_price) ? $this->request->starting_price : 0;
+            }
         } else {
             $this->old_auction = $this->setHistoryAuction();
             $slug              = $this->request->slug;
@@ -185,7 +191,7 @@ class Auction extends Model
             'meta_description' => $this->request->meta_description,
             'slug'             => $slug,
             'starting_price'   => isset($this->request->starting_price) ? $this->request->starting_price : 0,
-            'current_price'    => isset($this->request->current_price) ? $this->request->current_price : 0,
+            'current_price'    => $current_price,
             'reserve_price'    => isset($this->request->reserve_price) ? $this->request->reserve_price : 0,
             'min_increment'    => $min_increment,
             'start_time'       => $this->request->start_time ? Carbon::make($this->request->start_time) : null,

@@ -1,29 +1,28 @@
 <div>
-
     <div class="d-flex justify-content-center justify-content-sm-between align-items-center mx-3 pt-2 pb-4 pb-sm-2">
         <div class="d-flex flex-wrap">
-            <div class="d-flex   me-2  pb-3">
-                <select class="form-select pe-2" >
+            <div class="d-flex me-2 pb-3">
+                <select class="form-select pe-2" wire:model.live="sort">
                     <option value="">Sortiraj</option>
-                    <option value="novi">Najnovije</option>
-                    <option value="price_up">Najmanja cijena</option>
-                    <option value="price_down">Najveća cijena</option>
-                    <option value="naziv_up">A - Ž</option>
-                    <option value="naziv_down">Ž - A</option>
+                    <option value="created_at-asc">Najnovije</option>
+                    <option value="current_price-asc">Najmanja cijena</option>
+                    <option value="current_price-desc">Najveća cijena</option>
+                    <option value="name-asc">A - Ž</option>
+                    <option value="name-desc">Ž - A</option>
                 </select>
             </div>
 
-            <div class="d-flex   me-2  pb-3">
-                <select class="form-select pe-2"  style="min-width:160px">
-                    <option value=""> Odaberi grupu </option>
-                    <option value="Knjige"> Knjige </option>
-                    <option value="Knjige"> Razglednice </option>
-
+            <div class="d-flex me-2 pb-3">
+                <select class="form-select pe-2" style="min-width:160px" wire:model="group" wire:change="selectGroup()">
+                    <option value="">Odaberi grupu</option>
+                    @foreach ($groups as $group)
+                        <option value="{{ $group->group }}">{{ $group->title }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
 
-        <div class="d-flex pb-3"><span class="fs-sm text-muted btn btn-outline-secondary  text-nowrap ms-2 d-none d-sm-block">155 artikala</span></div>
+        <div class="d-flex pb-3"><span class="fs-sm text-muted btn btn-outline-secondary  text-nowrap ms-2 d-none d-sm-block">{{ $auctions->total() }} artikala</span></div>
     </div>
 
 

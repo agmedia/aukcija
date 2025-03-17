@@ -304,4 +304,4 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
  * Groups, Categories and Products routes resolver.
  * https://www.antikvarijat-biblos.hr/kategorija-proizvoda/knjige/
  */
-Route::get('{group?}/{auction?}', [CatalogRouteController::class, 'resolve'])->name('catalog.route');
+Route::get('aukcije/{group?}/{auction?}', [CatalogRouteController::class, 'resolve'])->name('catalog.route');

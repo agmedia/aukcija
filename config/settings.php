@@ -26,9 +26,12 @@ return [
     'publisher_path'    => 'nakladnik',
     'group_path'        => 'Kategorija proizvoda',
     //
+    'all_auctions_path' => 'Aukcije',
+    'archive_auctions_path' => 'Arhiva',
+    'about_page'        => 3,
+    //
     'admin_email' => 'info@aukcija.hr',
     //
-    'about_page'        => 2,
     'unknown_author'    => 3282,
     'unknown_publisher' => 376,
     'images_domain'     =>  env('APP_IMAGE_DOMAIN'),
