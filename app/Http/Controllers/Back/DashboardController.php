@@ -5,18 +5,11 @@ namespace App\Http\Controllers\Back;
 use App\Helpers\Chart;
 use App\Helpers\Helper;
 use App\Helpers\Import;
-use App\Helpers\ProductHelper;
 use App\Http\Controllers\Controller;
-use App\Imports\ProductImport;
-use App\Mail\OrderReceived;
-use App\Mail\OrderSent;
-use App\Models\Back\Catalog\Author;
+use App\Livewire\AuctionsTable;
+use App\Models\Back\Catalog\Auction\Auction;
+use App\Models\Back\Catalog\Auction\AuctionBid;
 use App\Models\Back\Catalog\Category;
-use App\Models\Back\Catalog\Mjerilo;
-use App\Models\Back\Catalog\Product\Auction;
-use App\Models\Back\Catalog\Product\AuctionCategory;
-use App\Models\Back\Catalog\Product\AuctionImage;
-use App\Models\Back\Catalog\Publisher;
 use App\Models\Back\Orders\Order;
 use App\Models\Back\Orders\OrderProduct;
 use App\Models\User;
@@ -37,19 +30,26 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $data['today']      = 0;
-        $data['proccess']   = 0;
+        $data['today']      = AuctionBid::whereDate('created_at', Carbon::today())->count();
+        $data['proccess']   =0;
         $data['finished']   = 0;
-        $data['this_month'] = 0;
 
-        $orders   = [];
-        $products = [];
+        $data['this_month'] = AuctionBid::whereYear('created_at', '=', Carbon::now()->year)->whereMonth('created_at', '=', Carbon::now()->month)->count();
 
-        $chart     = new Chart();
-        $this_year = json_encode([]);
-        $last_year = json_encode([]);
 
-        return view('back.dashboard', compact('data', 'orders', 'products', 'this_year', 'last_year'));
+
+
+        $bids = AuctionBid::query()->with('user', 'auction')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('settings.pagination.back'));
+
+
+        //dd($products);
+
+
+
+
+        return view('back.dashboard', compact('data', 'bids'));
     }
 
 
