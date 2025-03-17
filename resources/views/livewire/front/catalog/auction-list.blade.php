@@ -1,8 +1,8 @@
 <div>
-    <div class="d-flex justify-content-center justify-content-sm-between align-items-center mx-3 pt-2 pb-4 pb-sm-2">
+    <div class="d-flex justify-content-center justify-content-sm-between align-items-center mx-2 pt-2 pb-4 pb-sm-2">
         <div class="d-flex flex-wrap">
             <div class="d-flex me-2 pb-3">
-                <select class="form-select pe-2" style="min-width:180px" wire:model.live="sort">
+                <select class="form-select pe-2" style="min-width:140px" wire:model.live="sort">
                     <option value="">Sortiraj</option>
                     <option value="created_at-asc">Najnovije</option>
                     <option value="current_price-asc">Najmanja cijena</option>
@@ -13,7 +13,7 @@
             </div>
 
             <div class="d-flex me-2 pb-3">
-                <select class="form-select pe-2" style="min-width:160px" wire:model="group" wire:change="selectGroup()">
+                <select class="form-select pe-2" style="min-width:140px" wire:model="group" wire:change="selectGroup()">
                     <option value="">Odaberi grupu</option>
                     @foreach ($groups as $group)
                         <option value="{{ $group->group }}">{{ $group->title }}</option>
