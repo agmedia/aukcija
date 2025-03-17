@@ -2,7 +2,6 @@
 
 namespace App\Models\Back\Catalog\Groups;
 
-
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -127,12 +126,13 @@ class Groups extends Model
     private function getModelArray(bool $insert = true): array
     {
         $response = [
-            'group'      => Str::slug($this->request->input('title')),
-            'title'      => $this->request->input('title'),
-            'type'       => $this->request->input('type'),
-            'sort_order' => $this->request->input('sort_order') ?: 0,
-            'status'     => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
-            'updated_at' => Carbon::now()
+            'group'       => Str::slug($this->request->input('title')),
+            'group_title' => $this->request->input('title'),
+            'title'       => $this->request->input('title'),
+            'type'        => $this->request->input('type'),
+            'sort_order'  => $this->request->input('sort_order') ?: 0,
+            'status'      => (isset($this->request->status) and $this->request->status == 'on') ? 1 : 0,
+            'updated_at'  => Carbon::now()
         ];
 
         if ($insert) {
