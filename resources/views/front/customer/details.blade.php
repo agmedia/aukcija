@@ -34,7 +34,7 @@
                             <div class="border-bottom p-4">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="use-notifications-status" name="use_notifications" {{ (isset($user->details->use_notifications) and $user->details->use_notifications) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="use-notifications-statuss">Želim primati notifikacije</label>
+                                <label class="form-check-label" for="use-notifications-status">Želim primati notifikacije</label>
                             </div>
                                 <div class="form-text pt-2">Želim dobivati email notifikacije o punudama</div>
                             </div>

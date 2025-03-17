@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-center justify-content-sm-between align-items-center mx-3 pt-2 pb-4 pb-sm-2">
         <div class="d-flex flex-wrap">
-            <div class="d-flex align-items-center flex-nowrap me-3 me-sm-4 pb-3">
+            <div class="d-flex   me-2  pb-3">
                 <select class="form-select pe-2" >
                     <option value="">Sortiraj</option>
                     <option value="novi">Najnovije</option>
@@ -12,8 +12,18 @@
                     <option value="naziv_down">Ž - A</option>
                 </select>
             </div>
+
+            <div class="d-flex   me-2  pb-3">
+                <select class="form-select pe-2"  style="min-width:160px">
+                    <option value=""> Odaberi grupu </option>
+                    <option value="Knjige"> Knjige </option>
+                    <option value="Knjige"> Razglednice </option>
+
+                </select>
+            </div>
         </div>
-        <div class="d-flex pb-3"><span class="fs-sm text-muted btn btn-outline-secondary  text-nowrap ms-2 d-none d-sm-block">Ukupno 155 artikala</span></div>
+
+        <div class="d-flex pb-3"><span class="fs-sm text-muted btn btn-outline-secondary  text-nowrap ms-2 d-none d-sm-block">155 artikala</span></div>
     </div>
 
 
