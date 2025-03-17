@@ -4,10 +4,12 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ContactForm extends Mailable
 {
@@ -16,10 +18,7 @@ class ContactForm extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public array $contact) {}
 
     /**
      * Get the message envelope.
@@ -27,7 +26,7 @@ class ContactForm extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Form',
+            subject: 'Dobrodošli na Aukcije 4A',
         );
     }
 
@@ -37,7 +36,7 @@ class ContactForm extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.contact-form',
         );
     }
 

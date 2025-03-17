@@ -35,4 +35,24 @@ return [
         ],
     ],
 
+    /*******************************************************************************
+     *                                Copyright : AGmedia                           *
+     *                              email: filip@agmedia.hr                         *
+     *******************************************************************************/
+
+    'recaptcha' => [
+        'sitekey'    => env('GOOGLE_RECAPTCHA_SITE_KEY'),
+        'secret'     => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
+        'verify_url' => 'https://www.google.com/recaptcha/api/siteverify',
+    ],
+
+    'mailchimp' => [
+        'api_key'       => env('MAILCHIMP_API_KEY'),
+        'server_prefix' => env('MAILCHIMP_SERVER_PREFIX'),
+    ],
+
+    /*******************************************************************************
+     *                              END Copyright : AGmedia                         *
+     *******************************************************************************/
+
 ];
