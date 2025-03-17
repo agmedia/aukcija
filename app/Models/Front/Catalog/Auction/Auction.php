@@ -25,6 +25,7 @@ class Auction extends Model
 
     protected $appends = [
         'base_price',
+        'days_left'
     ];
 
 
@@ -70,6 +71,15 @@ class Auction extends Model
         }
 
         return $this->starting_price;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getDaysLeftAttribute(): float
+    {
+        return floor(now()->diffInDays($this->end_time));
     }
 
 

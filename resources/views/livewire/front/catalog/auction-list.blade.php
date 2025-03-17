@@ -20,13 +20,6 @@
     <div class="row pt-3 mx-n2">
         @foreach ($auctions as $auction)
 
-                <?php
-                $start =  \Illuminate\Support\Carbon::parse($auction->end_time);
-                $now =  \Illuminate\Support\Carbon::now();
-                $days_count = $now->diffInDays($start);
-                $days_count =  floor($days_count);
-                ?>
-
                 <div class="col-lg-3 col-md-4 col-sm-4 col-6 px-2 px-lg-4 mb-4 d-flex align-items-stretch">
                     <div class="card product-card-alt">
                         <div class="">
@@ -44,7 +37,7 @@
                             </div>
                             <div class="d-flex flex-wrap justify-content-between align-items-center">
                                 <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ {{$days_count}} DANA </span>
+                                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ {{ $auction->days_left }} DANA </span>
                             </div>
                         </div>
                     </div>
