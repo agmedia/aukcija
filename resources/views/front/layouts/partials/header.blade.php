@@ -5,7 +5,7 @@
                 <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40"  style="height:40px" alt="AUKCIJE 4A | Aukcije knjiga">
             </a>
             <a class="navbar-brand d-sm-none me-0 order-lg-1 p-0" href="{{ route('index') }}">
-                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" style="height:40px" height="40" alt="AUKCIJE 4A">
+                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" style="height:30px" height="30" alt="AUKCIJE 4A">
             </a>
 
             <!-- Toolbar -->
