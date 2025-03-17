@@ -50,7 +50,7 @@ class AuctionsTable extends DataTableComponent
 
                 ->location(
 
-                    fn($row) => ( 'http://aukcija.test/'. $row->image )
+                    fn($row) => ( $row->image )
 
                 )
 
