@@ -21,7 +21,7 @@
                     <!-- Item -->
                     <div class="col-6">
 
-                        <a href="https://www-antikvarijat-biblos.hr" >
+                        <a href="https://www.antikvarijat-biblos.hr" >
                             <img src="media/biblos-logo2.svg" class="img-thumbnail" alt="Antikvarijat Biblos">
 
                         </a>

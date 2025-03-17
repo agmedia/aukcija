@@ -92,10 +92,10 @@
                                                     </div>
                                                     <div class="media-body pr-10">
 
-                                                        <p class="dropdown-item d-flex align-items-center mb-0 pb-0" href="dashboard-products.html">{{ $notifications->data['title'] }}
+                                                        <p class="dropdown-item d-flex align-items-center mb-0 pb-0" ><strong><i class="ci-bell  me-2"></i> {{ $notifications->data['title'] }}</strong>
 
                                                         </p>
-                                                        <span class="dropdown-item d-flex align-items-center pt-0 fs-xs text-muted ms-auto">{{ date_format(date_create($notifications->created_at), 'd.m.Y. h:i:s') }}</span>
+                                                        <span class="dropdown-item d-flex align-items-center pt-0 fs-xs  ms-auto">{{ date_format(date_create($notifications->created_at), 'd.m.Y. h:i:s') }}</span>
 
                                                     </div>
                                                 </a>
