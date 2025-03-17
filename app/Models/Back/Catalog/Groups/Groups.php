@@ -127,7 +127,7 @@ class Groups extends Model
     private function getModelArray(bool $insert = true): array
     {
         $response = [
-            'group'      => '',
+            'group'      => Str::slug($this->request->input('title')),
             'title'      => $this->request->input('title'),
             'type'       => $this->request->input('type'),
             'sort_order' => $this->request->input('sort_order') ?: 0,
