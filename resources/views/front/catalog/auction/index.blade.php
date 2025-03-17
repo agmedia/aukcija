@@ -161,7 +161,7 @@
                                         <div class="col">
                                             <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 2)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
                                         </div>
-                                        <div class="col">
+                                        <div class="col d-none d-sm-block">
                                             <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 3)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
                                         </div>
                                     </div>
