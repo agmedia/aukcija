@@ -75,14 +75,14 @@
                                     <div class="product-gallery">
                                         <div class="product-gallery-preview order-sm-2 gallery">
                                             @if ( ! empty($auction->image))
-                                                <div class="product-gallery-preview-item active" id="first"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($auction->image) }}"><img  src="{{ asset($auction->image) }}"  alt="{{ $auction->name }}"></a></div>
+                                                <div class="product-gallery-preview-item active" id="first"><a class="gallery-item  mb-grid-gutter" href="{{ asset($auction->image) }}"><img  src="{{ asset($auction->image) }}"  alt="{{ $auction->name }}"></a></div>
 
 
                                             @endif
 
                                             @if ($auction->images->count())
                                                 @foreach ($auction->images as $key => $image)
-                                                    <div class="product-gallery-preview-item" id="key{{ $key + 1 }}"><a class="gallery-item rounded-3 mb-grid-gutter" href="{{ asset($image->image) }}"><img  src="{{ asset($image->image) }}" alt="{{ $image->alt }}"></a></div>
+                                                    <div class="product-gallery-preview-item" id="key{{ $key + 1 }}"><a class="gallery-item  mb-grid-gutter" href="{{ asset($image->image) }}"><img  src="{{ asset($image->image) }}" alt="{{ $image->alt }}"></a></div>
                                                 @endforeach
                                             @endif
                                         </div>

@@ -10,7 +10,7 @@
 
 
                 <p class=" text-primary  fs-md pb-1 d-none d-sm-block">  <strong>Broj telefona</strong><br>
-                    091 604 7126</p>
+                    +385 91 2213 198</p>
 
                 <p class=" text-primary  fs-md pb-1 d-none d-sm-block">  <strong>Email</strong><br>
                     info@aukcije4a.com</p>
