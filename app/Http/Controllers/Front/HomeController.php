@@ -8,6 +8,7 @@ use App\Helpers\Recaptcha;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FrontController;
 use App\Imports\ProductImport;
+use App\Mail\ContactForm;
 use App\Mail\ContactFormMessage;
 use App\Models\Front\Page;
 use App\Models\Sitemap;
@@ -77,14 +78,14 @@ class HomeController extends FrontController
         // Recaptcha
         $recaptcha = (new Recaptcha())->check($request->toArray());
 
-
-
         if ( ! $recaptcha->ok()) {
             return back()->withErrors(['error' => 'ReCaptcha Error! Kontaktirajte administratora!']);
         }
 
-        dispatch(function () use ($request) {
-            Mail::to(config('mail.admin'))->send(new ContactFormMessage($request->toArray()));
+        $data = $request->except('_token');
+
+        dispatch(function () use ($data) {
+            Mail::to(config('settings.admin_email'))->send(new ContactForm($data));
         })->afterResponse();
 
         return redirect()->route('kontakt')->with(['success' => 'Vaša poruka je uspješno poslana.! Odgovoriti ćemo vam uskoro.']);

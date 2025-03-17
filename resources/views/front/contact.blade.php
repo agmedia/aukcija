@@ -1,49 +1,35 @@
 @extends('front.layouts.app')
 
 @section('content')
-
     <!-- Page Title (Light)-->
     <div class="bg-symphony pt-4 pb-3 border-bottom" >
-        <div class="container   py-2 py-lg-3">
-
+        <div class="container py-2 py-lg-3">
             <div class=" pe-lg-4 text-center ">
                 <h1 class="h2 text-primary text-title mb-0">Kontaktirajte nas</h1>
             </div>
         </div>
     </div>
 
-
     <!-- Contact detail cards-->
     <section class="container pt-grid-gutter">
         <div class="row">
-
             @include('front.layouts.partials.success-session')
 
             <div class="col-12 col-sm-6 mb-5">
-
-                        <h3 class="mb-3">Impressum</h3>
-                        <p class="mb-3">
-
-                           <strong> Aukcije 4 antikvarijata</strong></p>
-
-                <p> Antikvarijat Biblos, Palmotićeva 28, Zagreb<br>
-
+                <h3 class="mb-3">Impressum</h3>
+                <p class="mb-3"><strong> Aukcije 4 antikvarijata</strong></p>
+                <p>
+                    Antikvarijat Biblos, Palmotićeva 28, Zagreb<br>
                     Antikvarijat Bono, Petrinjska 83, Zagreb<br>
-
                     Antikvarijat mali neboder, Ciottina 20b, Rijeka<br>
-
                     Antikvarijat Vremeplov, Lopašićeva 11 , Zagreb
-
-
                 </p>
-
                 <p>
                     +385977820935 (Tamara-english)<br>
                     +385912213198 (Tomo)<br>
                     +385981629674 (Daniel)<br>
                     +385989395989 (Morana)
                 </p>
-
             </div>
 
             <div class="col-12 col-sm-6 mb-5 ">
@@ -80,10 +66,6 @@
 
         </div>
     </section>
-
-
-
-
 
 @endsection
 

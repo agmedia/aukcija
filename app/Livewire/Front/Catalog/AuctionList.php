@@ -20,7 +20,7 @@ class AuctionList extends Component
     public $group = '';
 
     /**
-     * @var array 
+     * @var array
      */
     public $ids = [];
 

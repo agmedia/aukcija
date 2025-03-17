@@ -280,13 +280,6 @@ Route::get('/kontakt', [HomeController::class, 'contact'])->name('kontakt');
 Route::post('/kontakt/posalji', [HomeController::class, 'sendContactMessage'])->name('poruka');
 Route::get('/faq', [CatalogRouteController::class, 'faq'])->name('faq');
 //
-Route::get('/kosarica', [CheckoutController::class, 'cart'])->name('kosarica');
-Route::get('/naplata', [CheckoutController::class, 'checkout'])->name('naplata');
-Route::get('/pregled', [CheckoutController::class, 'view'])->name('pregled');
-Route::get('/narudzba', [CheckoutController::class, 'order'])->name('checkout');
-Route::get('/uspjeh', [CheckoutController::class, 'success'])->name('checkout.success');
-Route::get('/greska', [CheckoutController::class, 'error'])->name('checkout.error');
-//
 Route::get('pretrazi', [CatalogRouteController::class, 'search'])->name('pretrazi');
 //
 Route::get('info/{page}', [CatalogRouteController::class, 'page'])->name('catalog.route.page');
