@@ -19,10 +19,48 @@
                     <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
                 </a>
 
-                <!-- User -->
-                <a class="navbar-tool ms-12" href="{{ route('login') }}" ><span class="navbar-tool-tooltip">Korisnički račun</span>
-                    <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
-                </a>
+                @if (auth()->user())
+                    <!-- User -->
+
+                    <div class="navbar-tool ms-2 dropdown">
+                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{ route('moj.racun') }}">
+                            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div style="min-width: 14rem;">
+
+                                    <h6 class="dropdown-header">Moj račun</h6>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun') }}"> <i class="ci-user opacity-60 me-2"></i>Moji podaci</a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.narudzbe') }}"><i class="ci-bag opacity-60 me-2"></i>Moje ponude</a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.notifikacije') }}"> <i class="ci-bell opacity-60 me-2"></i>Notifikacije
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('moj.racun.detalji') }}"> <i class="ci-settings opacity-60 me-2"></i>Detalji računa
+                                </a>
+
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="ci-sign-out opacity-60 me-2"></i>Odjava</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                @else
+
+                    <!-- User -->
+                    <a class="navbar-tool ms-12" href="#signin-modal" data-bs-toggle="modal" type="button" ><span class="navbar-tool-tooltip">Korisnički račun</span>
+                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user-circle"></i></div>
+                    </a>
+
+
+
+                @endif
 
                 @if ($notifications_status && (auth()->guest() || (auth()->user() && auth()->user()->details->use_notifications)))
                     <!-- Notifications -->

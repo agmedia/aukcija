@@ -75,7 +75,7 @@
                         </tbody>
                     </table>
 
-                    <a class="btn btn-primary mt-4" href="{{ route('moj.racun.read.notifications') }}">Pročitaj sve</a>
+                    <a class="btn btn-dark mt-4" href="{{ route('moj.racun.read.notifications') }}">Pročitaj sve</a>
                 </div>
 
                 {{ $notifications->links() }}
