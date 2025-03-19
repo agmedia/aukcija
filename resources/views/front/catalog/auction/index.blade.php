@@ -122,37 +122,46 @@
                                                 <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
                                             @endif
                                         </div>
-                                        <div class="col">
-                                            <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
-                                            <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
-                                                <div class="countdown-days">
-                                                    <span class="countdown-value">0</span>
-                                                    <span class="countdown-label text-muted">d</span>
+
+                                        @if($auction->end_time > Carbon\Carbon::now())
+                                                <div class="col">
+                                                    <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
+                                                    <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
+                                                        <div class="countdown-days">
+                                                            <span class="countdown-value">0</span>
+                                                            <span class="countdown-label text-muted">d</span>
+                                                        </div>
+                                                        <div class="countdown-hours">
+                                                            <span class="countdown-value"></span>
+                                                            <span class="countdown-label text-muted">h</span>
+                                                        </div>
+                                                        <div class="countdown-minutes">
+                                                            <span class="countdown-value">0</span>
+                                                            <span class="countdown-label text-muted">m</span>
+                                                        </div>
+                                                        <div class="countdown-seconds">
+                                                            <span class="countdown-value">0</span>
+                                                            <span class="countdown-label text-muted">s</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="countdown-hours">
-                                                    <span class="countdown-value"></span>
-                                                    <span class="countdown-label text-muted">h</span>
-                                                </div>
-                                                <div class="countdown-minutes">
-                                                    <span class="countdown-value">0</span>
-                                                    <span class="countdown-label text-muted">m</span>
-                                                </div>
-                                                <div class="countdown-seconds">
-                                                    <span class="countdown-value">0</span>
-                                                    <span class="countdown-label text-muted">s</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endif
                                     </div>
 
 
 
                                     <!-- Place a bid-->
+                                    @if($auction->end_time < Carbon\Carbon::now())
 
+                                        <!-- Secondary alert -->
+                                        <div class="alert alert-danger d-flex" role="alert">
+                                            <div class="alert-icon">
+                                                <i class="ci-time"></i>
+                                            </div>
+                                            <div>Aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
+                                        </div>
 
-
-
-                                    @if(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
+                                    @elseif(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
 
                                     <div class="row mb-3">
                                         <div class="col">

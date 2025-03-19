@@ -22,8 +22,19 @@ $days_count =  floor($days_count);
             @endif
         </div>
         <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
-            <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ {{$days_count}} DANA </span>
+
+
+            @if($auction->end_time < Carbon\Carbon::now())
+
+                <span class=" fs-xs text-dark"><i class="ci-time  fs-sm  me-1"></i> AUKCIJA ZAVRŠENA </span>
+
+
+            @else
+                <div class="fs-xs me-2 text-gray ">TRENUTNA PONUDA</div>
+                <span class=" fs-xs "><i class="ci-time  fs-sm  me-1"></i>JOŠ {{$days_count}} DANA </span>
+            @endif
+
+
         </div>
     </div>
 </div>
