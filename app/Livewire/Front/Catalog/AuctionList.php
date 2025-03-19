@@ -80,24 +80,27 @@ class AuctionList extends Component
         $auctions = Auction::query()->active();
 
         if ($this->group == Str::slug(config('settings.archive_auctions_path'))) {
-            $auctions = $auctions->where('end_time', '<=', now());
+            $auctions->where('end_time', '<=', now());
+        } else {
+            $auctions->where('end_time', '>', now());
         }
 
         if ($this->group != '') {
             $group = Group::query()->where('group', $this->group)->first();
 
             if ($group) {
-                $auctions = $auctions->where('group', $group->group_title);
+                $auctions->where('group', $group->group_title);
             }
         }
 
         if ( ! empty($this->ids)) {
-            $auctions = $auctions->whereIn('id', $this->ids);
+            $auctions->whereIn('id', $this->ids);
         }
 
         if ($this->sort != '') {
             $sort     = explode('-', $this->sort);
-            $auctions = $auctions->orderBy($sort[0], $sort[1]);
+
+            $auctions->orderBy($sort[0], $sort[1]);
         }
 
         return $auctions->paginate(20);
