@@ -30,7 +30,7 @@ return [
     'archive_auctions_path' => 'Arhiva',
     'about_page'        => 3,
     //
-    'admin_email' => 'info@aukcija4a.com',
+    'admin_email' => 'info@aukcije4a.com',
     //
     'unknown_author'    => 3282,
     'unknown_publisher' => 376,
