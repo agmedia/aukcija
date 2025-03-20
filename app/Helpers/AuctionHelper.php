@@ -70,7 +70,7 @@ class AuctionHelper
      */
     public static function setFullImageTitle(string $title): string
     {
-        return $title . '-' . Str::random(4);
+        return $title . '-' . Str::slug($title);
     }
 
 }

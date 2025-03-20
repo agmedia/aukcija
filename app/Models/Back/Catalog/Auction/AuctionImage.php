@@ -214,7 +214,7 @@ class AuctionImage extends Model
 
             Log::info('saveMainTitle');
             Log::info($new_full);
-            Log::info('existing full');
+            Log::info('existingfull');
             Log::info($existing_full);
 
             Storage::disk('auctions')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
