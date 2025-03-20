@@ -49,9 +49,10 @@ class AuctionController extends Controller
         $auction = new Auction();
 
         $data           = $auction->getRelationsData();
+        $groups = Groups::all()->pluck('title', 'id');
         $active_actions = null;
 
-        return view('back.catalog.auction.edit', compact('data', 'active_actions'));
+        return view('back.catalog.auction.edit', compact('data', 'active_actions', 'groups'));
     }
 
 

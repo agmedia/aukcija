@@ -49,9 +49,6 @@ class BidController extends FrontController
                 auth()->user()
             );
 
-            Log::info('$this->notifications_status');
-            Log::info($this->notifications_status);
-
             if ($this->notifications_status) {
                 SendAuctionNotifications::dispatchAfterResponse(
                     $auction,
