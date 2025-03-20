@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Back\Settings;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Back\Settings\Settings;
+use App\Models\Front\Catalog\Auction\Auction;
 use App\Notifications\TestNotification;
+use App\Notifications\UserBidNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -55,6 +57,10 @@ class SystemController extends Controller
 
         if ($user) {
             $user->notify(new TestNotification());
+
+            /*$auction = Auction::query()->inRandomOrder()->first();
+
+            $user->notify(new UserBidNotification($auction, $user));*/
 
             return back()->with(['success' => 'Ponuda je uspješno snimljen!']);
         }

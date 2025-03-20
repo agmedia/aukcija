@@ -9,6 +9,7 @@ use App\Notifications\UserBidReceivedNotification;
 use App\Notifications\UserOutbidedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class SendAuctionNotifications implements ShouldQueue
 {
@@ -27,7 +28,11 @@ class SendAuctionNotifications implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info('handle():');
+
         if ($this->user->details->use_notifications) {
+
+            Log::info($this->user->details->toArray());
             $this->user->notify(new UserBidNotification($this->auction, $this->user));
         }
 
