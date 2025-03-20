@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Helpers\Helper;
-use App\Models\Back\Catalog\Product\Auction;
-use App\Models\Back\Catalog\Product\AuctionImage;
+use App\Models\Back\Catalog\Auction\Auction;
+use App\Models\Back\Catalog\Auction\AuctionImage;
 use App\Models\Back\Marketing\Action;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

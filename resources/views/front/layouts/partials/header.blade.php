@@ -2,10 +2,10 @@
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-none d-sm-block flex-shrink-0 me-4 order-lg-1 p-0" href="{{ route('index') }}">
-                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" height="40"  style="height:40px" alt="AUKCIJE 4A | Aukcije knjiga">
+                <img src="{{ asset('media/logo-aukcije4a-nobck.svg') }}" height="40"  style="height:40px" alt="AUKCIJE 4A | Aukcije knjiga">
             </a>
             <a class="navbar-brand d-sm-none me-0 order-lg-1 p-0" href="{{ route('index') }}">
-                <img src="{{ asset('media/logo-aukcije4a4.svg') }}" style="height:30px" height="30" alt="AUKCIJE 4A">
+                <img src="{{ asset('media/logo-aukcije4a-nobck.svg') }}" style="height:30px" height="30" alt="AUKCIJE 4A">
             </a>
 
             <!-- Toolbar -->
@@ -127,9 +127,9 @@
                 <!-- Navbar -->
                 <ul class="navbar-nav justify-content-center pe-lg-2 me-lg-2">
                     <li class="nav-item "><a class="nav-link " href="{{ route('catalog.route') }}"><span>Aukcije</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug(config('settings.archive_auctions_path'))]) }}"><span>Arhiva</span></a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route', ['group' => \Illuminate\Support\Str::slug(config('settings.archive_auctions_path'))]) }}"><span>Završene aukcije</span></a>
                     <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.page', ['page' => 'o-nama']) }}"><span>O nama</span></a>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>
+                  <!--  <li class="nav-item"><a class="nav-link" href="{{ route('catalog.route.blog') }}"><span>Blog</span></a></li>-->
                     <li class="nav-item"><a class="nav-link" href="{{ route('kontakt') }}"><span>Kontakt</span></a></li>
                 </ul>
 

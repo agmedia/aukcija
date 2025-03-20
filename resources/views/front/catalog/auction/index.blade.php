@@ -158,7 +158,7 @@
                                             <div class="alert-icon">
                                                 <i class="ci-time"></i>
                                             </div>
-                                            <div>Aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
+                                            <div>Online aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
                                         </div>
 
                                     @elseif(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)

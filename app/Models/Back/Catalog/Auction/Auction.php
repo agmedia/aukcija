@@ -50,8 +50,8 @@ class Auction extends Model
     {
         return $this->hasMany(AuctionImage::class, 'auction_id')->orderBy('sort_order');
     }
-    
-    
+
+
     /**
      * @return Relation
      */
@@ -59,8 +59,8 @@ class Auction extends Model
     {
         return $this->hasMany(AuctionAttribute::class, 'auction_id')->with('attribute');
     }
-    
-    
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -190,6 +190,7 @@ class Auction extends Model
             'meta_title'       => $this->request->meta_title ?: $this->request->name,
             'meta_description' => $this->request->meta_description,
             'slug'             => $slug,
+            'url'             => '/',
             'starting_price'   => isset($this->request->starting_price) ? $this->request->starting_price : 0,
             'current_price'    => $current_price,
             'reserve_price'    => isset($this->request->reserve_price) ? $this->request->reserve_price : 0,
@@ -356,8 +357,8 @@ class Auction extends Model
 
         return preg_replace('/ face=("|\')(.*?)("|\')/', '', $clean);
     }
-    
-    
+
+
     /**
      * @param int $auction_id
      *
@@ -367,10 +368,10 @@ class Auction extends Model
     {
         if ( ! empty($this->request->product_attributes) && is_array($this->request->product_attributes)) {
             AuctionAttribute::storeData($this->request->product_attributes, $auction_id);
-            
+
             return true;
         }
-        
+
         return false;
     }
 

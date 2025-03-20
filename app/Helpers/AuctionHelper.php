@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Back\Catalog\Auction\Auction;
-use App\Models\Back\Orders\OrderAuction;
+
 use App\Models\Front\Catalog\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;

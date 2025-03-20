@@ -273,7 +273,9 @@ class AuctionImage extends Model
         // Thumb creation
         $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
 
-        $img = $img->resize(null, 360)->resizeCanvas(288, null);
+        $img = $img->resize(288, 360)->resizeCanvas(288, 360);
+
+
 
         $path_webp_thumb = $path_thumb . 'webp';
         Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80));

@@ -106,7 +106,7 @@ class GroupsController extends Controller
         $destroyed = Groups::query()->where('group', $groups->group)->delete();
 
         if ($destroyed) {
-            AttributesTranslation::query()->whereIn('attribute_id', $for_d)->delete();
+
 
             return redirect()->route('groups')->with(['success' => 'Attribute was succesfully deleted!']);
         }
