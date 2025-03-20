@@ -125,6 +125,9 @@ class AuctionImage extends Model
 
         $path = $this->saveImage($new->image, $title);
 
+        Log::info('replace');
+        Log::info($path);
+
         // Ako nije glavna slika updejtaj path na auction_images DB
         if ($id) {
             return $this->where('id', $id)->update([
@@ -155,6 +158,9 @@ class AuctionImage extends Model
             } else {
                 $this->where('id', $new->id)->delete();
             }
+
+            Log::info('switchDefault');
+            Log::info($new->image);
 
             Auction::where('id', $this->resource->id)->update([
                 'image' => $new->image
@@ -205,6 +211,9 @@ class AuctionImage extends Model
             $path          = $this->resource->id . '/';
             $existing_full = AuctionHelper::getFullImageTitle($this->resource->image);
             $new_full      = AuctionHelper::setFullImageTitle($title);
+
+            Log::info('saveMainTitle');
+            Log::info($new_full);
 
             Storage::disk('auctions')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
             Storage::disk('auctions')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
