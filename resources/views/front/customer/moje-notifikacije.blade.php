@@ -15,7 +15,7 @@
                         <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
                             <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
                                 <div class="h4">{{ $notification->data['title'] }}</div>
-                                <p>{{ $notification->data['message'] }}</p>
+                                <p>{!! $notification->data['message'] !!} </p>
                             </div>
                         </div>
                     </div>
