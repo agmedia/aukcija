@@ -119,7 +119,7 @@ class AuctionImage extends Model
     {
         // Nađi staru sliku i izdvoji path
         $old  = $id ? $this->where('id', $id)->first() : $this->resource;
-        $path = str_replace('media/images/gallery/auctions/', '', $old['image']);
+        $path = str_replace('media/img/auctions/', '', $old['image']);
         // Obriši staru sliku
         Storage::disk('auctions')->delete($path);
 
