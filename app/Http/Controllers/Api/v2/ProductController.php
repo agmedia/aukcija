@@ -48,7 +48,7 @@ class ProductController extends Controller
         if (isset($image->image)) {
             $path = str_replace(config('filesystems.disks.products.url'), '', $image->image);
             // Obriši staru sliku
-            Storage::disk('products')->delete($path);
+            Storage::disk('auctions')->delete($path);
 
             if (AuctionImage::where('id', $request->input('data'))->delete()) {
                 AuctionImage::where('image', $image->image)->delete();
