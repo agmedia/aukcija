@@ -49,6 +49,7 @@ class AuctionImage extends Model
 
         // Ako ima novih slika
         if ($new) {
+
             foreach ($new as $new_image) {
                 if (isset($new_image['image']) && $new_image['image']) {
                     $data = json_decode($new_image['image']);
@@ -76,19 +77,18 @@ class AuctionImage extends Model
             }
 
             foreach ($existing as $key => $image) {
-
-                $title = $this->resource->name;
-
                 if (isset($image['image']) && $image['image']) {
                     $data = json_decode($image['image']);
 
                     if ($data) {
-                        $this->replace($key, $data->output, $title);
+                        $this->replace($key, $data->output, $image['title']);
                     }
                 }
 
                 if ( ! $key) {
-                    $this->saveMainTitle($title);
+                    $this->saveMainTitle($image['title']);
+                    //$this->saveMainTitle($image['title'], $image['alt']);
+                    // zamjeni title na glavnoj
                 }
 
                 if ($key && $key != 'default') {
@@ -100,7 +100,7 @@ class AuctionImage extends Model
                         'published'  => $published
                     ]);
 
-                    $this->saveTitle($key, $title);
+                    $this->saveTitle($key, $image['title']);
                 }
             }
         }
