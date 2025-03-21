@@ -106,12 +106,14 @@
                                 <div class="ps-xl-4 ps-lg-3">
                                     <!-- Meta-->
                                     <h1 class="h4 mb-3 pt-3">{{ $auction->name }}</h1>
-                                    <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
+
+                                    @if(isset($auction->start_time) and isset($auction->end_time))
+                                           <div class="d-flex align-items-center flex-wrap text-nowrap mb-sm-4 mb-3 fs-sm">
                                         <div class="mb-2 me-sm-3 me-2 text-muted">Početak aukcije:  {{ \Illuminate\Support\Carbon::make($auction->start_time)->format('d/m/Y')}}</div>
                                         <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
 
                                     </div>
-                                    @if(issset($auction->start_time) and issset($auction->end_time))
+
                                     <!-- Auction-->
                                             <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
                                                 <div class="col">
