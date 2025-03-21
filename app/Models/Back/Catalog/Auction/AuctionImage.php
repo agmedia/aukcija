@@ -295,7 +295,10 @@ class AuctionImage extends Model
 
 
         $path_webp_thumb = $path_thumb . 'webp';
-        Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80));
+        Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80),[
+            'visibility' => 'public',
+        'directory_visibility' => 'public'
+        ]);
 
         return $path_jpg;
     }

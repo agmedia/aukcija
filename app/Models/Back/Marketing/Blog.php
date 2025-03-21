@@ -126,10 +126,16 @@ class Blog extends Model
             $str = $blog->id . '/' . Str::slug($blog->title) . '-' . time() . '.';
 
             $path = $str . 'jpg';
-            Storage::disk('blog')->put($path, $img->toJpg(90));
+            Storage::disk('blog')->put($path, $img->toJpg(90),[
+                'visibility' => 'public',
+                'directory_visibility' => 'public'
+            ]);
 
             $path_webp = $str . 'webp';
-            Storage::disk('blog')->put($path_webp, $img->toWebp(90));
+            Storage::disk('blog')->put($path_webp, $img->toWebp(90),[
+                'visibility' => 'public',
+                'directory_visibility' => 'public'
+            ]);
 
             return $blog->update([
                 'image' => config('filesystems.disks.blog.url') . $path
