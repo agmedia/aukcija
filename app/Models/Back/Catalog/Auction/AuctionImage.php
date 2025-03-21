@@ -276,10 +276,16 @@ class AuctionImage extends Model
         $path = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '.';
 
         $path_jpg = $path . 'jpg';
-        Storage::disk('auctions')->put($path_jpg, $img->toJpeg(90));
+        Storage::disk('auctions')->put($path_jpg, $img->toJpeg(90),[
+            'visibility' => 'public',
+            'directory_visibility' => 'public'
+        ]);
 
         $path_webp = $path . 'webp';
-        Storage::disk('auctions')->put($path_webp, $img->toWebp(90));
+        Storage::disk('auctions')->put($path_webp, $img->toWebp(90),[
+            'visibility' => 'public',
+            'directory_visibility' => 'public'
+        ]);
 
         // Thumb creation
         $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
