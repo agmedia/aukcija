@@ -183,16 +183,16 @@
                                         <span class="nav-main-link-name">Valute</span>
                                     </a>
                                 </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link{{ request()->routeIs(['shippings']) ? ' active' : '' }}" href="{{ route('shippings') }}">
+                         <!--       <li class="nav-main-item">
+                                    <a class="nav-main-link{{-- request()->routeIs(['shippings']) ? ' active' : '' }}" href="{{ route('shippings') --}}">
                                         <span class="nav-main-link-name">Načini dostave</span>
                                     </a>
                                 </li>
                                 <li class="nav-main-item">
-                                    <a class="nav-main-link{{ request()->routeIs(['payments']) ? ' active' : '' }}" href="{{ route('payments') }}">
+                                    <a class="nav-main-link{{-- request()->routeIs(['payments']) ? ' active' : '' }}" href="{{ route('payments') --}}">
                                         <span class="nav-main-link-name">Načini plaćanja</span>
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
                         @if (auth()->user()->can('*'))
