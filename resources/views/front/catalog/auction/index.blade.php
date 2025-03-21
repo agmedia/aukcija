@@ -111,93 +111,95 @@
                                         <div class="mb-2 me-sm-3 me-2 ps-sm-3 ps-2 border-start text-muted"><i class="ci-eye me-1 fs-base mt-n1 align-middle"></i>{{ $auction->viewed }} pregleda</div>
 
                                     </div>
-
+                                    @if(issset($auction->start_time) and issset($auction->end_time))
                                     <!-- Auction-->
-                                    <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
-                                        <div class="col">
-                                            <h3 class="h6 mb-2 fs-sm text-muted">Trenutna cijena</h3>
-                                            @if($auction->current_price > 0)
-                                                <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->current_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
-                                            @else
-                                                <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
-                                            @endif
-                                        </div>
-
-                                        @if($auction->end_time > Carbon\Carbon::now())
+                                            <div class="row row-cols-sm-2 row-cols-1 gy-3 mb-4 pb-md-2">
                                                 <div class="col">
-                                                    <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
-                                                    <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
-                                                        <div class="countdown-days">
-                                                            <span class="countdown-value">0</span>
-                                                            <span class="countdown-label text-muted">d</span>
+                                                    <h3 class="h6 mb-2 fs-sm text-muted">Trenutna cijena</h3>
+                                                    @if($auction->current_price > 0)
+                                                        <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->current_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                                    @else
+                                                        <h2 class="h3 mb-1">  {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </h2><span class="fs-sm text-muted">Početna cijena: {{ \App\Helpers\Currency::main($auction->starting_price, true) }} </span>
+                                                    @endif
+                                                </div>
+
+                                                  @if($auction->end_time > Carbon\Carbon::now())
+                                                        <div class="col">
+                                                            <h3 class="h6 mb-2 pb-1 fs-sm text-muted">Aukcija završava za</h3>
+                                                            <div class="countdown h4 mb-0" data-countdown="{{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y')}}">
+                                                                <div class="countdown-days">
+                                                                    <span class="countdown-value">0</span>
+                                                                    <span class="countdown-label text-muted">d</span>
+                                                                </div>
+                                                                <div class="countdown-hours">
+                                                                    <span class="countdown-value"></span>
+                                                                    <span class="countdown-label text-muted">h</span>
+                                                                </div>
+                                                                <div class="countdown-minutes">
+                                                                    <span class="countdown-value">0</span>
+                                                                    <span class="countdown-label text-muted">m</span>
+                                                                </div>
+                                                                <div class="countdown-seconds">
+                                                                    <span class="countdown-value">0</span>
+                                                                    <span class="countdown-label text-muted">s</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="countdown-hours">
-                                                            <span class="countdown-value"></span>
-                                                            <span class="countdown-label text-muted">h</span>
-                                                        </div>
-                                                        <div class="countdown-minutes">
-                                                            <span class="countdown-value">0</span>
-                                                            <span class="countdown-label text-muted">m</span>
-                                                        </div>
-                                                        <div class="countdown-seconds">
-                                                            <span class="countdown-value">0</span>
-                                                            <span class="countdown-label text-muted">s</span>
-                                                        </div>
+                                                    @endif
+                                            </div>
+
+                                            <!-- Place a bid-->
+                                            @if($auction->end_time < Carbon\Carbon::now())
+
+                                                <!-- Secondary alert -->
+                                            <div class="alert alert-danger d-flex" role="alert">
+                                                    <div class="alert-icon">
+                                                        <i class="ci-time"></i>
                                                     </div>
+                                                    <div>Online aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
                                                 </div>
-                                            @endif
-                                    </div>
 
 
 
-                                    <!-- Place a bid-->
-                                    @if($auction->end_time < Carbon\Carbon::now())
+                                            @elseif(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
 
-                                        <!-- Secondary alert -->
-                                        <div class="alert alert-danger d-flex" role="alert">
-                                            <div class="alert-icon">
-                                                <i class="ci-time"></i>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + $auction->min_increment), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 2)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
+                                                </div>
+                                                <div class="col d-none d-sm-block">
+                                                    <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 3)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
+                                                </div>
                                             </div>
-                                            <div>Online aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
-                                        </div>
 
-                                    @elseif(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <input class="form-control rounded-pill d-block w-100 me-3" type="text" id="bid-amount-input" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }} ili više">
+                                                </div>
+                                                <div class="col">
+                                                    @if (auth()->guest())
+                                                        <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="#signin-modal" data-bs-toggle="modal">Unesite ponudu</a>
+                                                    @else
+                                                        <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="javascript:void(0); addAuctionBid();">Unesite ponudu</a>
+                                                    @endif
+                                                </div>
+                                            </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + $auction->min_increment), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 2)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
-                                        </div>
-                                        <div class="col d-none d-sm-block">
-                                            <a href="{{ auth()->guest() ? '#signin-modal' : route('auction.user.bid.store', ['amount' => ($auction->base_price + ($auction->min_increment * 3)), 'id' => $auction->id]) }}" @if(auth()->guest()) data-bs-toggle="modal" type="button" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            <input class="form-control rounded-pill d-block w-100 me-3" type="text" id="bid-amount-input" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }} ili više">
-                                        </div>
-                                        <div class="col">
-                                            @if (auth()->guest())
-                                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="#signin-modal" data-bs-toggle="modal">Unesite ponudu</a>
                                             @else
-                                                <a class="btn btn btn-dark d-block d-block w-100 rounded-pill" href="javascript:void(0); addAuctionBid();">Unesite ponudu</a>
-                                            @endif
-                                        </div>
-                                    </div>
+                                                <div class="row mb-3">
+                                                    <div class="alert alert-primary  d-flex" role="alert">
+                                                        <div class="alert-icon">
+                                                            <i class="ci-bell"></i>
+                                                        </div>
+                                                        <div class="fs-md">Onemogućeno vam je davanje ponuda. Za više informacije  <a href="{{ route('kontakt') }}" class="alert-link">kontaktirajte nas</a>.</div>
+                                                    </div>
 
-                                    @else
-                                        <div class="row mb-3">
-                                            <div class="alert alert-primary  d-flex" role="alert">
-                                                <div class="alert-icon">
-                                                    <i class="ci-bell"></i>
                                                 </div>
-                                                <div class="fs-md">Onemogućeno vam je davanje ponuda. Za više informacije  <a href="{{ route('kontakt') }}" class="alert-link">kontaktirajte nas</a>.</div>
-                                            </div>
+                                            @endif
 
-                                        </div>
                                     @endif
 
                                     <div class="row mb-3">
