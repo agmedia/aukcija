@@ -189,10 +189,15 @@ class User extends Authenticatable
 
         Bouncer::assign($this->request->role)->to($user);
 
+        $fname = $this->request->fname;
+        if ( ! $fname) {
+            $fname = $this->request->username;
+        }
+
         UserDetail::create([
             'user_id'           => $user->id,
             'user_group_id'     => 0,
-            'fname'             => $this->request->fname,
+            'fname'             => $fname,
             'lname'             => $this->request->lname,
             'address'           => $this->request->address,
             'zip'               => $this->request->zip,
