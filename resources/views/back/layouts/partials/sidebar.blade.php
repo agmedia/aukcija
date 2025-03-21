@@ -127,12 +127,12 @@
 
                 <li class="nav-main-heading">Aplikacija</li>
 
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->routeIs(['profile', 'profile.*']) ? ' active' : '' }}" href="{{ route('profile.show') }}">
+             <!--   <li class="nav-main-item">
+                    <a class="nav-main-link{{--request()->routeIs(['profile', 'profile.*']) ? ' active' : '' }}" href="{{ route('profile.show') --}}">
                         <i class="nav-main-link-icon si si-user"></i>
                         <span class="nav-main-link-name">Moj Profil</span>
                     </a>
-                </li>
+                </li>-->
 
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->routeIs(['widgets', 'widgets.*']) ? ' active' : '' }}" href="{{ route('widgets') }}">
