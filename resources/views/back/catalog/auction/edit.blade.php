@@ -90,7 +90,7 @@
                                             <div class="col-md-3">
                                                 <label for="price-input">Početna cijena <span class="text-danger">*</span> <span class="small text-gray">(S PDV-om)</span></label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="price-input" name="starting_price" placeholder="00.00" value="{{ isset($auction) ? $auction->starting_price : old('starting_price') }}">
+                                                    <input type="text" class="form-control" id="price-input" name="starting_price" placeholder="00.00" value="{{ isset($auction) ? $auction->starting_price : old('starting_price') }}" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">EUR</span>
                                                     </div>
@@ -100,7 +100,7 @@
                                                 @enderror
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="price-input">Trenutna cijena <span class="text-danger">*</span> <span class="small text-gray">(S PDV-om)</span></label>
+                                                <label for="price-input">Trenutna cijena  <span class="small text-gray">(S PDV-om)</span></label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="price-input" name="current_price" placeholder="00.00" value="{{ isset($auction) ? $auction->current_price : old('current_price') }}" >
                                                     <div class="input-group-append">
@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="sku-input">Šifra <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="sku-input" name="sku" placeholder="Upišite šifru artikla" value="{{ isset($auction) ? $auction->sku : old('sku') }}">
+                                                <input type="text" class="form-control" id="sku-input" name="sku" placeholder="Upišite šifru artikla" value="{{ isset($auction) ? $auction->sku : old('sku') }}" required>
                                                 @error('sku')
                                                 <span class="text-danger font-italic">Šifra je potrebna...</span>
                                                 @enderror
