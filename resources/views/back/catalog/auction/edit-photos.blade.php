@@ -63,7 +63,7 @@
                                      {{--data-service="{{ route('images.upload') }}"--}}
                                      data-ratio="free"
                                      {{--                             data-size="600,800"--}}
-                                     data-max-file-size="2"
+                                     data-max-file-size="20"
                                      data-meta-type="auctions"
                                      data-meta-type_id="{{ $auction->id }}"
                                      data-will-remove="removeImage"
@@ -112,7 +112,7 @@
                                                  {{--data-service="{{ route('images.ajax.upload') }}"--}}
                                                  data-ratio="free"
                                                  {{--                                         data-size="600,800"--}}
-                                                 data-max-file-size="2"
+                                                 data-max-file-size="20"
                                                  data-meta-type="auctions"
                                                  data-meta-type_id="{{ $auction->id }}"
                                                  data-meta-image_id="{{ $image['id'] }}"
@@ -267,7 +267,7 @@
             Slim.create(cropper, {
                 ratio: 'free',
                 //size: '600,800',
-
+                maxFileSize: '5',
                 service: false,
                 meta: {
                     type: 'auctions',
