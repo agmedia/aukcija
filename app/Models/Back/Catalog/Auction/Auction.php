@@ -167,19 +167,23 @@ class Auction extends Model
     private function getModelArray(bool $insert = true): array
     {
         $current_price = isset($this->request->current_price) ? $this->request->current_price : 0;
+        $current_price = str_replace(',', '.', $current_price);
+        $starting_price = isset($this->request->starting_price) ? $this->request->starting_price : 0;
+        $starting_price = str_replace(',', '.', $starting_price);
 
         if ($insert) {
             $slug = $this->resolveSlug();
 
             if ( ! $current_price) {
-                $current_price = isset($this->request->starting_price) ? $this->request->starting_price : 0;
+                $current_price = $starting_price;
             }
+
         } else {
             $this->old_auction = $this->setHistoryAuction();
             $slug              = $this->request->slug;
         }
 
-        $min_increment = $this->resolveMinIncrement(isset($this->request->starting_price) ? $this->request->starting_price : '10');
+        $min_increment = $this->resolveMinIncrement($starting_price ?: '10');
 
         $response = [
             'sku'              => $this->request->sku,
@@ -191,7 +195,7 @@ class Auction extends Model
             'meta_description' => $this->request->meta_description,
             'slug'             => $slug,
             'url'             => '/',
-            'starting_price'   => isset($this->request->starting_price) ? $this->request->starting_price : 0,
+            'starting_price'   => $starting_price,
             'current_price'    => $current_price,
             'reserve_price'    => isset($this->request->reserve_price) ? $this->request->reserve_price : 0,
             'min_increment'    => $min_increment,

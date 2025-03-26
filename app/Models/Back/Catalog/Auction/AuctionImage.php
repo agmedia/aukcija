@@ -54,7 +54,7 @@ class AuctionImage extends Model
                 if (isset($new_image['image']) && $new_image['image']) {
                     $data = json_decode($new_image['image']);
 
-                    $saved = $this->saveNew($data->output, $new_image['sort_order']);
+                    $saved = $this->saveNew($data->output, $new_image['sort_order'] ?: 0);
                     // Ako je novi default ujedno i novo uploadana fotka.
                     // Također ako je ime novo uploadane slike isto kao $existing['default']
                     if (
