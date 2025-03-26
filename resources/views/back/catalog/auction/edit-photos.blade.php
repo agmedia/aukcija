@@ -267,7 +267,7 @@
             Slim.create(cropper, {
                 ratio: 'free',
                 //size: '600,800',
-                maxFileSize: '20',
+
                 service: false,
                 meta: {
                     type: 'auctions',
