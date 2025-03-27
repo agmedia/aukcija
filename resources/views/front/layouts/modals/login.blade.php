@@ -31,6 +31,7 @@
                             <label class="form-check-label" for="si-remember">{{ __('front/cart.zapamti') }}</label>
                         </div><a class="fs-sm" href="forgot-password">{{ __('auth.forgot') }}</a>
                     </div>
+
                     <button class="btn btn-dark btn-shadow d-block w-100" type="submit">{{ __('front/cart.prijavi_se') }}</button>
                 </form>
                 <form class="needs-validation tab-pane fade" method="POST" action="{{ route('register') }}" autocomplete="off" novalidate id="signup-tab"  aria-controls="pills-signup" oninput='password_confirmation.setCustomValidity(password_confirmation.value != password.value ? "Passwords do not match." : "")'>
@@ -83,7 +84,7 @@
 
 
 
-
+                        <input type="hidden" name="recaptcha" id="recaptcha">
 
                         <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
                         <div class="invalid-feedback" id="terms">{{ __('front/cart.morate_se_sloziti') }}</div>
@@ -107,5 +108,9 @@
         </div>
     </div>
 </div>
+
+@push('js_after')
+    @include('front.layouts.partials.recaptcha-js')
+@endpush
 
 

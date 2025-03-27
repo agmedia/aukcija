@@ -72,6 +72,9 @@
 
     <style>
         [v-cloak] { display:none !important; }
+        .grecaptcha-badge {
+            visibility: hidden !important;
+        }
     </style>
 
 </head>
