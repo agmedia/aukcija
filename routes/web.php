@@ -171,7 +171,7 @@ Route::prefix('api/v2')->group(function () {
     Route::post('auctions/update-item/single', [\App\Http\Controllers\Api\v2\ProductController::class, 'updateItem'])->name('auctions.update.item');
     Route::post('auctions/delete/action', [\App\Http\Controllers\Api\v2\ProductController::class, 'destroyAction'])->name('auctions.destroy.action');
     //
-    Route::post('auctions/user/bid', [\App\Http\Controllers\Front\BidController::class, 'storeApi'])->name('auctions.user.bid.api');
+    Route::post('auctions/user/bid', [\App\Http\Controllers\Front\BidController::class, 'store'])->name('auctions.user.bid.api');
     Route::post('auctions/user/bid/destroy', [BidController::class, 'destroyApi'])->name('auctions.user.bid.api.destroy');
 
     Route::post('/blogs/destroy/api', [BlogController::class, 'destroyApi'])->name('blogs.destroy.api');
@@ -250,9 +250,6 @@ Route::prefix('api/v2')->group(function () {
         });
     });
 });
-
-
-Route::get('auction/user-bid', [\App\Http\Controllers\Front\BidController::class, 'store'])->name('auction.user.bid.store');
 
 
 /*******************************************************************************

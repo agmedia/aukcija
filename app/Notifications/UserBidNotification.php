@@ -19,8 +19,13 @@ class UserBidNotification extends Notification
      */
     public function __construct(
         protected Auction $auction,
-        protected User $user
-    ) {}
+        protected User $user,
+        protected float|null $amount = null,
+    ) {
+        if (is_null($amount)) {
+            $this->amount = $this->auction->current_price;
+        }
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -44,7 +49,7 @@ class UserBidNotification extends Notification
         return [
             'icon' => 'success',
             'title' => 'Vaša ponuda je bila uspješna.',
-            'message' => 'Dali ste ponudu od ' . $this->auction->current_price . ' na aukciju ' . '<a href="' . $auction_link . '">' . $this->auction->name . '</a>'
+            'message' => 'Dali ste ponudu od ' . $this->amount . ' na aukciju ' . '<a href="' . $auction_link . '">' . $this->auction->name . '</a>'
         ];
     }
 }

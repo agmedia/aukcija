@@ -69,7 +69,7 @@
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item">
-                            <a class="nav-main-link{{ request()->routeIs(['auctions', 'auction.*']) ? ' active' : '' }}" href="{{ route('auctions') }}">
+                            <a class="nav-main-link{{ request()->routeIs(['auctions', 'auctions.*']) ? ' active' : '' }}" href="{{ route('auctions') }}">
                                 <span class="nav-main-link-name">Aukcije</span>
                             </a>
                         </li>

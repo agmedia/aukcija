@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\FrontController;
-use App\Jobs\SendAuctionEmails;
-use App\Jobs\SendAuctionNotifications;
-use App\Models\Back\Catalog\Auction\AuctionBid;
-use App\Models\Front\Catalog\Auction\Auction;
+use App\Models\Front\Catalog\Bid;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,46 +16,33 @@ class BidController extends FrontController
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'id'     => 'required',
             'amount' => 'required',
         ]);
 
-        $auction = Auction::query()->where('id', $request->input('id'))->first();
+        $bid = new Bid($request->id, $request->amount);
 
-        if (auth()->user() && $auction && $auction->end_time > now()) {
-            // Create new bid. Update auction. Send emails.
-            AuctionBid::query()->create([
-                'auction_id' => $auction->id,
-                'user_id'    => auth()->id(),
-                'amount'     => $request->input('amount'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $auction->update([
-                'current_price' => $request->input('amount'),
-                'updated_at'    => now(),
-            ]);
-
-            SendAuctionEmails::dispatchAfterResponse(
-                $auction,
-                auth()->user()
-            );
-
-            if ($this->notifications_status) {
-                SendAuctionNotifications::dispatchAfterResponse(
-                    $auction,
-                    auth()->user()
-                );
+        if ($bid->isValid()) {
+            if ($bid->isSameAsMaxBid()) {
+                return response()->json($bid->generateResponse('same_as_max'));
             }
 
-            return back()->with(['success' => 'Hvala na ponudi. Potvrda je poslana na vaš email.']);
+            $bid->place()
+                ->updateAuctionCurrentPrice()
+                ->sendEmails()
+                ->sendNotifications($this->notifications_status);
+
+            if ($bid->hasErrors()) {
+                return response()->json($bid->generateResponse('error'));
+            }
+
+            return response()->json($bid->generateResponse());
         }
 
-        return back()->with(['error' => 'Došlo je do greške..!']);
+        return response()->json($bid->generateResponse('error'));
     }
 
 

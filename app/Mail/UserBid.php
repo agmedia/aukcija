@@ -18,7 +18,10 @@ class UserBid extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Auction $auction, public User $user) {}
+    public function __construct(public Auction $auction, public User $user, public float|null $amount = null)
+    {
+        if (is_null($amount)) $this->amount = $this->auction->current_price;
+    }
 
     /**
      * Get the message envelope.

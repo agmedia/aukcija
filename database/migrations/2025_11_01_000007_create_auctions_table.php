@@ -44,6 +44,7 @@ class CreateAuctionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('auction_id')->index();
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->decimal('amount', 15, 4)->default(0);
             $table->timestamps();
 
