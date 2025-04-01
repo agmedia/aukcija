@@ -270,7 +270,7 @@ class Bid
      */
     private function setBidParams(): self
     {
-        $this->min_required_bid = floatval($this->auction->current_price + $this->auction->min_increment);
+        $this->min_required_bid = floatval($this->auction->base_price + $this->auction->min_increment);
         $this->future_current_price = $this->min_required_bid;
 
         $max = $this->auction->bids()->orderBy('amount', 'desc')->first();
