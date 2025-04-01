@@ -110,7 +110,7 @@ class Bid
      */
     public function isSameAsMaxBid()
     {
-        if ($this->bid_amount == $this->max_existing_bid->amount) {
+        if ($this->max_existing_bid && $this->bid_amount == $this->max_existing_bid->amount) {
             return true;
         }
 
