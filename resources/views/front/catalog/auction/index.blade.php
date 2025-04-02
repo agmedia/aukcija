@@ -147,17 +147,27 @@
                                         <div>Online aukcija je završena: {{ \Illuminate\Support\Carbon::make($auction->end_time)->format('m/d/Y H:i:s')}} </div>
                                     </div>
                                 @elseif(auth()->guest() or auth()->user() and auth()->user()->details->can_bid)
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + $auction->min_increment }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
+                                    @if ($user_has_last_bid)
+                                        <div class="alert d-sm-flex alert-success pb-3 pt-sm-4" role="alert">
+                                            <i class="ci-check-circle fs-4"></i>
+                                            <div class="ps-sm-3 pe-sm-4">
+                                                <p class="mb-2">Zadnja ponuda je tvoja.</p>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 2) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
+                                    @else
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + $auction->min_increment }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 2) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
+                                            </div>
+                                            <div class="col d-none d-sm-block">
+                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 3) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
+                                            </div>
                                         </div>
-                                        <div class="col d-none d-sm-block">
-                                            <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 3) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
-                                        </div>
-                                    </div>
+                                    @endif
+
                                     <div class="row mb-3">
                                         <div class="col">
                                             <input class="form-control rounded-pill d-block w-100 me-3" type="text" id="bid-amount-input" placeholder="{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }} ili više">
@@ -186,7 +196,7 @@
                                 <div id="bid-result-div"></div>
                             </div>
 
-                            <!-- Product info-->
+
                             <div class="pt-0">
                                 <!-- Nav tabs-->
                                 <div class="mb-4" style="overflow-x: auto;">
@@ -195,14 +205,13 @@
                                     </ul>
                                 </div>
 
-                                <!-- Tabs content-->
-                                @if( isset($auction->bids) and $auction->bids()->count())
+                                <!-- Bids -->
+                                @if ($bids->count())
                                     <div class="tab-content">
-                                        <!-- Bid History-->
                                         <div class="tab-pane fade show active" id="bids" role="tabpanel">
                                             <ul class="list-unstyled mb-0">
                                                 @php $opacity = 100; @endphp
-                                                @foreach($auction->bids()->orderBy('created_at', 'desc')->take(4)->get() as $bid)
+                                                @foreach($bids as $bid)
                                                     <!-- Bid-->
                                                     <li class="d-flex align-items-sm-center align-items-start w-100 mb-2 pb-2 border-bottom">
                                                         <div class="d-sm-flex align-items-sm-center w-100" style="opacity: {{ $opacity }}%;">
@@ -253,7 +262,7 @@
     </div>
     <hr class="mb-2">
 
-    <!-- Recent products-->
+    <!-- Recent products -->
     <section class="container py-5 pt-0 mb-lg-3">
         <!-- Heading-->
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-bottom pb-4 mb-4">
@@ -274,9 +283,27 @@
         </div>
     </section>
 
+    <!-- Bids Modal -->
+    <div class="modal fade" id="modalCentered" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center" id="modal-content"></div>
+                <div class="modal-footer flex-column flex-sm-row align-items-center" id="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('js_after')
+    <script>
+        $(document).ready(function(){
+            $("#modalCentered").on("hide.bs.modal", function(){
+                window.location.reload();
+            })
+        })
+    </script>
+
     <script>
         function addAuctionBid(entered_amount = 0) {
             if (!entered_amount) {
@@ -299,7 +326,9 @@
                     console.log(data);
                     console.log(status);
 
-                    alert(data.message);
+                    fillModal(data);
+
+                    //alert(data.message);
 
                     /*if (status == 'success' && data.status == 200) {
                         setAuctionBidResult('green', '<div class="alert alert-success d-flex" role="alert"> <div class="alert-icon"> <i class="ci-check-circle"></i> </div> <div>Hvala na ponudi. Potvrda je poslana na vaš email.</div> </div>');
@@ -322,6 +351,23 @@
         function setAuctionBidResult(color, text) {
             document.getElementById('bid-result-div').style.color = color;
             document.getElementById('bid-result-div').innerHTML = text;
+        }
+
+        function fillModal(data) {
+            $('#modalCentered').modal('show');
+
+            let content = '<i class="' + data.icon + ' h1 m-2"></i><p class="h4 fw-light">' + data.message + '</p>';
+
+            document.getElementById('modal-content').innerHTML = content;
+
+            let footer = '<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Zatvori</button>';
+
+            if (data.choose) {
+                footer += '<button class="btn btn-primary" type="button">Može</button>';
+            }
+
+            document.getElementById('modal-footer').innerHTML = footer;
+
         }
     </script>
 

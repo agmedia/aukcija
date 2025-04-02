@@ -37,8 +37,16 @@ class CatalogRouteController extends FrontController
             $schema = $bc->auctionBookSchema($auction);
             $seo = Seo::getAuctionData($auction);
             $gdl = TagManager::getGoogleAuctionDataLayer($auction);
+
+            $bids = $auction->bids()->where('amount', '<=', $auction->current_price)
+                                    ->orderBy('created_at', 'desc')
+                                    ->take(4)
+                                    ->get()
+                                    ->sortByDesc('amount');
+
+            $user_has_last_bid = $auction->userHasLastBid($bids);
             
-            return view('front.catalog.auction.index', compact('auction', 'group', 'seo', 'crumbs', 'schema', 'gdl'));
+            return view('front.catalog.auction.index', compact('auction', 'group', 'bids', 'user_has_last_bid', 'seo', 'crumbs', 'schema', 'gdl'));
         }
         
         $meta_tags = Seo::getMetaTags($request, 'filter');

@@ -165,6 +165,10 @@ class Bid
             // bid is greater than MAX
         } elseif ($this->isMaxExistingBid('>')) {
             $this->createFutureAuctionBid($this->max_existing_bid->amount);
+
+            // bid is only 1 step from max. than max is current.
+        } elseif ($this->isMaxExistingBid('=') && $this->max_existing_bid->amount == ($this->bid_amount + $this->auction->min_increment)) {
+            $this->future_current_price = $this->max_existing_bid->amount;
         }
 
         return $this;

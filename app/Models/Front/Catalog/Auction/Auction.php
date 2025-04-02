@@ -5,6 +5,7 @@ namespace App\Models\Front\Catalog\Auction;
 use App\Helpers\Helper;
 use App\Models\Back\Catalog\Auction\AuctionBid;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
@@ -167,6 +168,31 @@ class Auction extends Model
 
             return [];
         });
+    }
+
+
+    /**
+     * @param Collection|null $bids
+     *
+     * @return bool
+     */
+    public function userHasLastBid(Collection $bids = null): bool
+    {
+        if ($bids && auth()->check() && (auth()->id() == $bids->first()->user_id)) {
+            return true;
+
+        } elseif ( ! $bids && auth()->check()) {
+            $bids = $this->bids()->where('amount', '>=', $this->current_price)
+                                  ->orderBy('created_at', 'desc')
+                                  ->take(4)
+                                  ->get();
+
+            if (auth()->id() == $bids->first()->user_id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
