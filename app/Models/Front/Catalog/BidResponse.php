@@ -29,7 +29,7 @@ class BidResponse
     {
         return [
             'status'  => 'outbid',
-            'icon'    => 'ci-meh',
+            'icon'    => 'ci-add-user',
             'message' => 'Nažalost netko je dao veću ponudu! Pokušajte ponovo.',
             'choose'  => 0
         ];
@@ -43,7 +43,7 @@ class BidResponse
     {
         return [
             'status'  => 'success',
-            'icon'    => 'ci-thumbs-up',
+            'icon'    => 'ci-thumb-up',
             'message' => 'Hvala na ponudi. Potvrda je poslana na vaš email.',
             'choose'  => 0
         ];
@@ -57,7 +57,7 @@ class BidResponse
     {
         return [
             'status'  => 'error',
-            'icon'    => 'ci-alert-triangle',
+            'icon'    => 'ci-announcement',
             'message' => 'Nažalost dogodila se greška prilikom davanja ponude. Molimo pokušajte ponovo ili kontaktirajte administratora.',
             'choose'  => 0
         ];
