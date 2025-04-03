@@ -178,7 +178,7 @@ class Auction extends Model
      */
     public function userHasLastBid(Collection $bids = null): bool
     {
-        if ($bids && auth()->check() && (auth()->id() == $bids->first()->user_id)) {
+        if ($bids && $bids->count()  && auth()->check() && (auth()->id() == $bids->first()->user_id)) {
             return true;
 
         } elseif ( ! $bids && auth()->check()) {
