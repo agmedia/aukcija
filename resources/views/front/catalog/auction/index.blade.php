@@ -157,13 +157,13 @@
                                     @else
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + $auction->min_increment }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
+                                                <a @if(auth()->guest()) href="#signin-modal" data-bs-toggle="modal" @else href="javascript:void(0); addAuctionBid({{ $auction->base_price + $auction->min_increment }});" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + $auction->min_increment), true) }}</a>
                                             </div>
                                             <div class="col">
-                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 2) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
+                                                <a @if(auth()->guest()) href="#signin-modal" data-bs-toggle="modal" @else href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 2) }});" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 2)), true) }}</a>
                                             </div>
                                             <div class="col d-none d-sm-block">
-                                                <a href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 3) }});" class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
+                                                <a @if(auth()->guest()) href="#signin-modal" data-bs-toggle="modal" @else href="javascript:void(0); addAuctionBid({{ $auction->base_price + ($auction->min_increment * 3) }});" @endif class="btn btn-outline-dark d-block w-100 rounded-pill">{{ \App\Helpers\Currency::main(($auction->base_price + ($auction->min_increment * 3)), true) }}</a>
                                             </div>
                                         </div>
                                     @endif
