@@ -108,13 +108,39 @@ class Bid
     /**
      * @return bool
      */
-    public function isSameAsMaxBid()
+    public function isSameAsMaxBid(): bool
     {
         if ($this->max_existing_bid && $this->bid_amount == $this->max_existing_bid->amount) {
             return true;
         }
 
         return false;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isFromSameUserAsMaxBid(): bool
+    {
+        if ($this->max_existing_bid && $this->max_existing_bid->user_id == $this->user->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @return $this
+     */
+    public function updateMaxBid(): self
+    {
+        if ($this->max_existing_bid && $this->max_existing_bid->amount < $this->bid_amount) {
+            $this->max_existing_bid->update(['amount' => $this->bid_amount]);
+        }
+
+        return $this;
     }
 
 
