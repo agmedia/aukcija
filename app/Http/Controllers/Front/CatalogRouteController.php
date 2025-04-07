@@ -39,7 +39,7 @@ class CatalogRouteController extends FrontController
             $gdl = TagManager::getGoogleAuctionDataLayer($auction);
 
             $bids = $auction->bids()->where('amount', '<=', $auction->current_price)
-                                    ->orderBy('created_at', 'desc')
+                                    ->orderBy('amount', 'desc')
                                     ->take(4)
                                     ->get()
                                     ->sortByDesc('amount');
