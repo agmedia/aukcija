@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class CatalogRouteController extends FrontController
 {
-    
+
     /**
      * @param Request      $request
      * @param string       $group
@@ -27,35 +27,32 @@ class CatalogRouteController extends FrontController
     public function resolve(Request $request, string $group = null, Auction $auction = null)
     {
         if ($auction) {
-            if ( ! $auction->status) { abort(404); }
-            
+            if ( ! $auction->status) {
+                abort(404);
+            }
+
             $auction->increment('viewed');
-            
-            $bc = new Breadcrumb();
+
+            $bc     = new Breadcrumb();
             $crumbs = $bc->auction($group, $auction)->resolve();
-            
             $schema = $bc->auctionBookSchema($auction);
+
             $seo = Seo::getAuctionData($auction);
             $gdl = TagManager::getGoogleAuctionDataLayer($auction);
 
-            $bids = $auction->bids()->where('amount', '<=', $auction->current_price)
-                                    ->orderBy('amount', 'desc')
-                                    ->take(4)
-                                    ->get()
-                                    ->sortByDesc('amount');
-
+            $bids              = $auction->latestBids(4);
             $user_has_last_bid = $auction->userHasLastBid($bids);
-            
+
             return view('front.catalog.auction.index', compact('auction', 'group', 'bids', 'user_has_last_bid', 'seo', 'crumbs', 'schema', 'gdl'));
         }
-        
+
         $meta_tags = Seo::getMetaTags($request, 'filter');
         $crumbs    = (new Breadcrumb())->group($group)->resolve();
-        
+
         return view('front.catalog.auction.list', compact('group', 'meta_tags', 'crumbs'));
     }
-    
-    
+
+
     /**
      *
      *
@@ -70,7 +67,7 @@ class CatalogRouteController extends FrontController
                 return redirect()->back()->with(['error' => 'Oops..! Zaboravili ste upisati pojam za pretraživanje..!']);
             }
 
-            $group = null;
+            $group  = null;
             $crumbs = null;
 
             $ids = Helper::search(
@@ -110,7 +107,7 @@ class CatalogRouteController extends FrontController
      */
     public function blog(Blog $blog)
     {
-        if (! $blog->exists) {
+        if ( ! $blog->exists) {
             $blogs = Blog::active()->get();
 
             return view('front.blog', compact('blogs'));
@@ -128,6 +125,7 @@ class CatalogRouteController extends FrontController
     public function faq()
     {
         $faq = Faq::where('status', 1)->get();
+
         return view('front.faq', compact('faq'));
     }
 
