@@ -25,6 +25,20 @@ class BidResponse
     /**
      * @return array
      */
+    public static function same_user_as_max(): array
+    {
+        return [
+            'status'  => 'same_user_as_max',
+            'icon'    => 'ci-sliders',
+            'message' => 'Vaša ponuda je obnovljena.',
+            'choose'  => 0
+        ];
+    }
+
+
+    /**
+     * @return array
+     */
     public static function outbid(): array
     {
         return [

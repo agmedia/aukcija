@@ -30,6 +30,12 @@ class BidController extends FrontController
                 return response()->json($bid->generateResponse('same_as_max'));
             }
 
+            if ($bid->isFromSameUserAsMaxBid()) {
+                $bid->updateMaxBid();
+
+                return response()->json($bid->generateResponse('same_user_as_max'));
+            }
+
             $bid->place()
                 ->updateAuctionCurrentPrice()
                 ->sendEmails()

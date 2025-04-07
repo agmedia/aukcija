@@ -112,6 +112,17 @@ class Auction extends Model
 
 
     /**
+     * @param int $take
+     *
+     * @return Collection
+     */
+    public function latestBids(int $take = 5): Collection
+    {
+        return $this->bids()->orderBy('created_at', 'desc')->take($take)->get();
+    }
+
+
+    /**
      * @param $query
      *
      * @return mixed
