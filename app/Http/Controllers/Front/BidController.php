@@ -39,7 +39,7 @@ class BidController extends FrontController
             $bid->place()
                 ->updateAuctionCurrentPrice()
                 ->sendEmails()
-                ->sendNotifications(intval($this->notifications_status->value));
+                ->sendNotifications(intval($this->notifications_status));
 
             if ($bid->hasErrors()) {
                 return response()->json($bid->generateResponse('error'));
