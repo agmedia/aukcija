@@ -36,7 +36,7 @@ class CatalogRouteController extends FrontController
             $bc     = new Breadcrumb();
             $crumbs = $bc->auction($group, $auction)->resolve();
             $schema = $bc->auctionBookSchema($auction);
-
+            
             $seo = Seo::getAuctionData($auction);
             $gdl = TagManager::getGoogleAuctionDataLayer($auction);
 

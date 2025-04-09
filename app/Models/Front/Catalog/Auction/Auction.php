@@ -118,7 +118,10 @@ class Auction extends Model
      */
     public function latestBids(int $take = 5): Collection
     {
-        return $this->bids()->orderBy('created_at', 'desc')->take($take)->get();
+        return $this->bids()->where('amount', '<=', $auction->current_price)
+                    ->orderBy('amount', 'desc')
+                    ->take(4)
+                    ->get();
     }
 
 
