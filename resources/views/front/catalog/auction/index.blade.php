@@ -328,6 +328,10 @@
 
                     fillModal(data);
 
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+
                     //alert(data.message);
 
                     /*if (status == 'success' && data.status == 200) {
