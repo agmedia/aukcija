@@ -328,9 +328,9 @@
 
                     fillModal(data);
 
-                    setTimeout(() => {
+                    /*setTimeout(() => {
                         window.location.reload();
-                    }, 500);
+                    }, 500);*/
 
                     //alert(data.message);
 
