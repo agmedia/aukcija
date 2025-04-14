@@ -9,6 +9,7 @@ use App\Models\Back\Catalog\Auction\AuctionBid;
 use App\Models\Front\Catalog\Auction\Auction;
 use App\Models\User;
 use App\Notifications\UserBidNotification;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -164,37 +165,44 @@ class Bid
 
 
     /**
-     * @if bid is == min
-     *       Create 1 true bid.
-     * @if bid is greater than MIN
-     *       Create 1 true bid. + 1 min+increment bid with true parent_id
-     * @if bid is greater than MAX
-     *       Create 1 true bid. + 1 max+increment bid with true parent_id
+     * Create bids process.
      *
      * @return $this
      */
     public function place(): self
     {
-        // bid is == min. Create 1 true bid.
-        $this->createAuctionBid($this->bid_amount);
+        // Create 1 true bid.
+        $this->createAuctionBid(amount: $this->bid_amount);
 
         // bid is greater than MIN
-        if ($this->bid_amount > $this->min_required_bid && $this->isMaxExistingBid('<')) {
-            $this->createAuctionBid($this->min_required_bid, $this->created_bid_id);
+        if ($this->bid_amount > $this->min_required_bid) {
+            // There is no MAX bid
+            if ( ! $this->isMaxExistingBid('=')) {
+                $this->createAuctionBid(amount: $this->min_required_bid, parent_id: $this->created_bid_id);
 
-            if ($this->isMaxExistingBid('=')) {
-                $this->createFutureAuctionBid($this->min_required_bid);
+            } else {
+                // bid is lower than MAX
+                if ($this->isMaxExistingBid('<')) {
+                    // Check if max is only 1-2 steps from bid amount
+                    if ($this->isOnlyFewSteps('<')) {
+                        $this->future_current_price = $this->max_existing_bid->amount;
 
-                $this->automatic_bid_created = true;
+                    } else {
+                        $this->createFutureAuctionBid(amount: $this->bid_amount, user_id: $this->max_existing_bid->user_id);
+                    }
+                }
+
+                // bid is greater than MAX
+                if ($this->isMaxExistingBid('>')) {
+                    // Check if bid amount is only 1-2 steps from MAX bid amount
+                    if ($this->isOnlyFewSteps('>')) {
+                        $this->future_current_price = $this->bid_amount;
+
+                    } else {
+                        $this->createFutureAuctionBid(amount: $this->max_existing_bid->amount);
+                    }
+                }
             }
-
-            // bid is greater than MAX
-        } elseif ($this->isMaxExistingBid('>') && $this->max_existing_bid->amount > ($this->bid_amount + $this->auction->min_increment)) {
-            $this->createFutureAuctionBid($this->max_existing_bid->amount);
-
-            // bid is only 1 step from max. than max is current.
-        } elseif ($this->isMaxExistingBid('=') && $this->max_existing_bid->amount == ($this->bid_amount + $this->auction->min_increment)) {
-            $this->future_current_price = $this->max_existing_bid->amount;
         }
 
         return $this;
@@ -345,14 +353,16 @@ class Bid
 
     /**
      * @param float $amount
+     * @param int   $user_id
      *
      * @return self
      */
-    private function createFutureAuctionBid(float $amount): self
+    private function createFutureAuctionBid(float $amount, int $parent_id = 0, int $user_id = 0): self
     {
         $this->future_current_price = $amount + $this->auction->min_increment;
+        $parent_id = $parent_id ?: $this->created_bid_id;
 
-        $this->createAuctionBid($this->future_current_price, $this->created_bid_id);
+        $this->createAuctionBid($this->future_current_price, $parent_id, $user_id);
 
         return $this;
     }
@@ -381,6 +391,32 @@ class Bid
 
         } elseif ($operator == '=') {
             if ($this->max_existing_bid) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @param string $operator
+     *
+     * @return bool
+     */
+    private function isOnlyFewSteps(string $operator): bool
+    {
+        if ($operator == '<') {
+            if ($this->bid_amount >= ($this->max_existing_bid->amount - $this->auction->min_increment)
+                || $this->bid_amount >= ($this->max_existing_bid->amount - ($this->auction->min_increment * 2))
+            ) {
+                return true;
+            }
+
+        } elseif ($operator == '>') {
+            if ($this->bid_amount <= ($this->max_existing_bid->amount + $this->auction->min_increment)
+                || $this->bid_amount <= ($this->max_existing_bid->amount - ($this->auction->min_increment * 2))
+            ) {
                 return true;
             }
         }

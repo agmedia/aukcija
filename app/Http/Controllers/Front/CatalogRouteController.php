@@ -36,12 +36,12 @@ class CatalogRouteController extends FrontController
             $bc     = new Breadcrumb();
             $crumbs = $bc->auction($group, $auction)->resolve();
             $schema = $bc->auctionBookSchema($auction);
-            
+
             $seo = Seo::getAuctionData($auction);
             $gdl = TagManager::getGoogleAuctionDataLayer($auction);
 
             $bids              = $auction->latestBids(4);
-            $user_has_last_bid = $auction->userHasLastBid($bids);
+            $user_has_last_bid = $auction->userHasLastBid();
 
             return view('front.catalog.auction.index', compact('auction', 'group', 'bids', 'user_has_last_bid', 'seo', 'crumbs', 'schema', 'gdl'));
         }

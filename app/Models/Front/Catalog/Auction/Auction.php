@@ -196,12 +196,10 @@ class Auction extends Model
             return true;
 
         } elseif ( ! $bids && auth()->check()) {
-            $bids = $this->bids()->where('amount', '>=', $this->current_price)
-                                  ->orderBy('created_at', 'desc')
-                                  ->take(4)
-                                  ->get();
+            $bids = $this->bids()->orderBy('amount', 'desc')
+                                  ->first();
 
-            if (auth()->id() == $bids->first()->user_id) {
+            if (auth()->id() == $bids->user_id) {
                 return true;
             }
         }
