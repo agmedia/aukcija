@@ -199,7 +199,7 @@ class Auction extends Model
             $bids = $this->bids()->orderBy('amount', 'desc')
                                   ->first();
 
-            if (auth()->id() == $bids->user_id) {
+            if ($bids && auth()->id() == $bids->user_id) {
                 return true;
             }
         }
