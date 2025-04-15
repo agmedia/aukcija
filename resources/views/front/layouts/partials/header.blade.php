@@ -76,9 +76,9 @@
                             <div style="min-width: 14rem;">
                                 <div class="d-flex align-items-center dropdown-header">
                                 <h6 class="mb-0 w-100">Vaše notifikacije </h6>
-                                    {{--
+
                                     <a type="button" href="{{ route('moj.racun.read.notifications') }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Označi sve kao pročitano" class="" ><i class="ci-eye-off"></i></a>
-                                    --}}
+
                                 </div>
 
                                 @if (auth()->user() && auth()->user()->unreadNotifications->count() > 0)

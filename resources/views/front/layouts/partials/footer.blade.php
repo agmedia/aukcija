@@ -59,8 +59,7 @@
                 <div class="widget widget-links widget-dark pb-2">
                     <h3 class="widget-title fw-700 text-primary"><span>Načini plaćanja</span></h3>
                     <ul class="widget-list  ">
-                        <li class="widget-list-item"><a href="https://www.zuzi.hr/info/nacini-placanja" class="widget-list-link" > Kreditnom karticom jednokratno ili na rate</a></li>
-                        <li class="widget-list-item"><a href="https://www.zuzi.hr/info/nacini-placanja" class="widget-list-link" > Apple Pay / Google Pay</a></li>
+
                         <li class="widget-list-item"><a href="https://www.zuzi.hr/info/nacini-placanja" class="widget-list-link" >Bankovna transakcija 2D barkod</a></li>
 
 
