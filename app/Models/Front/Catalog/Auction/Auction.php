@@ -67,11 +67,13 @@ class Auction extends Model
      */
     public function getBasePriceAttribute(): float
     {
+        $decrement = $this->bids()->count() ? 0 : $this->min_increment;
+
         if ($this->current_price > 0) {
-            return $this->current_price;
+            return $this->current_price - $decrement;
         }
 
-        return $this->starting_price;
+        return $this->starting_price - $decrement;
     }
 
 
