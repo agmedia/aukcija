@@ -43,9 +43,11 @@ class CatalogRouteController extends FrontController
             $bids              = $auction->latestBids(4);
             $user_has_last_bid = $auction->userHasLastBid();
 
-            $auctions_list = Auction::query()->active()->where('id', '!=', $auction->id)->inRandomOrder()->take(10);
+            $auction_list = Auction::query()->where('id', '!=', $auction->id)->inRandomOrder()->take(10)->get();
 
-            return view('front.catalog.auction.index', compact('auction', 'group', 'bids', 'user_has_last_bid', 'seo', 'crumbs', 'schema', 'auctions_list', 'gdl'));
+
+
+            return view('front.catalog.auction.index', compact('auction','auction_list', 'group', 'bids', 'user_has_last_bid', 'seo', 'crumbs', 'schema', 'gdl'));
         }
 
         $meta_tags = Seo::getMetaTags($request, 'filter');
