@@ -44,6 +44,11 @@ class Bid
     private $max_existing_bid = null;
 
     /**
+     * @var AuctionBid|null
+     */
+    private $current_active_bid = null;
+
+    /**
      * Price that should be updated
      * on auction current_price.
      *
@@ -178,7 +183,9 @@ class Bid
         if ($this->bid_amount > $this->min_required_bid) {
             // There is no MAX bid
             if ( ! $this->isMaxExistingBid('=')) {
-                $this->createAuctionBid(amount: $this->min_required_bid, parent_id: $this->created_bid_id);
+                if ($this->user->id != $this->current_active_bid->user_id) {
+                    $this->createAuctionBid(amount: $this->min_required_bid, parent_id: $this->created_bid_id);
+                }
 
             } else {
                 // bid is lower than MAX
@@ -310,6 +317,7 @@ class Bid
     {
         $this->min_required_bid = floatval($this->auction->base_price + $this->auction->min_increment);
         $this->future_current_price = $this->min_required_bid;
+        $this->current_active_bid = $this->auction->bids()->where('amount', '=', $this->auction->base_price)->first();
 
         $max = $this->auction->bids()->orderBy('amount', 'desc')->first();
 
