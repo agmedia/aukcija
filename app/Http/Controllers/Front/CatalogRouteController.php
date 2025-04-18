@@ -43,7 +43,7 @@ class CatalogRouteController extends FrontController
             $bids              = $auction->latestBids(4);
             $user_has_last_bid = $auction->userHasLastBid();
 
-            $auction_list = Auction::query()->where('id', '!=', $auction->id)->inRandomOrder()->take(10)->get();
+            $auction_list = Auction::query()->active()->where('id', '!=', $auction->id)->inRandomOrder()->take(10)->get();
 
 
 
