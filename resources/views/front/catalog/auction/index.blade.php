@@ -272,12 +272,13 @@
         <div class="tns-carousel tns-controls-static tns-controls-inside">
             <div class="tns-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": true, "autoHeight": true, "responsive": {"0":{"items":2, "gutter": 18},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":5, "gutter": 30}}}'>
 
-                @foreach ($auction->active()->inRandomOrder()->get()->unique()->take(10) as $cat_product)
-                    @if ($cat_product->id  != $auction->id)
+                @foreach ($auctions_list as $cat_product)
+
+
                         <div>
                             @include('front.catalog.auction.single', ['auction' => $cat_product])
                         </div>
-                    @endif
+
                 @endforeach
             </div>
         </div>
