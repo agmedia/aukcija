@@ -183,9 +183,9 @@ class Bid
         if ($this->bid_amount > $this->min_required_bid) {
             // There is no MAX bid
             if ( ! $this->isMaxExistingBid('=')) {
-                if ($this->user->id != $this->current_active_bid->user_id) {
+                if ($this->current_active_bid && $this->user->id != $this->current_active_bid->user_id) {
                     $this->createAuctionBid(amount: $this->min_required_bid, parent_id: $this->created_bid_id);
-                    
+
                 } else {
                     $this->future_current_price = $this->current_active_bid->amount;
                 }
