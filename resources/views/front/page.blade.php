@@ -13,8 +13,8 @@
     <meta property="og:description" content="Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija." />
     <meta property="og:url" content="{{ env('APP_URL')}}"  />
     <meta property="og:site_name" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
-    <meta property="og:image" content="{{ asset('media/img/cover-zuzi.jpg') }}" />
-    <meta property="og:image:secure_url" content="{{ asset('media/img/cover-zuzi.jpg') }}" />
+    <meta property="og:image" content="{{ asset('media/aukcije-4a-og.jpg') }}" />
+    <meta property="og:image:secure_url" content="{{ asset('media/aukcije-4a-og.jpg') }}" />
     <meta property="og:image:width" content="1920" />
     <meta property="og:image:height" content="720" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="AUKCIJE 4A | Aukcije 4 antikvarijata" />
     <meta name="twitter:description" content="Aukcija4a.com je web stranica antikvarijata Biblos – Zagreb, Antikvariat Glavan, Vremeplov Zagreb i Mali neboder Rijeka. Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija." />
-    <meta name="twitter:image" content="{{ asset('media/cover-aukcije4a.jpg') }}" />
+    <meta name="twitter:image" content="{{ asset('media/aukcije-4a-og.jpg') }}" />
 
 @endpush
 
