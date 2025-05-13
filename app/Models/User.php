@@ -120,6 +120,19 @@ class User extends Authenticatable
 
 
     /**
+     * @return bool
+     */
+    public function isMaster(): bool
+    {
+        if (auth()->user()->can('*')) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
      * Validate new category Request.
      *
      * @param Request $request
