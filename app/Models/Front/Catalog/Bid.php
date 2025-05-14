@@ -150,6 +150,18 @@ class Bid
     }
 
 
+    public function setFutureCurrentPrice(float|string $bid_amount): self
+    {
+        if ($bid_amount) {
+            $this->future_current_price = is_float($bid_amount) ? $bid_amount : floatval($bid_amount);
+        } else {
+            $this->future_current_price = $this->bid_amount;
+        }
+
+        return $this;
+    }
+
+
     /**
      * @param string|null $target
      *

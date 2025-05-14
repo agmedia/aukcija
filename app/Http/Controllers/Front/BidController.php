@@ -27,6 +27,11 @@ class BidController extends FrontController
 
         if ($bid->isValid()) {
             if ($bid->isSameAsMaxBid()) {
+                $bid->setFutureCurrentPrice()
+                    ->updateAuctionCurrentPrice()
+                    ->sendEmails()
+                    ->sendNotifications(intval($this->notifications_status));
+
                 return response()->json($bid->generateResponse('same_as_max'));
             }
 
