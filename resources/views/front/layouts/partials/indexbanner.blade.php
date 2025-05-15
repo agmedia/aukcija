@@ -6,7 +6,7 @@
 
             <div class="col-lg-6 text-center text-lg-start pb-3 pt-lg-2">
                 <h2 class="h3 mb-2 pb-3 text-center text-title text-lg-start">Aukcije <span class="text-dark">4 antikvarijata</span></h2>
-                <p class="lead">Aukcija4a.com je web stranica antikvarijata <strong> Biblos – Zagreb, Antikvarijat Glavan, Vremeplov Zagreb i Mali neboder Rijeka.</strong> </p>
+                <p class="lead">Aukcija4a.com je web stranica antikvarijata <strong> Biblos – Zagreb, Antikvarijat Glavan - Ljubljana, Vremeplov - Zagreb i Mali neboder - Rijeka.</strong> </p>
 
                 <p>  Stranica je postavljena kako bi podržala napore navedenih antikvarijata u promociji i prodaji starih i rijetkih knjiga putem održavanje javnih aukcija. </p>
 

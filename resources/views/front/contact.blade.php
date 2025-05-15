@@ -20,7 +20,7 @@
                 <p class="mb-3"><strong> Aukcije 4 antikvarijata</strong></p>
                 <p>
                     Antikvarijat Biblos, Palmotićeva 28, Zagreb<br>
-                    Antikvarijat Bono, Petrinjska 83, Zagreb<br>
+                    Antikvarijat Glavan, Trg republike 2,  Ljubljana<br>
                     Antikvarijat mali neboder, Ciottina 20b, Rijeka<br>
                     Antikvarijat Vremeplov, Lopašićeva 11 , Zagreb
                 </p>
@@ -28,7 +28,7 @@
                     +385977820935 (Tamara-english)<br>
                     +385912213198 (Tomo)<br>
                     +385981629674 (Daniel)<br>
-                    +385989395989 (Morana)
+                    +386 31725669 (Rok)
                 </p>
             </div>
 
