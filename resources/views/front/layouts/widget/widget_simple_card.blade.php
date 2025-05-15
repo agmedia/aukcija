@@ -10,7 +10,7 @@
                             <div class="col-7">
                                 <div class="card-body ps-md-4">
                                     <h3 class="mb-4">{{ $widget['title'] }}</h3>
-                                    <a class="btn btn-primary btn-shadow btn-sm" href="{{ url($widget['url']) }}">Pogledajte ponudu <i class="ci-arrow-right "></i></a>
+                                    {!! $widget['subtitle'] !!}
                                 </div>
                             </div>
                             <div class="col-5">
@@ -23,7 +23,7 @@
                             <div class="col-7">
                                 <div class="card-body ps-md-4">
                                     <h3 class="mb-4">{{ $widget['title'] }}</h3>
-                                    <p>{{ $widget['subtitle'] }}</p>
+                                   {!! $widget['subtitle'] !!}
 
                                 </div>
                             </div>

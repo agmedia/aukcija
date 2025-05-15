@@ -176,9 +176,20 @@
     <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <script src="{{ asset('js/plugins/slim/slim.kickstart.js') }}"></script>
+    <script src="{{ asset('js/plugins/ckeditor5-classic/build/ckeditor.js') }}"></script>
 
     <script>
         $(() => {
+
+            ClassicEditor
+                .create(document.querySelector('#subtitle-input'))
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
             let preselected_size = '{{ isset($widget->width) ? $widget->width : 0 }}';
             setSize(preselected_size);
 
