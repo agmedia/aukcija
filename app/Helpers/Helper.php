@@ -267,7 +267,7 @@ class Helper
                     'subtitle' => $widget->subtitle,
                     'color'    => $widget->badge,
                     'url'      => $widget->url,
-                    'image'    => $widget->thumb,
+                    'image'    => $widget->image,
                     'width'    => $widget->width,
                     'right'    => (isset($data['right']) && $data['right'] == 'on') ? 1 : null,
                 ];

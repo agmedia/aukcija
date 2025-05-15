@@ -1,5 +1,5 @@
 <!-- {"title": "Auction Carousel", "description": "Some description of a Auction Carousel."} -->
-<section class="container py-4 mb-lg-3 {{ $data['css'] }}" style="z-index: 10;">
+<section class="container py-4 pt-0 mb-lg-3 {{ $data['css'] }}" style="z-index: 10;">
     @if ($data['container'])
 
 
