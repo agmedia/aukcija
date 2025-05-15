@@ -359,10 +359,12 @@ class Helper
         $auctions->active();
 
         if (isset($data['popular']) && $data['popular'] == 'on') {
-            $auctions->popular();
+            //$auctions->popular();
         }
 
-        $auctions->distinct()->last();
+       // $auctions->distinct()->last();
+
+        $auctions->OrderBy('sku', 'DESC')->get();
 
         if (isset($data['list']) && $data['list']) {
             $auctions->whereIn('id', $data['list']);

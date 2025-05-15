@@ -103,6 +103,8 @@ class AuctionList extends Component
             $auctions->orderBy($sort[0], $sort[1]);
         }
 
+        $auctions->orderBy('sku', 'ASC');
+
         return $auctions->paginate(20);
     }
 
