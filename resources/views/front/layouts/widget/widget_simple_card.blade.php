@@ -1,5 +1,5 @@
 <!-- {"title": "Simple Card Widget", "description": "Some description of a Simple Card Widget."} -->
-<section class="container pt-3 mb-0 pb-0">
+<section class="container pt-5 mb-0 pb-0">
     <div class="row">
         @foreach ($data as $widget)
 
@@ -9,7 +9,7 @@
                         @if ($widget['right'])
                             <div class="col-7">
                                 <div class="card-body ps-md-4">
-                                    <h3 class="mb-4">{{ $widget['title'] }}</h3>
+                                    <h3 class="mb-4 text-title">{{ $widget['title'] }}</h3>
                                     {!! $widget['subtitle'] !!}
                                 </div>
                             </div>
@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-7">
                                 <div class="card-body ps-md-4">
-                                    <h3 class="mb-4">{{ $widget['title'] }}</h3>
+                                    <h3 class="mb-4 text-title">{{ $widget['title'] }}</h3>
                                    {!! $widget['subtitle'] !!}
 
                                 </div>
