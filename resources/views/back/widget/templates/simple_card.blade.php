@@ -58,7 +58,7 @@
                                                  data-ratio="16:9"
                                                  data-force-size="600,314"
                                                  data-max-file-size="2">
-                                                <img src="{{ isset($widget) && isset($widget->image) ? asset($widget->image) : '' }}" alt=""/>
+                                                <img width="600" height="314" src="{{ isset($widget) && isset($widget->image) ? str_replace('.webp', '.jpg', asset($widget->image)) : '' }}" alt=""/>
                                                 <input type="file" name="image_long"/>
                                             </div>
                                         </div>
