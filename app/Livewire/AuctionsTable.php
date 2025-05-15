@@ -33,6 +33,7 @@ class AuctionsTable extends DataTableComponent
         App::setLocale('hr');
         $this->setPrimaryKey('id');
         $this->setDefaultSort('sku', 'desc');
+        $this->setSortingPillsStatus(false);
 
     }
 
