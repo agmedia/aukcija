@@ -32,6 +32,7 @@ class AuctionsTable extends DataTableComponent
 
         App::setLocale('hr');
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('sku', 'desc');
 
     }
 
@@ -42,8 +43,11 @@ class AuctionsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
-                ->sortable(),
+            Column::make("Šifra", "sku")
+                ->sortable()
+                ->searchable(),
+            Column::make("Id", "id")->hideIf(true),
+           //     ->sortable(),
             Column::make("Image", "image")->hideIf(true),
 
             ImageColumn::make('Slika')
@@ -61,9 +65,7 @@ class AuctionsTable extends DataTableComponent
                     'alt' => $row->name . ' Avatar',
 
                 ]),
-            Column::make("Šifra", "sku")
-                ->sortable()
-                ->searchable(),
+
             Column::make("Grupa", "group")
                 ->sortable(),
             Column::make("Naziv", "name")
