@@ -27,7 +27,7 @@ class BidController extends FrontController
 
         if ($bid->isValid()) {
             if ($bid->isSameAsMaxBid()) {
-                $bid->setFutureCurrentPrice()
+                $bid->setFutureCurrentPrice(record_bid: false)
                     ->updateAuctionCurrentPrice()
                     ->sendEmails()
                     ->sendNotifications(intval($this->notifications_status));
