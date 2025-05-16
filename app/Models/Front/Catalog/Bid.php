@@ -204,7 +204,7 @@ class Bid
                     $this->createAuctionBid(amount: $this->min_required_bid, parent_id: $this->created_bid_id);
 
                 } else {
-                    $this->future_current_price = $this->current_active_bid->amount;
+                    $this->future_current_price = $this->current_active_bid ? $this->current_active_bid->amount : $this->auction->base_price;
                 }
 
             } else {
