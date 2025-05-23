@@ -72,21 +72,19 @@
                     </div>
 
                     <div class="form-check form-check-inline">
-
-
-
-
-                        <label class="form-check-label" for="ex-check-4">{{ __('front/cart.slazem_se_sa') }} {!! __(' :terms_of_service', [
-                                                'terms_of_service' => '<a target="_blank" href="'.route('catalog.route.page',['page' => 'opci-uvjeti-poslovanja']).'" class="link-fx">'.__('front/cart.uvijetima_kupovine').'</a>',
-
-                                        ]) !!}</label>
-
-
-
-
                         <input type="hidden" name="recaptcha" id="recaptcha">
 
                         <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
+                        <label class="form-check-label" for="ex-check-4">{{ __('front/cart.slazem_se_sa') }} {!! __(' :terms_of_service', [
+                                                'terms_of_service' => '<a target="_blank" href="'.route('catalog.route.page',['page' => 'opci-uvjeti-koristenja']).'" class="link-fx">'.__('front/cart.uvijetima_kupovine').'</a>',
+
+                                        ]) !!}
+
+                        </label>
+
+
+
+
                         <div class="invalid-feedback" id="terms">{{ __('front/cart.morate_se_sloziti') }}</div>
                     </div>
 
