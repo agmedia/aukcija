@@ -402,8 +402,8 @@
                     const processed = await recompressImage(blob, {
                         type: 'image/jpeg',
                         quality: 0.82,    // slobodno spusti na 0.75 ako treba još manje
-                        maxW: 1200,
-                        maxH: 1200
+                        maxW: 2000,
+                        maxH: 2000
                     });
 
                     // pokupi sort_order iz bloka gdje je Slim
