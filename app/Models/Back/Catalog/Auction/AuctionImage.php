@@ -267,41 +267,137 @@ class AuctionImage extends Model
      */
     private function saveImage($image, $title = null)
     {
-        if ( ! $title) {
-            $title = $this->resource->name;
+        $t0   = microtime(true);
+        $mem0 = memory_get_usage(true);
+
+        try {
+            if (!$title) {
+                $title = $this->resource->name;
+            }
+
+            // Osnovni kontekst o okruženju / driveru
+            Log::info('saveImage:start', [
+                'auction_id' => $this->resource->id ?? null,
+                'title'      => $title,
+                'driver'     => config('image.driver') ?? 'unknown',
+                'imagick'    => extension_loaded('imagick'),
+                'gd'         => extension_loaded('gd'),
+            ]);
+
+            // 1) Base64 -> bin
+            $b64len = strlen($image);
+            Log::info('saveImage:incoming_base64', ['length_bytes' => $b64len]);
+
+            $binary = $this->makeImageFromBase($image);
+            $binLen = strlen($binary);
+            Log::info('saveImage:decoded_binary', ['length_bytes' => $binLen]);
+
+            // 2) Meta iz originalnog bina (mime + dimenzije)
+            $meta = @getimagesizefromstring($binary);
+            $mime = $meta['mime'] ?? null;
+            $w0   = $meta[0] ?? null;
+            $h0   = $meta[1] ?? null;
+            Log::info('saveImage:source_meta', ['mime' => $mime, 'width' => $w0, 'height' => $h0]);
+
+            // 3) Učitavanje slike + orijentacija
+            $img = Image::read($binary)->orient();
+            if (method_exists($img, 'width') && method_exists($img, 'height')) {
+                Log::info('saveImage:loaded', ['width' => $img->width(), 'height' => $img->height()]);
+            }
+
+            // 4) Downscale prije enkodiranja (smanjuje memoriju i IO)
+            $max = 2000; // po potrebi promijeni
+            $img = $img->resize($max, $max, function ($c) {
+                $c->aspectRatio();
+                $c->upsize();
+            });
+
+            if (method_exists($img, 'width') && method_exists($img, 'height')) {
+                Log::info('saveImage:resized', ['width' => $img->width(), 'height' => $img->height(), 'max' => $max]);
+            }
+
+            // 5) Putanje
+            $time = Str::random(4);
+            $slug = Str::slug($this->resource->name) . '-' . $time;
+            $dir  = $this->resource->id . '/';
+
+            $path_jpg       = $dir . $slug . '.jpg';
+            $path_webp      = $dir . $slug . '.webp';
+            $path_webp_thumb= $dir . $slug . '-thumb.webp';
+
+            // 6) Enkodiranje u buffer (da izmjerimo veličine)
+            $jpgBin  = (string) $img->toJpeg(80);
+            $webpBin = (string) $img->toWebp(80);
+
+            Log::info('saveImage:encoded_main', [
+                'jpg_bytes'  => strlen($jpgBin),
+                'webp_bytes' => strlen($webpBin),
+            ]);
+
+            // 7) Spremanje glavnih fajlova
+            Storage::disk('auctions')->put($path_jpg, $jpgBin, [
+                'visibility'            => 'public',
+                'directory_visibility'  => 'public',
+            ]);
+
+            Storage::disk('auctions')->put($path_webp, $webpBin, [
+                'visibility'            => 'public',
+                'directory_visibility'  => 'public',
+            ]);
+
+            // 8) Thumb (288x360 canvas)
+            $thumb = $img->resize(288, null, function ($c) {
+                $c->aspectRatio();
+                $c->upsize();
+            })->resizeCanvas(288, 360);
+
+            $thumbBin = (string) $thumb->toWebp(75);
+            Log::info('saveImage:encoded_thumb', ['thumb_bytes' => strlen($thumbBin)]);
+
+            Storage::disk('auctions')->put($path_webp_thumb, $thumbBin, [
+                'visibility'            => 'public',
+                'directory_visibility'  => 'public',
+            ]);
+
+            // 9) Veličine na disku
+            $jpgSize   = Storage::disk('auctions')->size($path_jpg);
+            $webpSize  = Storage::disk('auctions')->size($path_webp);
+            $twebpSize = Storage::disk('auctions')->size($path_webp_thumb);
+
+            Log::info('saveImage:saved_files', [
+                'jpg_path'    => $path_jpg,
+                'jpg_size'    => $jpgSize,
+                'webp_path'   => $path_webp,
+                'webp_size'   => $webpSize,
+                'thumb_path'  => $path_webp_thumb,
+                'thumb_size'  => $twebpSize,
+                'public_url'  => config('filesystems.disks.auctions.url') . $path_jpg,
+            ]);
+
+            // 10) Performanse / memorija
+            $t1   = microtime(true);
+            $mem1 = memory_get_usage(true);
+            $peak = memory_get_peak_usage(true);
+
+            Log::info('saveImage:perf', [
+                'time_ms'  => round(($t1 - $t0) * 1000, 1),
+                'mem_used' => $mem1 - $mem0,
+                'mem_peak' => $peak,
+            ]);
+
+            // Važno: vraća istu vrijednost kao tvoja originalna funkcija
+            return $path_jpg;
+        } catch (\Throwable $e) {
+            Log::error('saveImage:exception', [
+                'auction_id' => $this->resource->id ?? null,
+                'message'    => $e->getMessage(),
+                'code'       => $e->getCode(),
+                'trace'      => substr($e->getTraceAsString(), 0, 4000),
+            ]);
+            throw $e;
         }
-
-        $time = Str::random(4);
-        $img  = Image::read($this->makeImageFromBase($image));
-        $path = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '.';
-
-        $path_jpg = $path . 'jpg';
-        Storage::disk('auctions')->put($path_jpg, $img->toJpeg(90),[
-            'visibility' => 'public',
-            'directory_visibility' => 'public'
-        ]);
-
-        $path_webp = $path . 'webp';
-        Storage::disk('auctions')->put($path_webp, $img->toWebp(90),[
-            'visibility' => 'public',
-            'directory_visibility' => 'public'
-        ]);
-
-        // Thumb creation
-        $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
-
-        $img = $img->resize(288, 360)->resizeCanvas(288, 360);
-
-
-
-        $path_webp_thumb = $path_thumb . 'webp';
-        Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80),[
-            'visibility' => 'public',
-        'directory_visibility' => 'public'
-        ]);
-
-        return $path_jpg;
     }
+
 
 
     /**
