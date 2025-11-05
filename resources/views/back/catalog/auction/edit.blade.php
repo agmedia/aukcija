@@ -23,7 +23,7 @@
     <!-- Page Content -->
     <div class="content content-full">
         @include('back.layouts.partials.session')
-        <form action="{{ isset($auction) ? route('auctions.update', ['auction' => $auction]) : route('auctions.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="auction-form" action="{{ isset($auction) ? route('auctions.update', ['auction' => $auction]) : route('auctions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if (isset($auction))
                 {{ method_field('PATCH') }}
@@ -278,6 +278,95 @@
 
     <!-- Page JS Helpers (CKEditor 5 plugins) -->
     <script>jQuery(function(){Dashmix.helpers(['datepicker']);});</script>
+
+    <script>
+        (function () {
+            const form = document.getElementById('auction-form');
+            if (!form) return;
+
+            // Pomocne
+            function getSlimFilename(slim) {
+                return (slim?.data?.output?.name) ||
+                    (slim?.data?.input?.name)  ||
+                    'upload.jpg';
+            }
+            function getSlimHostContainer(slim) {
+                return slim?._elements?.container || slim?._output?.parentNode || document;
+            }
+            async function getSlimBlob(slim) {
+                if (slim?.data?.output?.image instanceof Blob) return slim.data.output.image;
+                if (slim?.data?.input?.image  instanceof Blob) return slim.data.input.image;
+                return null;
+            }
+
+            form.addEventListener('submit', async function (e) {
+                // Sve radimo ručno da bismo dodali Slim Blob-ove
+                e.preventDefault();
+
+                const fd = new FormData(form); // pokupi sve tvoje inpute (CSRF, _method=PATCH, itd.)
+
+                // Skupi sve Slim instance koje su na stranici (glavna + nove)
+                const slims = (window.Slim && Slim.getAll) ? Slim.getAll() : [];
+
+                let idx = 0;
+                for (const slim of slims) {
+                    const blob = await getSlimBlob(slim);
+                    if (!blob) continue;
+
+                    const filename = getSlimFilename(slim);
+
+                    // pokušaj pročitati sort_order iz bloka gdje je Slim
+                    let sortOrder = 0;
+                    try {
+                        const host = getSlimHostContainer(slim);
+                        const so = host.querySelector('input[name^="files"][name$="[sort_order]"]');
+                        if (so && so.value !== '') sortOrder = parseInt(so.value, 10) || 0;
+                    } catch (__) {}
+
+                    // Dodaj u FormData u formatu koji tvoj backend već očekuje
+                    fd.append(`files[${idx}][image]`, blob, filename);
+                    fd.append(`files[${idx}][sort_order]`, sortOrder);
+                    idx++;
+                }
+
+                // Pobrinimo se da files[default] postoji (uzima vrijednost tvog radio gumba “Default”)
+                const def = form.querySelector('input[name="files[default]"]:checked');
+                if (def && !fd.has('files[default]')) {
+                    fd.append('files[default]', def.value);
+                }
+
+                // Po potrebi dodaj auction_id (ako ga forma već nema kao hidden)
+                if (!fd.has('auction_id') && "{{ isset($auction) ? $auction->id : '' }}") {
+                    fd.append('auction_id', "{{ isset($auction) ? $auction->id : '' }}");
+                }
+
+                try {
+                    const res = await fetch(form.action, {
+                        method: 'POST', // _method=PATCH već je u fd kad editiraš
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: fd
+                    });
+
+                    if (!res.ok) {
+                        const txt = await res.text().catch(()=>'');
+                        console.error('Upload failed', res.status, txt);
+                        alert('Greška pri spremanju. (' + res.status + ')');
+                        return;
+                    }
+
+                    // Ako tvoja update/store ruta vraća redirect HTML, samo refresh:
+                    // (ako vraća JSON, možeš parsirati)
+                    window.location.reload();
+                } catch (err) {
+                    console.error(err);
+                    alert('Greška pri spajanju na server.');
+                }
+            }, { passive: false });
+        })();
+    </script>
+
 
     <script>
         $(() => {
