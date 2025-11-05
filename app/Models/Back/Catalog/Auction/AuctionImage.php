@@ -6,12 +6,12 @@ use App\Helpers\AuctionHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
+
 
 class AuctionImage extends Model
 {
@@ -42,52 +42,34 @@ class AuctionImage extends Model
     public function store($resource, $request)
     {
         $this->resource = $resource;
-        $existing       = $request['slim']  ?? null; // postojeće slike (edit)
-        $new            = $request['files'] ?? null; // nove slike (multipart ili base64)
+        $existing       = isset($request['slim']) ? $request['slim'] : null;
+        $new            = isset($request['files']) ? $request['files'] : null;
 
-        // NOVE SLIKE
+        //dd($request, $resource, $existing, $new);
+
+        // Ako ima novih slika
         if ($new) {
+
             foreach ($new as $new_image) {
-                if (!isset($new_image['image']) || !$new_image['image']) {
-                    continue;
-                }
+                if (isset($new_image['image']) && $new_image['image']) {
+                    $data = json_decode($new_image['image']);
 
-                // 1) Ako dolazi kao UploadedFile (multipart)
-                if ($new_image['image'] instanceof UploadedFile) {
-                    $saved = $this->saveNew($new_image['image'], $new_image['sort_order'] ?? 0);
-
-                    // default = "image/<original-name>"
+                    $saved = $this->saveNew($data->output, $new_image['sort_order'] ?: 0);
+                    // Ako je novi default ujedno i novo uploadana fotka.
+                    // Također ako je ime novo uploadane slike isto kao $existing['default']
                     if (
                         isset($new['default']) &&
-                        strpos($new['default'], 'image/') === 0 &&
-                        $new_image['image']->getClientOriginalName() === str_replace('image/', '', $new['default'])
+                        strpos($new['default'], 'image/') !== false &&
+                        $data->output->name == str_replace('image/', '', $new['default'])
                     ) {
                         $this->switchDefault($saved);
-                    }
-                    continue;
-                }
-
-                // 2) Ako je došao kao string (očekujemo Slim JSON s base64)
-                if (is_string($new_image['image'])) {
-                    $data = json_decode($new_image['image']);
-                    if ($data && isset($data->output)) {
-                        $saved = $this->saveNew($data->output, $new_image['sort_order'] ?? 0);
-
-                        if (
-                            isset($new['default']) &&
-                            strpos($new['default'], 'image/') !== false &&
-                            (($data->output->name ?? null) === str_replace('image/', '', $new['default']))
-                        ) {
-                            $this->switchDefault($saved);
-                        }
                     }
                 }
             }
         }
 
-        // POSTOJEĆE SLIKE (EDIT)
         if ($existing) {
-            // promjena default-a
+            // Ako se mijenja default i nismo ga već promjenili...
             if (isset($existing['default']) && $existing['default'] != 'on') {
                 $this->switchDefault(
                     $this->where('id', $existing['default'])->first()
@@ -96,34 +78,29 @@ class AuctionImage extends Model
 
             foreach ($existing as $key => $image) {
                 if (isset($image['image']) && $image['image']) {
-                    // replace: UploadedFile?
-                    if ($image['image'] instanceof UploadedFile) {
-                        $this->replace($key, $image['image'], $image['title'] ?? $this->resource->name);
-                    } else {
-                        // Slim JSON string
-                        $data = is_string($image['image']) ? json_decode($image['image']) : null;
-                        if ($data) {
-                            $this->replace($key, $data->output ?? $data, $image['title'] ?? $this->resource->name);
-                        }
+                    $data = json_decode($image['image']);
+
+                    if ($data) {
+                        $this->replace($key, $data->output, $image['title']);
                     }
                 }
 
-                // glavna slika (key == 0)
-                if (!$key) {
-                    $this->saveMainTitle($image['title'] ?? $this->resource->name);
+                if ( ! $key) {
+                    $this->saveMainTitle($image['title']);
+                    //$this->saveMainTitle($image['title'], $image['alt']);
+                    // zamjeni title na glavnoj
                 }
 
-                // pojedinačna slika (nije default ključ)
                 if ($key && $key != 'default') {
                     $published = (isset($image['published']) && $image['published'] == 'on') ? 1 : 0;
 
                     $this->where('id', $key)->update([
-                        'alt'        => $image['alt'] ?? $this->resource->name,
-                        'sort_order' => $image['sort_order'] ?? 0,
+                        'alt'        => $image['alt'],
+                        'sort_order' => $image['sort_order'],
                         'published'  => $published
                     ]);
 
-                    $this->saveTitle($key, $image['title'] ?? $this->resource->name);
+                    $this->saveTitle($key, $image['title']);
                 }
             }
         }
@@ -133,11 +110,8 @@ class AuctionImage extends Model
 
 
     /**
-     * Zamijeni postojeću sliku novom (ili postavi glavnu ako $id falsy)
-     *
-     * @param int|string $id
-     * @param mixed      $new  UploadedFile | stdClass(Slim output) | string(base64 json)
-     * @param string     $title
+     * @param $id
+     * @param $new
      *
      * @return mixed
      */
@@ -145,16 +119,14 @@ class AuctionImage extends Model
     {
         // Nađi staru sliku i izdvoji path
         $old  = $id ? $this->where('id', $id)->first() : $this->resource;
-        $path = str_replace('media/img/auctions/', '', $old['image'] ?? '');
+        $path = str_replace('media/img/auctions/', '', $old['image']);
         // Obriši staru sliku
-        if ($path) {
-            Storage::disk('auctions')->delete($path);
-        }
+        Storage::disk('auctions')->delete($path);
 
-        // $new može biti UploadedFile ili Slim output / string
-        $path = $this->saveImage($new, $title);
+        $path = $this->saveImage($new->image, $title);
 
-        Log::info('replace', ['path' => $path]);
+        Log::info('replace');
+        Log::info($path);
 
         // Ako nije glavna slika updejtaj path na auction_images DB
         if ($id) {
@@ -163,7 +135,6 @@ class AuctionImage extends Model
             ]);
         }
 
-        // inače je to glavna slika na Auction modelu
         return Auction::where('id', $this->resource->id)->update([
             'image' => config('filesystems.disks.auctions.url') . $path
         ]);
@@ -171,16 +142,43 @@ class AuctionImage extends Model
 
 
     /**
-     * Spremi novu sliku u auction_images
+     * @param $new
      *
-     * @param mixed $new UploadedFile | stdClass(Slim output) | string(base64 json)
-     * @param int   $sort_order
+     * @return mixed
+     */
+    public function switchDefault($new)
+    {
+        //dd($new, $this->resource);
+        if (isset($new->id)) {
+
+            if ($this->resource->image) {
+                $this->where('id', $new->id)->update([
+                    'image' => $this->resource->image
+                ]);
+            } else {
+                $this->where('id', $new->id)->delete();
+            }
+
+            Log::info('switchDefault');
+            Log::info($new->image);
+
+            Auction::where('id', $this->resource->id)->update([
+                'image' => $new->image
+            ]);
+        }
+
+        return $new;
+    }
+
+
+    /**
+     * @param $new
      *
      * @return mixed
      */
     public function saveNew($new, $sort_order = 0)
     {
-        $path = $this->saveImage($new);
+        $path = $this->saveImage($new->image);
 
         // Store image in auction_images DB
         $id = $this->insertGetId([
@@ -214,7 +212,10 @@ class AuctionImage extends Model
             $existing_full = AuctionHelper::getFullImageTitle($this->resource->image);
             $new_full      = AuctionHelper::setFullImageTitle($title);
 
-            Log::info('saveMainTitle', ['new_full' => $new_full, 'existing_full' => $existing_full]);
+            Log::info('saveMainTitle');
+            Log::info($new_full);
+            Log::info('existingfull');
+            Log::info($existing_full);
 
             Storage::disk('auctions')->move($path . $existing_full . '.jpg', $path . $new_full . '.jpg');
             Storage::disk('auctions')->move($path . $existing_full . '.webp', $path . $new_full . '.webp');
@@ -260,163 +261,46 @@ class AuctionImage extends Model
 
 
     /**
-     * @param mixed $image UploadedFile | stdClass(Slim output) | string(base64 json) | string(base64 data)
-     * @param string|null $title
+     * @param $image
      *
-     * @return string relative jpg path
+     * @return string
      */
     private function saveImage($image, $title = null)
     {
-        $t0   = microtime(true);
-        $mem0 = memory_get_usage(true);
-
-        try {
-            if (!$title) {
-                $title = $this->resource->name;
-            }
-
-            Log::info('saveImage:start', [
-                'auction_id' => $this->resource->id ?? null,
-                'title'      => $title,
-                'driver'     => config('image.driver') ?? 'unknown',
-                'imagick'    => extension_loaded('imagick'),
-                'gd'         => extension_loaded('gd'),
-                'payload'    => $image instanceof UploadedFile ? 'uploaded_file' : (is_string($image) ? 'string' : (is_object($image) ? 'object' : gettype($image))),
-            ]);
-
-            // ---------- 1) Izvuci binarne podatke ----------
-            $binary = null;
-
-            if ($image instanceof UploadedFile) {
-                // multipart upload
-                $binary = file_get_contents($image->getRealPath());
-                Log::info('saveImage:uploaded_file', [
-                    'client_name' => $image->getClientOriginalName(),
-                    'mime'        => $image->getClientMimeType(),
-                    'size'        => $image->getSize(),
-                ]);
-            } elseif (is_object($image) && isset($image->image) && is_string($image->image)) {
-                // Slim stdClass output s base64
-                $binary = $this->makeImageFromBase($image->image);
-                Log::info('saveImage:slim_object', ['len' => strlen($image->image)]);
-            } elseif (is_string($image)) {
-                // ili je došao Slim JSON string ili direktan base64 string
-                if (str_contains($image, 'base64,')) {
-                    $binary = $this->makeImageFromBase($image);
-                    Log::info('saveImage:base64_string', ['len' => strlen($image)]);
-                } else {
-                    // možda je došao kao JSON string
-                    $decoded = json_decode($image);
-                    if ($decoded && isset($decoded->output->image)) {
-                        $binary = $this->makeImageFromBase($decoded->output->image);
-                        Log::info('saveImage:json_string_with_base64');
-                    }
-                }
-            }
-
-            if (!$binary) {
-                throw new \InvalidArgumentException('Unsupported image payload');
-            }
-
-            // ---------- 2) Meta ----------
-            $meta = @getimagesizefromstring($binary);
-            $mime = $meta['mime'] ?? null;
-            $w0   = $meta[0] ?? null;
-            $h0   = $meta[1] ?? null;
-            Log::info('saveImage:source_meta', ['mime' => $mime, 'width' => $w0, 'height' => $h0]);
-
-            // ---------- 3) Učitaj sliku i orijentiraj ----------
-            $img = Image::read($binary)->orient();
-            if (method_exists($img, 'width') && method_exists($img, 'height')) {
-                Log::info('saveImage:loaded', ['width' => $img->width(), 'height' => $img->height()]);
-            }
-
-            // ---------- 4) Downscale ----------
-            $max = 2000; // po potrebi
-            $img = $img->resize($max, $max, function ($c) {
-                $c->aspectRatio();
-                $c->upsize();
-            });
-            if (method_exists($img, 'width') && method_exists($img, 'height')) {
-                Log::info('saveImage:resized', ['width' => $img->width(), 'height' => $img->height(), 'max' => $max]);
-            }
-
-            // ---------- 5) Putanje ----------
-            $time = Str::random(4);
-            $slug = Str::slug($this->resource->name) . '-' . $time;
-            $dir  = $this->resource->id . '/';
-
-            $path_jpg        = $dir . $slug . '.jpg';
-            $path_webp       = $dir . $slug . '.webp';
-            $path_webp_thumb = $dir . $slug . '-thumb.webp';
-
-            // ---------- 6) Encode ----------
-            $jpgBin  = (string) $img->toJpeg(80);
-            $webpBin = (string) $img->toWebp(80);
-            Log::info('saveImage:encoded_main', [
-                'jpg_bytes'  => strlen($jpgBin),
-                'webp_bytes' => strlen($webpBin),
-            ]);
-
-            // ---------- 7) Save ----------
-            Storage::disk('auctions')->put($path_jpg, $jpgBin, [
-                'visibility'            => 'public',
-                'directory_visibility'  => 'public',
-            ]);
-            Storage::disk('auctions')->put($path_webp, $webpBin, [
-                'visibility'            => 'public',
-                'directory_visibility'  => 'public',
-            ]);
-
-            // ---------- 8) Thumb ----------
-            $thumb = $img->resize(288, null, function ($c) {
-                $c->aspectRatio();
-                $c->upsize();
-            })->resizeCanvas(288, 360);
-
-            $thumbBin = (string) $thumb->toWebp(75);
-            Log::info('saveImage:encoded_thumb', ['thumb_bytes' => strlen($thumbBin)]);
-
-            Storage::disk('auctions')->put($path_webp_thumb, $thumbBin, [
-                'visibility'            => 'public',
-                'directory_visibility'  => 'public',
-            ]);
-
-            // ---------- 9) Disk size ----------
-            $jpgSize   = Storage::disk('auctions')->size($path_jpg);
-            $webpSize  = Storage::disk('auctions')->size($path_webp);
-            $twebpSize = Storage::disk('auctions')->size($path_webp_thumb);
-
-            Log::info('saveImage:saved_files', [
-                'jpg_path'    => $path_jpg,
-                'jpg_size'    => $jpgSize,
-                'webp_path'   => $path_webp,
-                'webp_size'   => $webpSize,
-                'thumb_path'  => $path_webp_thumb,
-                'thumb_size'  => $twebpSize,
-                'public_url'  => config('filesystems.disks.auctions.url') . $path_jpg,
-            ]);
-
-            // ---------- 10) Perf ----------
-            $t1   = microtime(true);
-            $mem1 = memory_get_usage(true);
-            $peak = memory_get_peak_usage(true);
-            Log::info('saveImage:perf', [
-                'time_ms'  => round(($t1 - $t0) * 1000, 1),
-                'mem_used' => $mem1 - $mem0,
-                'mem_peak' => $peak,
-            ]);
-
-            return $path_jpg;
-        } catch (\Throwable $e) {
-            Log::error('saveImage:exception', [
-                'auction_id' => $this->resource->id ?? null,
-                'message'    => $e->getMessage(),
-                'code'       => $e->getCode(),
-                'trace'      => substr($e->getTraceAsString(), 0, 4000),
-            ]);
-            throw $e;
+        if ( ! $title) {
+            $title = $this->resource->name;
         }
+
+        $time = Str::random(4);
+        $img  = Image::read($this->makeImageFromBase($image));
+        $path = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '.';
+
+        $path_jpg = $path . 'jpg';
+        Storage::disk('auctions')->put($path_jpg, $img->toJpeg(90),[
+            'visibility' => 'public',
+            'directory_visibility' => 'public'
+        ]);
+
+        $path_webp = $path . 'webp';
+        Storage::disk('auctions')->put($path_webp, $img->toWebp(90),[
+            'visibility' => 'public',
+            'directory_visibility' => 'public'
+        ]);
+
+        // Thumb creation
+        $path_thumb = $this->resource->id . '/' . Str::slug($this->resource->name) . '-' . $time . '-thumb.';
+
+        $img = $img->resize(288, 360)->resizeCanvas(288, 360);
+
+
+
+        $path_webp_thumb = $path_thumb . 'webp';
+        Storage::disk('auctions')->put($path_webp_thumb, $img->toWebp(80),[
+            'visibility' => 'public',
+        'directory_visibility' => 'public'
+        ]);
+
+        return $path_jpg;
     }
 
 
@@ -428,7 +312,8 @@ class AuctionImage extends Model
     private function makeImageFromBase(string $base_64_string)
     {
         $image_parts = explode(";base64,", $base_64_string);
-        return base64_decode($image_parts[1] ?? '');
+
+        return base64_decode($image_parts[1]);
     }
 
 
@@ -447,7 +332,7 @@ class AuctionImage extends Model
         $response = [];
 
         if ($auction_id) {
-            $images = self::where('auction_id', $auction_id)->orderBy('sort_order')->get();
+            $images   = self::where('auction_id', $auction_id)->orderBy('sort_order')->get();
 
             foreach ($images as $image) {
                 $response[] = [
@@ -467,7 +352,8 @@ class AuctionImage extends Model
 
 
     /**
-     * Save stack of images to the auction_images DB.
+     * Save stack of images to the
+     * auction_images database.
      *
      * @param array $paths
      * @param       $auction_id
@@ -488,7 +374,7 @@ class AuctionImage extends Model
             ]);
         }
 
-        if (!empty($images)) {
+        if ( ! empty($images)) {
             return $images;
         }
 
@@ -497,7 +383,9 @@ class AuctionImage extends Model
 
 
     /**
-     * Move temporary stored images to the auction folder (by auction ID).
+     * Save temporary stored images
+     * to newly saved auction folder.
+     * The folder is based on auction ID.
      *
      * @param array $paths
      * @param       $auction_id
@@ -541,4 +429,5 @@ class AuctionImage extends Model
             'image' => $path
         ]);
     }
+
 }
