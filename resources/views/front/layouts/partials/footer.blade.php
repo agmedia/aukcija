@@ -65,7 +65,7 @@
 
                     </ul>
 
-                  <a href="https://www.aukcije.hr/">  <img src="{{ config('settings.images_domain') }}media/320x200.png"/></a>
+                  <a href="https://www.aukcije.hr/">  <img src="{{ config('settings.images_domain') }}media/img/320x200.png"/></a>
 
                 </div>
             </div>
