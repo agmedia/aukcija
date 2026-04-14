@@ -520,6 +520,17 @@ class Auction extends Model
     }
 
 
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeCreatedToday(Builder $query): Builder
+    {
+        return $query->whereDate('created_at', Carbon::today());
+    }
+
+
 
 
 

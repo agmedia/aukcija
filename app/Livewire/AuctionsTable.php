@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Carbon;
 
 use App\Models\Back\Catalog\Auction\Auction;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -17,6 +19,10 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
  */
 class AuctionsTable extends DataTableComponent
 {
+    /**
+     * @var bool
+     */
+    public bool $showOnlyNew = true;
 
     /**
      * @var string
@@ -35,6 +41,16 @@ class AuctionsTable extends DataTableComponent
         $this->setDefaultSort('sku', 'desc');
         $this->setSortingPillsStatus(false);
 
+    }
+
+
+    /**
+     * @return Builder
+     */
+    public function builder(): Builder
+    {
+        return Auction::query()
+            ->when($this->showOnlyNew, fn (Builder $query) => $query->createdToday());
     }
 
 
@@ -72,6 +88,9 @@ class AuctionsTable extends DataTableComponent
             Column::make("Naziv", "name")
                 ->sortable()
                 ->searchable(),
+            Column::make("Kreirano", "created_at")
+                ->sortable()
+                ->format(fn($value) => Carbon::make($value)?->format('d.m.Y. H:i') ?: '-'),
             Column::make("Trenutna cijena", "current_price")
                 ->sortable(),
             BooleanColumn::make('Status', 'status')

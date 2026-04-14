@@ -26,10 +26,27 @@
     <!-- All Products -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Sve aukcije {{ $auctions->total() }}</h3>
+                <h3 class="block-title">Aukcije {{ $auctions->total() }}</h3>
+                <div class="block-options">
+                    <form action="{{ route('auctions') }}" method="GET" class="mb-0">
+                        <input type="hidden" name="show_only_new" value="0">
+                        <div class="custom-control custom-switch custom-control-success">
+                            <input
+                                type="checkbox"
+                                class="custom-control-input"
+                                id="show-only-new-auctions"
+                                name="show_only_new"
+                                value="1"
+                                onchange="this.form.submit()"
+                                {{ $showOnlyNew ? 'checked' : '' }}
+                            >
+                            <label class="custom-control-label" for="show-only-new-auctions">Samo novo unesene aukcije</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="block-content pb-4">
-                <livewire:auctions-table theme="bootstrap-5" />
+                <livewire:auctions-table theme="bootstrap-5" :show-only-new="$showOnlyNew" />
             </div>
         </div>
     </div>

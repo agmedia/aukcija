@@ -28,14 +28,19 @@ class AuctionController extends Controller
      */
     public function index(Request $request, Auction $auction)
     {
+        $showOnlyNew = $request->has('show_only_new') ? $request->boolean('show_only_new') : true;
         $query = $auction->filter($request);
+
+        if ($showOnlyNew) {
+            $query->createdToday();
+        }
 
         $auctions = $query->paginate(20)->appends(request()->query());
 
         $groups = Groups::all()->pluck('title', 'id');
         $counts = [];//Auction::setCounts($query);
 
-        return view('back.catalog.auction.index', compact('auctions', 'groups', /*'authors', 'publishers',*/ 'counts'));
+        return view('back.catalog.auction.index', compact('auctions', 'groups', /*'authors', 'publishers',*/ 'counts', 'showOnlyNew'));
     }
 
 
